@@ -7,15 +7,15 @@
 Technical Story: {description | ticket/issue URL} <!-- optional -->
 
 ## Context and Problem Statement
-Creare una webapp che permetta l'upload di un file > 2gb con la possibilita' di effettuare query.
+To create a webapp that allows the user to upload a file > 2gb and gives the chance to query.
 
 ## Decision Drivers
 
-* Velocita' visto la dimensione dei file
-* Facilita' di apprendimento
-* Supporto community
-* Adattabile allo scopo del progetto
-* Stabilita'
+* Speed, due to file's size.
+* Ease of learning
+* Community's support
+* Fit for the project's purpose
+* Steadiness
 
 ## Considered Options
 
@@ -42,18 +42,17 @@ Chosen option: "{option 1}", because {justification. e.g., only option, which me
 
 ### Go
 *Pro*
-- Molto veloce
-- Facile da comprendere, sintassi chiara
-- Fornisce molte librerie senza bisogno di utilizzarle da terzi
-- Sicuro, Garbage Collector incluso che aiuta a prevenire la perdita di memoria nel codice
-- Ottimo con le API,
-scalabilità e prestazioni per le API pesanti
-- Libreria standard multithread che utilizza tutti i core del processore senza moduli aggiuntivi
-- alternativa al C++ più facile da apprendere e codificare ottimizzato per - l'esecuzione su CPU multicore
+- Very fast.
+- Easy to understand, clear syntax.
+- Provides heaps of libraries with no need to use the from third parties.
+- Safe, including a Garbage Collector that helps preventing loss of memory in the code.
+- Excellent with APIs, scalability e performance for heavy APIs.
+- Libreria standard multithread che utilizza tutti i core del processore senza moduli aggiuntivi. Standard multithread library that exploits all processor's cores without additional modules.
+- Alternative option to C++, easier to learn and code, optimized to execute on multicore CPUs.
 
 *Cons*
-- E’ un linguaggio giovane
-- Mancanza di una MV, le dimensioni dei file Go spesso superano quelle di altri linguaggi
+- It's a young language.
+- Lack of MV, Go's files' size often outclass other languages' one.
 
 ### C#
 
