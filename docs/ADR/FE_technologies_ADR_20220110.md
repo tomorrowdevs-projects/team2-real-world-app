@@ -2,82 +2,84 @@
 
 - Status: Proposed
 - Deciders:
-- Date: 2022/01/10
 
-Technical Story: {description | ticket/issue URL} <!-- optional -->
+  - Isabel Lombardi
+  - Alessandro Attene
+  - Domenico Cavaglieri
+  - Matteo Bisicchia
+  - Gabriele Diana
+  - Aldo Telese
+  - Luca Bertoldi
+
+- Date: 2022/01/12
 
 ## Context and Problem Statement
 
-Creare una webapp che permetta l'upload di un file > 2gb con la possibilita' di effettuare query.
+To create a webapp that allows the user to upload a file > 2gb and gives the chance to query.
 
 ## Decision Drivers
 
-- Facilita' di apprendimento
-- Supporto community
-- Adattabile allo scopo del progetto
-- Semplificazione nell'utlizzo di tool complessi
-- Livello qualitativo della webapp
+- Ease of learning
+- Community's support
+- Fit for the project's purpose
+- Simplification in the use of complex tools
+- Quality level of the webapp
 
 ## Considered Options
 
-- JavaScript (senza framework)
-- JavaScript con React
-- TypeScript (con o senza React)
+- JavaScript (without frameworks)
+- JavaScript with React
+- TypeScript (with or without React)
 
 ## Decision Outcome
 
-Chosen option: "{option 1}", because {justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force {force} | … | comes out best (see below)}.
+Chosen **JavaScript with React** because it is a frontend stack which makes the webapp level more adequate to current web standards.
+The frontend technologies will include Create React App and possibly React-Bootstrap and Axios.
 
 ### Positive Consequences <!-- optional -->
 
-- {e.g., improvement of quality attribute satisfaction, follow-up decisions required, …}
-- …
+- Simplification in the use of complex tools aimed at compilation, module bundling, transpilation and minification, combined with modern development for components and advanced state management
+- Community Active
 
 ### Negative Consequences <!-- optional -->
 
-- {e.g., compromising quality attribute, follow-up decisions required, …}
-- …
+- Learning not facilitated by the presence of very specific syntax
 
 ## Pros and Cons of the Options
 
-### JavaScript (senza framework)
+### JavaScript (without frameworks)
 
-_Pro_
+**Pro**
 
-- Facilita' di apprendimento
-- Supporto community
-- Adattabile allo scopo del progetto
+- Easy to understand, clear syntax.
+- Community's support
+- Fit for the project's purpose
 
-_Cons_
+**Cons**
 
-- Nessuna semplificazione nell'utlizzo di tool complessi finalizzati alla compilazione, al module bundling, alla transpilazione e minificazione
-- Livello qualitativo della webapp conseguentemente inferiore agli attuali standard del Web
+- No simplification in the use of complex tools aimed at compilation, module bundling, transpilation and minification
+- Quality level of the webapp consequently lower than the current standards of the Web
 
-### JavaScript con React
+### JavaScript with React
 
-_Pro_
+**Pro**
 
-- Supporto community
-- Adattabile allo scopo del progetto
-- Semplificazione nell'utlizzo di tool complessi finalizzati alla compilazione, al module bundling, alla transpilazione e minificazione, uniti al moderno sviluppo per componenti
-- Livello qualitativo della webapp conseguentemente più conforme agli attuali standard del Web
+- Community's support
+- Fit for the project's purpose
+- Simplification in the use of complex tools aimed at compilation, module bundling, transpilation and minification, combined with modern development for components and advanced state management
+- Quality level of the webapp consequently more compliant with current web standards
 
-_Cons_
+**Cons**
 
-- Facilita' di apprendimento non agevolata da sintassi specifica
+- Learning not facilitated by the presence of very specific syntax
 
-### TypeScript (con o senza React)
+### TypeScript (with or without React)
 
-{example | description | pointer to more information | …} <!-- optional -->
+**Pro**
 
-- Good, because {argument a}
-- Good, because {argument b}
-- Bad, because {argument c}
-- … <!-- numbers of pros and cons can vary -->
+- Strong typing and stability-enhancing constraints that are characteristic of more traditnal languages than JavaSctiript
 
-## Links <!-- optional -->
+**Cons**
 
-- {Link type} {Link to ADR} <!-- example: Refined by [ADR-0005](0005-example.md) -->
-- … <!-- numbers of links can vary -->
-
-<!-- markdownlint-disable-file MD013 -->
+- Oversized structure and benefits not appreciable in this specific application context
+- Learning not facilitated by the presence of very specific syntax
