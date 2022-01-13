@@ -1,27 +1,35 @@
-# {short title of solved problem and solution}
+## Team 2 - TD Project
 
-* Status: {proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)} <!-- optional -->
-* Deciders: {list everyone involved in the decision} <!-- optional -->
-* Date: {YYYY-MM-DD when the decision was last updated} <!-- optional -->
+* Status: Proposed 
+* Deciders: 
+  * Isabel Lombardi
+  * Alessandro Attene
+  * Domenico Cavaglieri
+  * Matteo Bisicchia
+  * Gabriele Diana
+  * Aldo Telese
+  * Luca Bertoldi   
+  
 
-Technical Story: {description | ticket/issue URL} <!-- optional -->
+* Date: 2022/01/12
+
 
 ## Context and Problem Statement
-
-{Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.}
+To create a webapp that allows the user to upload a file > 2gb and gives the chance to query.
 
 ## Decision Drivers <!-- optional -->
 
-* {driver 1, e.g., a force, facing concern, …}
-* {driver 2, e.g., a force, facing concern, …}
-* … <!-- numbers of drivers can vary -->
+* MultiThread support
+* Lightweight software
+* Easy management of > 2GB
+* Availability to support simple queries
+* Easy interaction with GO
 
 ## Considered Options
 
-* {option 1}
-* {option 2}
-* {option 3}
-* … <!-- numbers of options can vary -->
+* SQLite
+* MySQL
+* PostgreSQL
 
 ## Decision Outcome
 
@@ -39,25 +47,36 @@ Chosen option: "{option 1}", because {justification. e.g., only option, which me
 
 ## Pros and Cons of the Options <!-- optional -->
 
-### {option 1}
+### SQLite
 
-{example | description | pointer to more information | …} <!-- optional -->
+It differs from all other SQL languages since it uses a dynamic type system, meaning a value stored in a column determines its data type, and not the column’s data type
+**Pro**
 
-* Good, because {argument a}
-* Good, because {argument b}
-* Bad, because {argument c}
-* … <!-- numbers of pros and cons can vary -->
+* Can be used by multithread (as long as a single database connection is not used simultaneously in two or more threads)
+* Serverless, it doesn’t require much configuration, the setup is fast and easy
+* Using the language is simple
+* Runs very fast
 
-### {option 2}
+**Cons**
+* Primitive syntax and formatting limitations, doesn’t support as many functions
+* Doesn't provide network access (i.e. accessing it from another machine) as it is serverless
+* Not built for large-scale applications
 
-{example | description | pointer to more information | …} <!-- optional -->
+### MySQL
+Is a database server. 
+Therefore, you can't just directly integrate it with your app like SQLite, it requires that you install it and then connect it to your app
 
-* Good, because {argument a}
-* Good, because {argument b}
-* Bad, because {argument c}
-* … <!-- numbers of pros and cons can vary -->
+* Powerful and able to handle high traffic sites
+* Feature rich
+* Many security features built-in
+* If you require scalability in terms of the number of database queries required,
 
-### {option 3}
+* Not as portable as SQLite
+* Reliability issues
+* Since being acquired by Oracle, development has slowed down
+
+
+### PostgreSQL
 
 {example | description | pointer to more information | …} <!-- optional -->
 
