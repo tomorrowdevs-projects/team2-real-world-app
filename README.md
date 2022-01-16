@@ -9,13 +9,13 @@ The purpose of the project is to create a Web App for an Ecommerce, where after 
 <br>
 
 <h2>Partecipants</h2>
-<li> Isabel Lombardi (Team Leader) </li>
-<li> Alessandro Attene </li>
-<li> Domenico Cavaglieri </li>
-<li> Matteo Bisicchia </li>
-<li> Gabriele Diana </li>
-<li> Aldo Telese </li>
-<li> Luca Bertoldi </li>
+<li> Isabel Lombardi (Team Leader) [add LinkeIn] [Add  personal GitHub]</li>
+<li> Alessandro Attene  [add LinkeIn] [Add  personal GitHub]</li>
+<li> Domenico Cavaglieri [add LinkeIn] [Add  personal GitHub]</li>
+<li> Matteo Bisicchia [add LinkeIn] [Add  personal GitHub]</li>
+<li> Gabriele Diana [add LinkeIn] [Add  personal GitHub]</li>
+<li> Aldo Telese [add LinkeIn] [Add  personal GitHub]</li>
+<li> Luca Bertoldi [add LinkeIn] [Add  personal GitHub]</li>
 <br>
 
 <h3>Yes, but who are we?</h3>
