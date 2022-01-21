@@ -19,7 +19,7 @@ func main() {
 	const iterations = 4000000                                                 // total number of entries (orders)
 	const percentage_unique_clients = 60                                    // 100% means all clients are different
 	const n_unique_clients = (iterations * percentage_unique_clients) / 100 // number of unique clients
-	const n_products = 500                                                  // total number of products available on the ecommerce
+	const n_products = 1000                                                  // total number of products available on the ecommerce
 
 	// CSV FILE CREATION  (in brackets: path where the file was created, starting from the current location)
 	csvFile, err := os.Create("ecommerce.csv")
