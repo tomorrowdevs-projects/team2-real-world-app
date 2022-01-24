@@ -3,7 +3,7 @@
 
 <br>
 
-* Status: Accepted  
+* Status: Accepted  ✔️
 * Deciders: 
   * Isabel Lombardi
   * Alessandro Attene
@@ -53,7 +53,7 @@ Chosen **Go**, because We preferred the speed and execution power of the basic m
 ## Pros and Cons of the Options
 
 ### Go
-**Pro**
+**Pro** 👍
 - Very fast.
 - Easy to understand, clear syntax.
 - Provides heaps of libraries with no need to use the from third parties.
@@ -76,7 +76,7 @@ Chosen **Go**, because We preferred the speed and execution power of the basic m
 - Concurrency (or competition) supported, which helps programmers and programmers build systems with a high degree of parallel processing.
 
 
-**Cons**
+**Cons**  👎
 - It's a young language.
 - Lack of MV, Go's files' size often outclass other languages' one.
 - Compared to Node it requires more code to implement a simple function (it has less versatility than Node).
@@ -87,7 +87,7 @@ Chosen **Go**, because We preferred the speed and execution power of the basic m
 
 ### NodeJS
 
-**Pro**
+**Pro** 👍
 - Designed to build complex and simple scalable network applications 
 - Works on different platforms such as Windows, Linux and MACOS.
 - Allowing full-stack development of both the frontend and backend of an application.
@@ -103,7 +103,7 @@ Chosen **Go**, because We preferred the speed and execution power of the basic m
 - Has a lower learning curve than Golang.
 - Traditionally handles errors using the exception management try-catch technique, where errors are captured just when they occur and developers can debug errors quickly and quickly. This is why Node.js overcomes Go in handling errors and exceptions correctly.
  
-**Cons**
+**Cons** 👎
 - Difficult to debug Node.js because it uses Javascript, a dynamic typing language
 - It uses asynchronous programming, which seems advantageous but requires a high level of skills to master to create a scalable application.
 - Many Apis and packages undergo frequent changes and updates, which cause compatibility problems and confuse the developer

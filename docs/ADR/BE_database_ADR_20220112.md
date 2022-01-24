@@ -3,7 +3,7 @@
 
 <br>
 
-* **Status:** Proposed 
+* **Status:** Proposed ❓
 
 
 * **Deciders:**
@@ -61,7 +61,8 @@ Chosen option: "{option 1}", because {justification. e.g., only option, which me
 ### SQLite
 
 It differs from all other SQL languages since it uses a dynamic type system, meaning a value stored in a column determines its data type, and not the column’s data type
-**Pros**
+
+**Pros**   👍
 
 * Can be used by multithread (as long as a single database connection is not used simultaneously in two or more threads)
 * Serverless, it doesn’t require much configuration, the setup is fast and easy
@@ -70,7 +71,8 @@ It differs from all other SQL languages since it uses a dynamic type system, mea
 * Maximum number of rows in a table is 2^64 (18446744073709551616 or 1.8e+19)
 * Maximum database size is 140 terabytes
 
-**Cons**
+**Cons**  👎 
+
 * Primitive syntax and formatting limitations, doesn’t support as many functions
 * Doesn't provide network access (i.e. accessing it from another machine) as it is serverless
 * Not built for large-scale applications
@@ -78,7 +80,7 @@ It differs from all other SQL languages since it uses a dynamic type system, mea
 
 ### MySQL
 
-**Pros**
+**Pros** 👍
 * Support multithread
 * Easy to use the queries
 * Superfast in fetching the data
@@ -91,7 +93,7 @@ It differs from all other SQL languages since it uses a dynamic type system, mea
 - If you don't expect your application to grow or are looking for a quick prototyping tool, then consider MySQL.
 
 
-**Cons**
+**Cons** 👎
 * Bad Documentation
 * Not as portable as SQLite
 * Reliability issues
@@ -100,7 +102,7 @@ It differs from all other SQL languages since it uses a dynamic type system, mea
 
 ### PostgreSQL
 
-**Pros**
+**Pros** 👍
 * Data are safe and secure
 * Support multithread
 * Good Documentation
@@ -112,7 +114,7 @@ It differs from all other SQL languages since it uses a dynamic type system, mea
 * Highly extensible. It supports a number of advanced data types not available in MySQL (geometric/GIS, network address types, JSONB that can be indexed, native UUID, time zone compatible timestamps)
 * Consider PostgreSQL for any application that might grow to the enterprise environment, with complex queries and frequent write operations.
 
-**Cons**   
+**Cons**   👎
 * Architecture: object-relational database, offers more complex data types and allows objects to inherit properties, but it also makes working with PostgreSQL more complex.
 * Less popular than MySQL, so fewer third-party tools are available. 
 

@@ -4,7 +4,7 @@
 <br>
 
 
-- Status: Accepted
+- Status: Accepted ✔️
 - Deciders:
 
   - Isabel Lombardi
@@ -53,7 +53,7 @@ The frontend technologies will include Create React App and possibly React-Boots
 
 ### JavaScript (without frameworks)
 
-**Pro**
+**Pro** 👍
 
 - Easy to understand, clear syntax.
 - Community's support
@@ -66,24 +66,24 @@ The frontend technologies will include Create React App and possibly React-Boots
 
 ### JavaScript with React
 
-**Pro**
+**Pro** 👍
 
 - Community's support
 - Fit for the project's purpose
 - Simplification in the use of complex tools aimed at compilation, module bundling, transpilation and minification, combined with modern development for components and advanced state management
 - Quality level of the webapp consequently more compliant with current web standards
 
-**Cons**
+**Cons** 👎
 
 - Learning not facilitated by the presence of very specific syntax
 
 ### TypeScript (with or without React)
 
-**Pro**
+**Pro** 👍
 
 - Strong typing and stability-enhancing constraints that are characteristic of more traditnal languages than JavaSctiript
 
-**Cons**
+**Cons** 👎
 
 - Oversized structure and benefits not appreciable in this specific application context
 - Learning not facilitated by the presence of very specific syntax
