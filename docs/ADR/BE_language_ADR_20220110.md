@@ -1,6 +1,6 @@
 ## Team 2 - TD Project
 
-* Status: Proposed 
+* Status: Accepted  
 * Deciders: 
   * Isabel Lombardi
   * Alessandro Attene
