@@ -1,7 +1,12 @@
-## Team 2 - TD Project
 
-* Status: Proposed 
-* Deciders: 
+<h1 id="logo"><a href="/"><img src="..\images\TD-logo.png" alt="TD-logo" width="100" height="100" /> Team 2 - TD Project </a></h1>
+
+<br>
+
+* **Status:** Proposed 
+
+
+* **Deciders:**
   * Isabel Lombardi
   * Alessandro Attene
   * Domenico Cavaglieri
@@ -11,11 +16,16 @@
   * Luca Bertoldi   
   
 
-* Date: 2022/01/12
+* **Last Update:** 2022/01/24
 
 
 ## Context and Problem Statement
-To create a webapp that allows the user to upload a file > 2gb and gives the chance to query.
+The aim of the project is the realization of a WebApp that supports **the uploading of a file with a size larger than 2 GB** and 
+with the possibility to **perform queries on it**, such as:
+* Sum of number of orders and turnover per product in a user-definable time period
+* Number of single customers in a user-definable time period
+* Average value of executed orders
+
 
 ## Decision Drivers <!-- optional -->
 
@@ -24,6 +34,7 @@ To create a webapp that allows the user to upload a file > 2gb and gives the cha
 * Easy management of > 2GB
 * Availability to support simple queries
 * Easy interaction with GO
+* Easy to interact 
 
 ## Considered Options
 

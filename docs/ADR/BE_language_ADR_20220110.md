@@ -1,4 +1,7 @@
-## Team 2 - TD Project
+
+<h1 id="logo"><a href="/"><img src="..\images\TD-logo.png" alt="TD-logo" width="100" height="100" /> Team 2 - TD Project </a></h1>
+
+<br>
 
 * Status: Accepted  
 * Deciders: 
