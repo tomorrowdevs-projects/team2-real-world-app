@@ -3,7 +3,7 @@
 
 <br>
 
-* **Status:** Proposed ❓
+* Status: Accepted  ✔️
 
 
 * **Deciders:**
@@ -44,17 +44,17 @@ with the possibility to **perform queries on it**, such as:
 
 ## Decision Outcome
 
-Chosen option: "{option 1}", because {justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force {force} | … | comes out best (see below)}.
+We chose to use **MySQL** because it meets all of our requirements 
+and does so in a simpler way than Postgres can.
+
+
 
 ### Positive Consequences <!-- optional -->
 
-* {e.g., improvement of quality attribute satisfaction, follow-up decisions required, …}
-* …
+* It's a Database we already know and know how to move with.
+* Multithread support, one of our primary requirements.
+* Simple to use
 
-### Negative Consequences <!-- optional -->
-
-* {e.g., compromising quality attribute, follow-up decisions required, …}
-* …
 
 ## Pros and Cons of the Options <!-- optional -->
 
