@@ -13,7 +13,6 @@
   - Matteo Bisicchia
   - Gabriele Diana
   - Aldo Telese
-  - Luca Bertoldi
 
 - Date: 2022/01/12
 
