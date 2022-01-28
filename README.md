@@ -1,4 +1,8 @@
-<h1>Team 2 - Real World App</h1>
+
+
+<h1>
+<img src="docs\images\TD-logo.png" alt="TD-logo" width="50" height="50" /> 
+Team 2 - Real World App</h1>
 
 
 <h2>Description</h2>
@@ -9,18 +13,18 @@ The purpose of the project is to create a Web App for an Ecommerce, where after 
 <br>
 
 <h2>Partecipants</h2>
-<li> Isabel Lombardi (Team Leader) [add LinkeIn] [Add  personal GitHub]</li>
-<li> Alessandro Attene  [add LinkeIn] [Add  personal GitHub]</li>
-<li> Domenico Cavaglieri [add LinkeIn] [Add  personal GitHub]</li>
-<li> Matteo Bisicchia [add LinkeIn] [Add  personal GitHub]</li>
-<li> Gabriele Diana [add LinkeIn] [Add  personal GitHub]</li>
-<li> Aldo Telese [add LinkeIn] [Add  personal GitHub]</li>
-<li> Luca Bertoldi [add LinkeIn] [Add  personal GitHub]</li>
+<li> Isabel Lombardi (Team Leader) </li>
+<li> Alessandro Attene</li> 
+<li> Domenico Cavaglieri </li>
+<li> Matteo Bisicchia </li>
+<li> Gabriele Diana </li>
+<li> Aldo Telese </li>
+<li> Luca Bertoldi </li>
 <br>
 
 <h3>Yes, but who are we?</h3>
 <p>
-We are student members of the TommorwDevs community.
+We are members of the TommorowDevs community.
 In fact, the purpose of this project is to simulate a real world situation by working in teams.
 </p>
 
@@ -33,7 +37,16 @@ One of the specifications of the project was that we could not use the same tech
 
 In order to choose the technologies to be used, such as the programming language or the choice of the Database, more suitable to the specifications of our project we used an <b>Architecture Decision Record (ADR)</b>, a document that captures an important architectural decision made along with its context and consequences. <br>
 You can find the documents used in the <code>docs/ADR/</code> folder.
-</p>
+
+<ul>
+<li> <a href="https://github.com/tomorrowdevs-projects/team2-real-world-app/blob/master/docs/ADR/BE_database_ADR_20220112.md">
+    Database ADR</a> </li>
+<li> <a href="https://github.com/tomorrowdevs-projects/team2-real-world-app/blob/master/docs/ADR/BE_language_ADR_20220110.md">
+    Backend Language</a> </li>
+<li> <a href="https://github.com/tomorrowdevs-projects/team2-real-world-app/blob/master/docs/ADR/FE_technologies_ADR_20220110.md">
+    Frontend Technologies</a> </li>
+</ul>
+
 
 <br>
 
