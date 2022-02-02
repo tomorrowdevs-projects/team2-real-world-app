@@ -54,5 +54,5 @@ You can find the documents used in the <code>docs/ADR/</code> folder.
 <p>
 The entity–relationship model (ER model) that shows the relationships of entity sets stored in a database.
 
-<img src="docs\images\ER_database.png" alt="ER Database">
+<img src="docs\images\ER-DB.png" alt="ER Database">
 </p>
