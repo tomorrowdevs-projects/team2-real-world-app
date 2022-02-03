@@ -56,3 +56,13 @@ The entity–relationship model (ER model) that shows the relationships of entit
 
 <img src="docs\images\ER-DB.png" alt="ER Database">
 </p>
+
+
+<h2>Project Folder Structure</h2>
+<p>
+Schema representing how the folder structure is set up within the project.
+<br>
+<a href="https://whimsical.com/project-structure-6txcHoWTUd8wjZuHgFhL33">
+    Project Folder Schema</a> 
+
+</p>
