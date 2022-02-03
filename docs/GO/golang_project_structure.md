@@ -72,7 +72,7 @@ Defines:
 <li> The version of go with which the module is created. </li>
 <li>Module dependency requirements for a successful build. Defines the dependency requirements of both projects and also locks them onto the correct version. </li>
 </ul>
-
+</p>
 
 <br>
 
