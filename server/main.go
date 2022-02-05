@@ -1,11 +1,10 @@
 package main
 
-import (
-	// module path + pack pat
-	"team2-real-world-app/server/pkg/database"
-)
+// module path + pack pat
+//"team2-real-world-app/server/pkg/database"
 
 func main() {
-	database.GetConnection()
+	// import example
+	//database.GetConnection()
 
 }
