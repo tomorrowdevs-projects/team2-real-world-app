@@ -1,31 +1,68 @@
 package database
 
 import (
-	"fmt"
-	"team2-real-world-app/server/pkg/helpers"
-
 	"database/sql"
+	"errors"
+	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetConnection() *sql.DB {
+type DBParameters struct {
+	UserName string
+	Password string
+	Host     string
+	Port     int
+	DbName   string
+}
 
-	var username string = helpers.GetEnv("DB_HOST")
-	var password string = helpers.GetEnv("DB_PORT")
-	var host string = helpers.GetEnv("DB_USERNAME")
-	var port string = helpers.GetEnv("DB_PASSWORD")
-	var db_name string = helpers.GetEnv("DB_NAME")
+type DBManager struct {
+	conn        *sql.DB
+	isConnected bool
+}
 
-	conn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, db_name)
+var IsDisconnectedError = errors.New("database not connected")
+var AlreadyConnectedError = errors.New("database already connected")
 
-	// open database connection
-	db, err := sql.Open("mysql", conn)
+func GetDBManager() *DBManager {
+	return &DBManager{
+		conn: nil,
+	}
+}
 
-	if err != nil {
-		panic(err.Error())
+func (dbm *DBManager) Connect(dBParameters DBParameters) error {
+	if dbm.isConnected {
+		return AlreadyConnectedError
 	}
 
-	return db
+	conn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dBParameters.UserName, dBParameters.Password,
+		dBParameters.Host, dBParameters.Port, dBParameters.DbName)
+	//
+	//	// open database connection
+	db, err := sql.Open("mysql", conn)
+	if err != nil {
+		return err
+	}
+	dbm.conn = db
+	dbm.isConnected = true
+	return nil
+}
 
+func (dbm *DBManager) Disconnect() error {
+	if !dbm.isConnected {
+		return IsDisconnectedError
+	}
+	dbm.isConnected = false
+	return dbm.conn.Close()
+}
+
+func (dbm *DBManager) IsConnected() bool {
+	return dbm.conn != nil && dbm.isConnected
+}
+
+func (dbm *DBManager) DoSomething() error {
+	if !dbm.isConnected {
+		return IsDisconnectedError
+	}
+	return nil
 }
