@@ -1,16 +1,17 @@
 package main
 
-// module path + pack pat
-//"team2-real-world-app/server/pkg/database"
 
 import (
 	"fmt"
+	// module path + pack pat
 	dbmanager "team2-real-world-app/server/pkg/database"
 )
 
 func main() {
-	// import example
-	//database.GetConnection()
+	/*
+	this comment will be removed,
+	at the moment I leave it here so that you all can better understand 
+	how to use the structure created in database.go
 
 	/// LEt's suppose I run Docker in this way:
 	///  docker run  --name db -p 3306:3306 \
@@ -51,3 +52,4 @@ func main() {
 	}
 
 }
+*/
