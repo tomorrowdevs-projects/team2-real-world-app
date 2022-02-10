@@ -4,11 +4,15 @@ import (
 	"errors"
 	"os"
 	"path/filepath" // check file extension
+	helpers "team2-real-world-app/server/pkg/helpers"
 )
 
 // InvalidFileExtensionError handle errors
 var (
-	InvalidFileExtensionError = errors.New("the file extension is not .csv")
+
+	ErrInvalidFileExtension = errors.New("the file extension is not .csv")
+	ErrInvalidFileSize      = errors.New("the file size exceeds the maximum allowed")
+
 )
 
 
@@ -23,8 +27,13 @@ func NewImportFile() *ImportFile {
 // SplitFile for local testing, waiting to understand type of passed file
 func (importFile ImportFile) SplitFile(filePath string) error {
 
+
 	if !importFile.isCsvExtension(filePath) { // check file extension
 		return InvalidFileExtensionError
+	}
+
+	if !handleFile.isTheRightSize(filePath) {
+		return ErrInvalidFileSize
 	}
 
 	csvFile, err := os.Open(filePath)
@@ -42,4 +51,24 @@ func (importFile ImportFile) SplitFile(filePath string) error {
 // check if the file is a csv
 func (importFile ImportFile) isCsvExtension(filePath string) bool {
 	return filepath.Ext(filePath) == ".csv"
+}
+
+// check if the file size does not exceed the maximum allowed
+func (handleFile HandleFile) isTheRightSize(filePath string) bool {
+	// max size of the file
+	maxSize := 10
+
+	info, err := os.Stat(filePath)
+	if err != nil {
+	}
+
+	fileSize := info.Size()
+
+	fileGB := helpers.BytesToGB(fileSize)
+
+	if int64(fileGB) < int64(maxSize) {
+		return true
+	}
+	return false
+
 }
