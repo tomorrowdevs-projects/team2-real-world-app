@@ -2,32 +2,34 @@ package file
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath" // check file extension
 	helpers "team2-real-world-app/server/pkg/helpers"
 )
 
-// handle errors
+// InvalidFileExtensionError handle errors
 var (
+
 	ErrInvalidFileExtension = errors.New("the file extension is not .csv")
 	ErrInvalidFileSize      = errors.New("the file size exceeds the maximum allowed")
+
 )
 
-//
-type HandleFile struct {
+
+type ImportFile struct {
 	//fileSplitted type
 }
 
-func GetHandleFile() *HandleFile {
-	return &HandleFile{} // to get the address or a pointer variable
+func NewImportFile() *ImportFile {
+	return &ImportFile{} // to get the address or a pointer variable
 }
 
-// for local testing, waiting to understand type of passed file
-func (handleFile HandleFile) SplitFile(filePath string) error {
+// SplitFile for local testing, waiting to understand type of passed file
+func (importFile ImportFile) SplitFile(filePath string) error {
 
-	if !handleFile.isCsvExtension(filePath) {
-		return ErrInvalidFileExtension
+
+	if !importFile.isCsvExtension(filePath) { // check file extension
+		return InvalidFileExtensionError
 	}
 
 	if !handleFile.isTheRightSize(filePath) {
@@ -35,24 +37,20 @@ func (handleFile HandleFile) SplitFile(filePath string) error {
 	}
 
 	csvFile, err := os.Open(filePath)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Successfully Opened CSV file")
+	defer func(csvFile *os.File) error {
+		return csvFile.Close()
+	}(csvFile)
 
-	// close inside or out?
-	defer csvFile.Close()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 // check if the file is a csv
-func (handleFile HandleFile) isCsvExtension(filePath string) bool {
-	fileExtension := filepath.Ext(filePath)
-
-	if fileExtension == ".csv" {
-		return true
-	}
-	return false
+func (importFile ImportFile) isCsvExtension(filePath string) bool {
+	return filepath.Ext(filePath) == ".csv"
 }
 
 // check if the file size does not exceed the maximum allowed
