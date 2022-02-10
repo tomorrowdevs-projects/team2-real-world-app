@@ -30,7 +30,7 @@ the gloabl variables should be defined at the top of the function
 var IsDisconnectedError = errors.New("database not connected")
 var AlreadyConnectedError = errors.New("database already connected")
 
-func GetDBManager() *DBManager {
+func NewDBManager() *DBManager {
 	return &DBManager{ // to get the address or a pointer variable
 		conn: nil,
 	}
