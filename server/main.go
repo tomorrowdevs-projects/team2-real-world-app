@@ -1,11 +1,20 @@
 package main
 
+import (
+	file "team2-real-world-app/server/pkg/file"
+)
+
 func main() {
+
+	filePath := "C:/Users/Isabel/Desktop/ecommerce.csv"
+
+	importFile := file.NewImportFile()
+	importFile.SplitFile(filePath)
 
 	/*
 		this comment will be removed,
 		at the moment I leave it here so that you all can better understand
-		how to use the structure created in database.cgo
+		how to use the structure created in database.go
 
 		/// LEt's suppose I run Docker in this way:
 		///  docker run  --name db -p 3306:3306 \

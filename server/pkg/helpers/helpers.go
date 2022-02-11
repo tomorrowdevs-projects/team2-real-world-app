@@ -20,3 +20,12 @@ func GetEnv(key string) string {
 
 	return os.Getenv(key)
 }
+
+// function that convert byte into GB
+func BytesToGB(bytes int64) int64 {
+
+	gb := bytes / (1024 * 1024 * 1024)
+
+	return gb
+
+}
