@@ -11,6 +11,7 @@ import (
 var (
 	ErrInvalidFileExtension = errors.New("the file extension is not .csv")
 	ErrInvalidFileSize      = errors.New("the file size exceeds the maximum allowed")
+
 )
 
 type ImportFile struct {
@@ -24,6 +25,7 @@ func NewImportFile() *ImportFile {
 // SplitFile for local testing, waiting to understand type of passed file
 func (importFile ImportFile) SplitFile(filePath string) error {
 
+
 	if !importFile.isCsvExtension(filePath) { // check file extension
 		return ErrInvalidFileExtension
 	}
@@ -32,7 +34,6 @@ func (importFile ImportFile) SplitFile(filePath string) error {
 		return ErrInvalidFileSize
 	}
 
-	////////////////////////////////////////////////
 
 	csvFile, err := os.Open(filePath)
 	defer func(csvFile *os.File) error {
