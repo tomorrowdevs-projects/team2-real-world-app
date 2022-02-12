@@ -1,5 +1,11 @@
+import './dashboard.scss';
+
 const Dashboard = () => {
-  return <h1>Dashboard</h1>;
+  return (
+    <div className='container-dashboard'>
+      <h1>Dashboard</h1>
+    </div>
+  );
 };
 
 export default Dashboard;

@@ -1,5 +1,11 @@
+import './signup.scss';
+
 const Signup = () => {
-  return <h1>Signup</h1>;
+  return (
+    <div className='container-signup'>
+      <h1>Signup</h1>
+    </div>
+  );
 };
 
 export default Signup;
