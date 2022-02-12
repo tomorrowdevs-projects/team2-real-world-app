@@ -1,5 +1,11 @@
+import './queries.scss';
+
 const Queries = () => {
-  return <h1>Queries</h1>;
+  return (
+    <div className='container-queries'>
+      <h1>Queries</h1>
+    </div>
+  );
 };
 
 export default Queries;

@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import Header from './Header';
-import NavApp from './NavApp';
 import Footer from './Footer';
 
 const Layout = () => {
   return (
-    <>
+    <div className='container-main'>
       <Header />
-      <NavApp />
-      <hr />
-      <Outlet />
+      <Container className='container-center'>
+        <Outlet />
+      </Container>
       <Footer />
-    </>
+    </div>
   );
 };
 
