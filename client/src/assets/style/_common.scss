@@ -1,0 +1,17 @@
+/*Containers*/
+.container-main {
+  background: linear-gradient(119.36deg, #90c8f1 0%, #6f6cf5 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.container-center {
+  background-color: cyan;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
