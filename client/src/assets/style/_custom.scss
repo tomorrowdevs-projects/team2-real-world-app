@@ -1,1 +1,25 @@
+$primary: #4765b9;
+$dark: #052c65;
+$border-width: 2px;
+$border-radius: 20px;
+$box-shadow: #00000033 2px 2px 2px 1px;
+$text-shadow: #000000ff 1px 1px 1px;
+
+@mixin bg-header() {
+  background: #6f6cf5;
+  background: linear-gradient(90deg, #6f6cf5c6 0%, #90c8f1 100%);
+  border: {
+    bottom: solid 2px #6f6cf5;
+  }
+}
+
+@mixin bg-footer() {
+  background: rgb(144, 200, 241);
+  background: linear-gradient(
+    90deg,
+    rgba(144, 200, 241, 0.8688992275280899) 0%,
+    rgba(111, 108, 245, 0.7790115870786517) 32%
+  );
+}
+
 @import '~bootstrap/scss/bootstrap';

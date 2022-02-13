@@ -1,3 +1,23 @@
+body {
+  min-width: 340px;
+  color: $blue-800;
+  .container-header {
+    @include bg-header;
+    border: {
+      bottom: solid 2px $blue-800;
+    }
+  }
+  .container-footer {
+    @include bg-footer;
+    border: {
+      top: solid 2px $blue-800;
+    }
+  }
+  h1 {
+    text-shadow: $text-shadow;
+  }
+}
+
 /*Containers*/
 .container-main {
   background: linear-gradient(119.36deg, #90c8f1 0%, #6f6cf5 100%);
@@ -8,10 +28,9 @@
 }
 
 .container-center {
-  background-color: cyan;
+  // background-color: cyan;
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 50vh;
 }
