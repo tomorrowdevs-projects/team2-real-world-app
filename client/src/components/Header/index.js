@@ -1,21 +1,19 @@
-import { useNavigate, Link } from 'react-router-dom';
-import { Container, Row, Col, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import './header.scss';
-import logo from '../../assets/images/logo192.png';
 import Buttons from '../Buttons';
 import { pageLinks, logSignLinks } from '../Buttons/button-list';
 import Menu from '../Menu';
+import Logo from '../Logo.js';
 
-const Header = ({ className }) => {
-  const navigate = useNavigate();
-
+const Header = () => {
   return (
     <div className='container-header'>
       <Container>
         <Row className='gy-3 align-items-center'>
-          <Col className='p-3'>
+          <Col className='p-3 d-flex align-items-center'>
             <Link className='navbar-brand' to='/'>
-              <img alt='' src={logo} width='30' height='30' /> E-Comm App
+              <Logo />
             </Link>
           </Col>
           <Col className='d-none d-lg-block'>

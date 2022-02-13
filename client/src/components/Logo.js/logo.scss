@@ -1,0 +1,20 @@
+#logo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  background-color: #f0ecec;
+  padding: {
+    top: 5px;
+    left: 10px;
+    right: 10px;
+    bottom: 5px;
+  }
+  border-radius: 20px;
+  border: solid 5px #052c65;
+  box-shadow: #00000033 2px 2px 2px 1px;
+  color: #052c65;
+  font-size: 25px;
+  font-weight: 700;
+  text-shadow: #000000ff 1px 1px 1px;
+}
