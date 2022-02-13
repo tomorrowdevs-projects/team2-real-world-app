@@ -1,3 +1,9 @@
 .container-footer {
-  background-color: gray;
+  min-height: 10vh;
+  svg {
+    font-size: 1.6rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
