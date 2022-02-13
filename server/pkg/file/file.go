@@ -9,12 +9,10 @@ import (
 
 // InvalidFileExtensionError handle errors
 var (
-
 	ErrInvalidFileExtension = errors.New("the file extension is not .csv")
 	ErrInvalidFileSize      = errors.New("the file size exceeds the maximum allowed")
 
 )
-
 
 type ImportFile struct {
 	//fileSplitted type
@@ -29,12 +27,13 @@ func (importFile ImportFile) SplitFile(filePath string) error {
 
 
 	if !importFile.isCsvExtension(filePath) { // check file extension
-		return InvalidFileExtensionError
+		return ErrInvalidFileExtension
 	}
 
-	if !handleFile.isTheRightSize(filePath) {
+	if !importFile.isTheRightSize(filePath) {
 		return ErrInvalidFileSize
 	}
+
 
 	csvFile, err := os.Open(filePath)
 	defer func(csvFile *os.File) error {
@@ -54,21 +53,19 @@ func (importFile ImportFile) isCsvExtension(filePath string) bool {
 }
 
 // check if the file size does not exceed the maximum allowed
-func (handleFile HandleFile) isTheRightSize(filePath string) bool {
-	// max size of the file
-	maxSize := 10
+func (importFile ImportFile) isTheRightSize(filePath string) bool {
 
-	info, err := os.Stat(filePath)
+	maxSize := 10 // max size of the file
+
+	info, err := os.Stat(filePath) // returns the FileInfo structure describing file.
+
+	// what is the best way to handle err this situations?
 	if err != nil {
+		//return err
 	}
 
 	fileSize := info.Size()
-
 	fileGB := helpers.BytesToGB(fileSize)
 
-	if int64(fileGB) < int64(maxSize) {
-		return true
-	}
-	return false
-
+	return int64(fileGB) < int64(maxSize)
 }
