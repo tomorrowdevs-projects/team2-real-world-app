@@ -1,5 +1,5 @@
 import { Accordion, Form, Button, Stack } from 'react-bootstrap';
-import SelectAutocomplete from '../../components/SelectAutocomplete.js/SelectAutomplete';
+import SelectAutocomplete from '../../components/SelectAutocomplete/SelectAutomplete';
 import DateRange from '../../components/DataRange/DateRange';
 import AlertMessage from '../../components/AlertMessage/AlertMessage';
 import SearchResult from '../../components/SearchResult/SearchResult';
