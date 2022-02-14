@@ -1,7 +1,7 @@
 export const pageLinks = [
   { label: 'Home', path: '' },
   { label: 'Upload file', path: 'upload' },
-  { label: 'Queries', path: 'queries' },
+  { label: 'Search', path: 'search' },
 ];
 
 export const logSignLinks = [

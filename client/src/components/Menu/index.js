@@ -8,10 +8,10 @@ const Menu = ({ currentUser, handleLogout, path }) => {
   const navigate = useNavigate();
   return (
     <Dropdown>
-      <Dropdown.Toggle variant='primary' id='dropdown-basic'>
+      <Dropdown.Toggle variant='outline-dark' id='dropdown-basic'>
         <img
           src={userIcon}
-          alt='user profile photo'
+          alt='user profile'
           style={{
             height: '40px',
             width: '40px',

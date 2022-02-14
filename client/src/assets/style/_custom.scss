@@ -1,1 +1,26 @@
+/*Bootstrap variables*/
+$primary: #4765b9;
+$dark: #052c65;
+$border-width: 2px;
+$border-radius: 20px;
+$input-group-addon-bg: #90c8f1;
+
+/*Custom variables*/
+$box-shadow: #00000033 2px 2px 2px 1px;
+$text-shadow: #000000ff 1px 1px 1px;
+
+/*Custom mixin*/
+@mixin bg-header() {
+  background: #6f6cf5;
+  background: linear-gradient(90deg, #6f6cf5c6 0%, #90c8f1 100%);
+  border: {
+    bottom: solid 2px #6f6cf5;
+  }
+}
+
+@mixin bg-footer() {
+  background: rgb(144, 200, 241);
+  background: linear-gradient(90deg, #90c8f1de 0%, #6f6cf5c7 32%);
+}
+
 @import '~bootstrap/scss/bootstrap';

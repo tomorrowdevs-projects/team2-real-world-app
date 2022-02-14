@@ -1,10 +1,7 @@
-import './upload-file.scss';
+import UploadFileSection from './UploadFile';
+
 const UploadFile = () => {
-  return (
-    <div className='container-upload-file'>
-      <h1>Upload your file</h1>
-    </div>
-  );
+  return <UploadFileSection />;
 };
 
 export default UploadFile;
