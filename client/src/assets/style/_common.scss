@@ -7,14 +7,29 @@ body {
       bottom: solid 2px $blue-800;
     }
   }
+  main {
+    section {
+      border: {
+        left: $blue-800 solid 3px;
+      }
+      padding: {
+        left: 1rem;
+      }
+      h1 {
+        text-shadow: $text-shadow;
+        margin-bottom: 20px;
+      }
+    }
+    .section-main {
+      margin-left: 20px;
+    }
+  }
+
   .container-footer {
     @include bg-footer;
     border: {
       top: solid 2px $blue-800;
     }
-  }
-  h1 {
-    text-shadow: $text-shadow;
   }
 }
 
@@ -24,13 +39,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .container-center {
-  // background-color: cyan;
   position: relative;
   display: flex;
   justify-content: center;
-  height: 50vh;
+  min-height: 50vh;
+  margin-bottom: 30px;
+  padding-top: 20px;
 }
