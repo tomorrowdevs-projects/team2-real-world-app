@@ -5,7 +5,6 @@ import Home from '../pages/Home';
 import UploadFile from '../pages/UploadFile';
 import Search from '../pages/Search';
 import Login from '../pages/Login';
-import Signup from '../pages/Signup';
 import Dashboard from '../pages/Dashboard';
 import NotFound from '../pages/NotFound';
 
@@ -20,7 +19,6 @@ function App() {
             <Route path='search' element={<Search />} />
           </Route>
           <Route path='login' element={<Login />} />
-          <Route path='signup' element={<Signup />} />
           <Route path='dashboard' element={<Dashboard />} />
         </Route>
         <Route path='*' element={<NotFound />} />
