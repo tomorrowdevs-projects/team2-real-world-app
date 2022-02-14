@@ -3,7 +3,7 @@ import Layout from './Layout';
 import ProtectedRoute from './ProtectedRoute';
 import Home from '../pages/Home';
 import UploadFile from '../pages/UploadFile';
-import Queries from '../pages/Queries';
+import Search from '../pages/Search';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Dashboard from '../pages/Dashboard';
@@ -17,7 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route element={<ProtectedRoute user={true} />}>
             <Route path='upload' element={<UploadFile />} />
-            <Route path='queries' element={<Queries />} />
+            <Route path='search' element={<Search />} />
           </Route>
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
