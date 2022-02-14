@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import './header.scss';
 import Buttons from '../Buttons';
-import { pageLinks, logSignLinks } from '../Buttons/button-list';
+import { pageLinks, logSignLinks } from './button-list';
 import Menu from '../Menu';
 import Logo from '../Logo.js';
 
