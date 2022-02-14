@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import './header.scss';
 import Buttons from '../Buttons';
-import { pageLinks, logSignLinks } from './button-list';
+import { pageLinks } from './button-list';
 import Menu from '../Menu';
 import Logo from '../Logo.js';
 
@@ -23,7 +23,9 @@ const Header = () => {
             xs='auto'
             className=' d-flex justify-content-end align-items-center'
           >
-            <Buttons buttonList={logSignLinks} className='d-none d-lg-block' />
+            <Link to='/login' className='d-none d-lg-block'>
+              <Button variant='outline-dark'>Authenticate</Button>
+            </Link>
             <Menu path='/dashboard' />
           </Col>
         </Row>

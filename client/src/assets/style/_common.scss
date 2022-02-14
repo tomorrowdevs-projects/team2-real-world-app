@@ -21,7 +21,10 @@ body {
       }
     }
     .section-main {
-      margin-left: 20px;
+      margin: {
+        left: 20px;
+        right: 18px;
+      }
     }
   }
 
