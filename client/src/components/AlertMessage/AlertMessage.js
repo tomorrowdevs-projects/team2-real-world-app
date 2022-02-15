@@ -1,36 +1,29 @@
-import { Alert, Spinner, Stack, Row, Col } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
+import './alert-message.scss';
+import { useAppContext } from '../../context/appContext';
 
-const AlertMessage = ({
-  alert,
-  handleAlert,
-  show,
-  message,
-  variant,
-  dismissible,
-  animation,
-}) => {
+const AlertMessage = () => {
+  const { handleAlert, alert } = useAppContext();
+  const { show, message, variant, dismissible, animation } = alert;
   return (
-    <Row className='alert-box'>
-      <Col>
-        <Stack direction='horizontal' gap={3}>
-          {show && (
-            <Alert
-              variant={variant}
-              onClose={() => handleAlert(false)}
-              dismissible={dismissible}
-            >
-              {message}
-              <Spinner
-                className='alert-spinner'
-                animation={animation}
-                size='sm'
-                role='status'
-              ></Spinner>
-            </Alert>
-          )}
-        </Stack>
-      </Col>
-    </Row>
+    <div className='alert-box mt-4 mb-auto d-flex justify-content-center'>
+      {show && (
+        <Alert
+          className='mb-0'
+          variant={variant}
+          onClose={() => handleAlert(false)}
+          dismissible={dismissible}
+        >
+          {message}
+          <Spinner
+            className='alert-spinner ms-2'
+            animation={animation}
+            size='sm'
+            role='status'
+          ></Spinner>
+        </Alert>
+      )}
+    </div>
   );
 };
 
