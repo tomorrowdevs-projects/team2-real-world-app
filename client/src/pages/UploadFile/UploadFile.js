@@ -9,7 +9,7 @@ const UploadFileSection = ({
 }) => {
   return (
     <main>
-      <section>
+      <section className='upload-file-section'>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId='formFileLg'>
             <Form.Label className='mt-2'>
@@ -27,9 +27,11 @@ const UploadFileSection = ({
               height: '2rem',
             }}
           >
-            {progress && (
-              <ProgressBar now={progress} label={`${progress}%`} animated />
-            )}
+            <div className='container-progress d-flex flex-column justify-content-center'>
+              {progress && (
+                <ProgressBar now={progress} label={`${progress}%`} animated />
+              )}
+            </div>
           </div>
           <div className='button-box'>
             <Button variant='primary' type='submit'>

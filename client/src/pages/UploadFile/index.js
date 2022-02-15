@@ -5,7 +5,12 @@ import UploadFileSection from './UploadFile';
 
 const UploadFile = () => {
   const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(null);
   const { handleAlert } = useAppContext();
+
+  useEffect(() => {
+    progress === 100 && setTimeout(() => setProgress(null), 3000);
+  }, [progress, setProgress]);
 
   const handleInputFile = event => {
     setFile(event.target.files[0]);
@@ -26,6 +31,10 @@ const UploadFile = () => {
     const option = {
       headers: {
         'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: data => {
+        //Set the progress value to show the progress bar
+        setProgress(Math.round((100 * data.loaded) / data.total));
       },
     };
 
@@ -49,6 +58,7 @@ const UploadFile = () => {
     <UploadFileSection
       handleInputFile={handleInputFile}
       handleSubmit={handleSubmit}
+      progress={progress}
     />
   );
 };
