@@ -19,7 +19,7 @@ const UploadFileSection = ({
               type='file'
               size='lg'
               onChange={handleInputFile}
-              // accept='.csv'
+              accept='.csv'
             />
           </Form.Group>
           <div
