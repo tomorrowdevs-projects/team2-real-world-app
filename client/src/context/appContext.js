@@ -12,6 +12,7 @@ import { appFirebase } from '../services/auth/firebase-config';
 const AppContext = React.createContext();
 
 const defaultState = {
+  currentUser: null,
   alert: {
     show: false,
     message: '',
@@ -24,6 +25,10 @@ const defaultState = {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
 
+  //Generic dispatch
+  const setDispatch = (type, payload) => {
+    dispatch({ type: type, payload: payload });
+  };
   //Auth
   const auth = getAuth(appFirebase);
 
@@ -35,9 +40,26 @@ export const AppProvider = ({ children }) => {
   const logout = () => {
     return signOut(auth);
   };
-  const handleAlert = (...value) => {
-    dispatch({ type: 'HANDLE_ALERT', payload: value });
-  };
+  useEffect(() => {
+    onAuthStateChanged(auth, userData => {
+      console.log('user:', userData);
+      if (userData) {
+        setDispatch('UPDATE_USER_LOGGED', {
+          accessToken: userData.accessToken,
+          userName: userData.displayName,
+          email: userData.email,
+          photo: userData.photoURL,
+        });
+      } else {
+        setDispatch('UPDATE_USER_LOGGED', null);
+      }
+      setDispatch('SET_LOADING', false);
+    });
+  }, [auth]);
+
+  useEffect(() => {
+    state.currentUser ? console.log('user logged in') : console.log('no user');
+  }, [state.currentUser]);
 
   return (
     <AppContext.Provider
