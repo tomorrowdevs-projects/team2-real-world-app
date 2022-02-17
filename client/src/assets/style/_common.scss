@@ -1,6 +1,19 @@
 body {
   min-width: 340px;
   color: $blue-800;
+  button {
+    height: $btn-height;
+    padding: {
+      left: 20px;
+      right: 20px;
+    }
+  }
+  a,
+  a:link,
+  a:visited {
+    text-decoration: none;
+    color: $dark;
+  }
   .container-header {
     @include bg-header;
     border: {
