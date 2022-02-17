@@ -14,6 +14,9 @@ $ npm install
 # Run the project in dev mode (Webpack Dev Server localhost:3000)
 $ npm start
 
+# Launches the test runner in the interactive watch mode.
+$ npm test
+
 # UPLOAD FILE
 # To change the url POST go to line 58 of the following file:
 client\src\pages\UploadFile\index.js
