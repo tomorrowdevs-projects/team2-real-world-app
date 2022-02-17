@@ -11,4 +11,4 @@ use these:\
 ***
 *** **note** ***:\
 the code samples above will work from the *main.go* script after importing
-the module as `"team2-real-world-app/server/helpers/csvgeneration"`
+the module as `"team2-real-world-app/server/pkg/helpers/csvgeneration"`
