@@ -1,4 +1,5 @@
 import React, { useContext, useReducer, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import reducer from './reducer';
 import {
   getAuth,
@@ -13,6 +14,7 @@ const AppContext = React.createContext();
 
 const defaultState = {
   currentUser: null,
+  isLoading: true,
   alert: {
     show: false,
     message: '',
@@ -25,24 +27,55 @@ const defaultState = {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
 
+  const navigate = useNavigate();
+
   //Generic dispatch
   const setDispatch = (type, payload) => {
     dispatch({ type: type, payload: payload });
   };
+
+  //Alerts
+  const handleAlert = (...value) => {
+    dispatch({ type: 'HANDLE_ALERT', payload: value });
+  };
+
+  useEffect(() => {
+    state.alert.show && setTimeout(() => handleAlert(false), 3000);
+  }, [state.alert.show]);
+
   //Auth
   const auth = getAuth(appFirebase);
 
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
+  const signInWithProvider = authProvider => {
+    handleAlert(false);
+    const provider = new authProvider();
+    signInWithRedirect(auth, provider)
+      .then(navigate('/'))
+      .catch(error =>
+        handleAlert(
+          true,
+          `Sorry, some login problems... ${error.message}`,
+          'danger',
+          false
+        )
+      );
   };
 
   const logout = () => {
-    return signOut(auth);
+    signOut(auth)
+      .then(navigate('/'))
+      .catch(error =>
+        handleAlert(
+          true,
+          `Sorry, some logout problems... ${error.message}`,
+          'danger',
+          false
+        )
+      );
   };
+
   useEffect(() => {
     onAuthStateChanged(auth, userData => {
-      console.log('user:', userData);
       if (userData) {
         setDispatch('UPDATE_USER_LOGGED', {
           accessToken: userData.accessToken,
@@ -58,14 +91,20 @@ export const AppProvider = ({ children }) => {
   }, [auth]);
 
   useEffect(() => {
-    state.currentUser ? console.log('user logged in') : console.log('no user');
+    console.log(state.currentUser);
   }, [state.currentUser]);
 
   return (
     <AppContext.Provider
-      value={{ ...state, signInWithGoogle, logout, handleAlert }}
+      value={{
+        ...state,
+        signInWithProvider,
+        GoogleAuthProvider,
+        logout,
+        handleAlert,
+      }}
     >
-      {children}
+      {state.isLoading ? <h1>Loading...</h1> : children}
     </AppContext.Provider>
   );
 };
