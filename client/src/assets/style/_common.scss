@@ -51,7 +51,7 @@ body {
 
 /*Containers*/
 .container-main {
-  background: linear-gradient(119.36deg, #90c8f1 0%, #6f6cf5 100%);
+  background-image: $bg-gradient-main;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
