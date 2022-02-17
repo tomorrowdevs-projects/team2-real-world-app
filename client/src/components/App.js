@@ -23,7 +23,14 @@ function App() {
         <Route path='login' element={<Login />} />
         <Route path='dashboard' element={<Dashboard />} />
       </Route>
-      <Route path='*' element={<NotFound />} />
+      <Route
+        path='*'
+        element={
+          <Layout dNone='d-none'>
+            <NotFound />
+          </Layout>
+        }
+      />
     </Routes>
   );
 }

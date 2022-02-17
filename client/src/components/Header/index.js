@@ -6,7 +6,7 @@ import Menu from '../Menu';
 import Logo from '../Logo.js';
 import { useAppContext } from '../../context/appContext';
 
-const Header = () => {
+const Header = ({ dNone }) => {
   const { currentUser, logout } = useAppContext();
   const navigate = useNavigate();
 
@@ -22,15 +22,18 @@ const Header = () => {
             <Logo navigate={navigate} to={'/'} />
           </Col>
           <Col
-            className='d-flex justify-content-center py-3'
+            className={`d-flex justify-content-center py-3 ${dNone}`}
             xs={{ order: 3, span: 12 }}
           >
             <Buttons buttonList={pageLinks} />
           </Col>
-          <Col className='d-flex justify-content-end' lg={{ order: 3 }}>
+          <Col
+            className={`d-flex justify-content-end ${dNone}`}
+            lg={{ order: 3 }}
+          >
             {!currentUser && (
               <Button
-                className='d-none d-lg-block me-2'
+                className='d-none d-lg-block me-3'
                 variant='dark'
                 onClick={() => navigate('/login')}
               >

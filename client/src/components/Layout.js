@@ -4,13 +4,13 @@ import Header from './Header';
 import AlertMessage from './AlertMessage/AlertMessage';
 import Footer from './Footer';
 
-const Layout = () => {
+const Layout = ({ dNone, children }) => {
   return (
     <div className='container-main'>
-      <Header />
+      <Header dNone={dNone} />
       <AlertMessage />
       <Container className='container-center'>
-        <Outlet />
+        {children ? children : <Outlet />}
       </Container>
       <Footer />
     </div>
