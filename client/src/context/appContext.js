@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import { appFirebase } from '../services/auth/firebase-config';
+import Loading from '../components/Loading/Loading';
 
 const AppContext = React.createContext();
 
@@ -104,7 +105,7 @@ export const AppProvider = ({ children }) => {
         handleAlert,
       }}
     >
-      {state.isLoading ? <h1>Loading...</h1> : children}
+      {state.isLoading ? <Loading /> : children}
     </AppContext.Provider>
   );
 };
