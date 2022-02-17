@@ -2,7 +2,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsGithub } from 'react-icons/bs';
 import './sign-in-button.scss';
 
-const SignInButton = ({ provider }) => {
+const SignInButton = ({ provider, handleProvider, providerIstance }) => {
   const icon = () => {
     switch (provider) {
       case 'Google':
@@ -17,7 +17,10 @@ const SignInButton = ({ provider }) => {
   };
 
   return (
-    <div className='sign-in-btn d-flex align-items-center mt-2'>
+    <div
+      className='sign-in-btn d-flex align-items-center mt-2'
+      onClick={() => handleProvider(providerIstance)}
+    >
       <div>
         <div className='sign-in-logo mb-1 ps-1 me-3'>{icon()}</div>
       </div>
