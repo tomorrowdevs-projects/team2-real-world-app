@@ -28,17 +28,12 @@ const Menu = ({ currentUser, handleLogout, path }) => {
         <Dropdown.Header>{getData('email')}</Dropdown.Header>
         <NavDropdown.Divider />
         <Dropdown.Item
-          href='#/action-1'
           disabled={currentUser === null}
           onClick={() => navigate(path)}
         >
           <MdSettings className='me-1' /> Account
         </Dropdown.Item>
-        <Dropdown.Item
-          href='#/action-3'
-          disabled={currentUser === null}
-          onClick={handleLogout}
-        >
+        <Dropdown.Item disabled={currentUser === null} onClick={handleLogout}>
           <ImExit className='me-1' />
           Log Out
         </Dropdown.Item>
