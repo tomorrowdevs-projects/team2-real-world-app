@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import Buttons from '../Buttons';
 import { pageLinks } from './button-list';
 import Menu from '../Menu';
-import Logo from '../Logo.js';
+import Logo from '../Logo';
 import { useAppContext } from '../../context/appContext';
 
 const Header = ({ dNone }) => {
