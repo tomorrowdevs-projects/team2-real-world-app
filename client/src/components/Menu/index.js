@@ -14,17 +14,15 @@ const Menu = ({ currentUser, handleLogout, path }) => {
       <Dropdown.Toggle variant='outline-dark' id='dropdown-user'>
         <img
           src={getUserData(currentUser, 'photo', userIcon)}
-          alt='user profile'
+          alt={getUserData(currentUser, 'userName')}
           className='user-photo'
         />
       </Dropdown.Toggle>
       <Dropdown.Menu align='end'>
         <Dropdown.Header>
-          {getUserData(currentUser, 'userName', userIcon)}
+          {getUserData(currentUser, 'userName')}
         </Dropdown.Header>
-        <Dropdown.Header>
-          {getUserData(currentUser, 'email', userIcon)}
-        </Dropdown.Header>
+        <Dropdown.Header>{getUserData(currentUser, 'email')}</Dropdown.Header>
         <NavDropdown.Divider />
         <Dropdown.Item
           disabled={currentUser === null}

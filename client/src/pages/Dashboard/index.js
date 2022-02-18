@@ -15,7 +15,7 @@ const Dashboard = () => {
           <h1>Dashboard</h1>
           <img
             src={getUserData(currentUser, 'photo', userIcon)}
-            alt='user profile'
+            alt={getUserData(currentUser, 'userName')}
             className='user-photo'
           />
         </Card.Header>
