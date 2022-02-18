@@ -1,7 +1,7 @@
 const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
-    case 'UPDATE_USER_LOGGED':
+    case 'UPDATE_USER_DATA':
       return {
         ...state,
         currentUser: payload,

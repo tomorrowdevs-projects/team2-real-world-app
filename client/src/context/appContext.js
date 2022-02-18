@@ -4,7 +4,7 @@ import reducer from './reducer';
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithRedirect,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -50,42 +50,58 @@ export const AppProvider = ({ children }) => {
   const signInWithProvider = authProvider => {
     handleAlert(false);
     const provider = new authProvider();
-    signInWithRedirect(auth, provider)
-      .then(navigate('/'))
-      .catch(error =>
+    signInWithPopup(auth, provider)
+      .then(result => {
+        const credential = authProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        setDispatch('UPDATE_USER_DATA', {
+          accessToken: token,
+          userName: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        });
+        navigate('/');
+      })
+      .catch(error => {
         handleAlert(
           true,
-          `Sorry, some login problems... ${error.message}`,
+          'Sorry, login problems, please try again.',
           'danger',
           false
-        )
-      );
+        );
+        console.log('Login error: ', error);
+      });
   };
 
   const logout = () => {
     signOut(auth)
-      .then(navigate('/'))
-      .catch(error =>
+      .then(
+        setDispatch('SET_LOADING', true),
+        setDispatch('UPDATE_USER_DATA', null),
+        navigate('/')
+      )
+      .catch(error => {
         handleAlert(
           true,
-          `Sorry, some logout problems... ${error.message}`,
+          'Sorry, logout problems, please try again.',
           'danger',
           false
-        )
-      );
+        );
+        console.log('Logout error: ', error);
+      });
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, userData => {
+      console.log(userData);
       if (userData) {
-        setDispatch('UPDATE_USER_LOGGED', {
+        setDispatch('UPDATE_USER_DATA', {
           accessToken: userData.accessToken,
           userName: userData.displayName,
           email: userData.email,
           photo: userData.photoURL,
         });
-      } else {
-        setDispatch('UPDATE_USER_LOGGED', null);
       }
       setDispatch('SET_LOADING', false);
     });
