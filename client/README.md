@@ -1,3 +1,6 @@
+  <p>Deploy:
+  <a href="https://x-comm-app.netlify.app/">x-comm-app.netlify.app/</a>
+
 ## :pushpin: Requirements
 
 Before starting, you need to have [Node](https://nodejs.org/en/) installed.
