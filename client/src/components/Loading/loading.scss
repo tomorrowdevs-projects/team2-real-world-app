@@ -1,0 +1,13 @@
+@import '../../assets/style/custom';
+
+.container-center {
+  .spinner-border {
+    background-image: $bg-gradient-main;
+    border-right-color: unset;
+    width: 100px;
+    height: 100px;
+    color: $info;
+    animation: 0.4s linear infinite spinner-border;
+    margin-top: 10vh;
+  }
+}

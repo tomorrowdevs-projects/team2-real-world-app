@@ -2,36 +2,35 @@ import { useNavigate } from 'react-router';
 import { Dropdown, NavDropdown } from 'react-bootstrap';
 import { ImExit } from 'react-icons/im';
 import { MdSettings } from 'react-icons/md';
+import './menu.scss';
 import userIcon from '../../assets/images/user-icon.png';
+import { getUserData } from '../../assets/scripts/utils/dataManagement';
 
 const Menu = ({ currentUser, handleLogout, path }) => {
   const navigate = useNavigate();
+
   return (
     <Dropdown>
-      <Dropdown.Toggle variant='outline-dark' id='dropdown-basic'>
+      <Dropdown.Toggle variant='outline-dark' id='dropdown-user'>
         <img
-          src={userIcon}
-          alt='user profile'
-          style={{
-            height: '40px',
-            width: '40px',
-            borderRadius: '50%',
-            marginRight: '3px',
-          }}
+          src={getUserData(currentUser, 'photo', userIcon)}
+          alt={getUserData(currentUser, 'userName')}
+          className='user-photo'
         />
       </Dropdown.Toggle>
       <Dropdown.Menu align='end'>
-        <Dropdown.Header></Dropdown.Header>
-        <Dropdown.Header></Dropdown.Header>
+        <Dropdown.Header>
+          {getUserData(currentUser, 'userName')}
+        </Dropdown.Header>
+        <Dropdown.Header>{getUserData(currentUser, 'email')}</Dropdown.Header>
         <NavDropdown.Divider />
-        <Dropdown.Item href='#/action-1' onClick={() => navigate(path)}>
+        <Dropdown.Item
+          disabled={currentUser === null}
+          onClick={() => navigate(path)}
+        >
           <MdSettings className='me-1' /> Account
         </Dropdown.Item>
-        <Dropdown.Item
-          href='#/action-3'
-          disabled={!currentUser}
-          onClick={handleLogout}
-        >
+        <Dropdown.Item disabled={currentUser === null} onClick={handleLogout}>
           <ImExit className='me-1' />
           Log Out
         </Dropdown.Item>

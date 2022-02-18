@@ -1,6 +1,6 @@
 @import '../../assets/style/custom';
 
-.container-home {
+.container-not-found {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -9,14 +9,18 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('../../assets/images/bg-home.jpg');
+    background-image: url('../../assets/images/bg-not-found.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position-y: center;
     opacity: 0.2;
     width: 100%;
     height: 100%;
     z-index: -1;
     border-radius: $border-radius;
+    background-position-x: left;
+    background-size: cover;
+    @media all and (min-width: 768px) {
+      background-position-x: right;
+      background-size: contain;
+    }
   }
 }

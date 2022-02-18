@@ -6,7 +6,7 @@ const AlertMessage = () => {
   const { handleAlert, alert } = useAppContext();
   const { show, message, variant, dismissible, animation } = alert;
   return (
-    <div className='alert-box mt-4 mb-auto d-flex justify-content-center'>
+    <div className='alert-box mt-3 mb-0 mx-auto'>
       {show && (
         <Alert
           className='mb-0'

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import ProtectedRoute from './ProtectedRoute';
 import Home from '../pages/Home';
@@ -7,23 +7,31 @@ import Search from '../pages/Search';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
 import NotFound from '../pages/NotFound';
+import { useAppContext } from '../context/appContext';
 
 function App() {
+  const { currentUser } = useAppContext();
+
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route element={<ProtectedRoute user={true} />}>
-            <Route path='upload' element={<UploadFile />} />
-            <Route path='search' element={<Search />} />
-          </Route>
-          <Route path='login' element={<Login />} />
-          <Route path='dashboard' element={<Dashboard />} />
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route element={<ProtectedRoute user={currentUser} />}>
+          <Route path='upload' element={<UploadFile />} />
+          <Route path='search' element={<Search />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </Router>
+        <Route path='login' element={<Login />} />
+        <Route path='dashboard' element={<Dashboard />} />
+      </Route>
+      <Route
+        path='*'
+        element={
+          <Layout dNone='d-none'>
+            <NotFound />
+          </Layout>
+        }
+      />
+    </Routes>
   );
 }
 

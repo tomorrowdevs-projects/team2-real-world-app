@@ -1,0 +1,17 @@
+#dropdown-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: {
+    top: 1px;
+    right: 7px;
+    bottom: 0;
+    left: 7px;
+  }
+  min-width: 90px;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+  }
+}

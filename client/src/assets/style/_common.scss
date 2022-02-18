@@ -1,6 +1,19 @@
 body {
   min-width: 340px;
   color: $blue-800;
+  button {
+    height: $btn-height;
+    padding: {
+      left: 20px;
+      right: 20px;
+    }
+  }
+  a,
+  a:link,
+  a:visited {
+    text-decoration: none;
+    color: $dark;
+  }
   .container-header {
     @include bg-header;
     border: {
@@ -38,7 +51,7 @@ body {
 
 /*Containers*/
 .container-main {
-  background: linear-gradient(119.36deg, #90c8f1 0%, #6f6cf5 100%);
+  background-image: $bg-gradient-main;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,6 +63,6 @@ body {
   display: flex;
   justify-content: center;
   min-height: 50vh;
-  margin-bottom: 30px;
+  margin-bottom: auto;
   padding-top: 20px;
 }
