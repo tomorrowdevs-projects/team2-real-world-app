@@ -24,7 +24,7 @@ func UploadFile(c *gin.Context) {
 	// logging successful reception of the file
 	log.Println("file received: " + header.Filename)
 
-	// error check on file extension  (temporarily here, will be externalized with a function)
+	// file extension check (NOTE: temporarily here, will be externalized invoking check function)
 	if filepath.Ext(header.Filename) != ".csv" {
 		extensionError := model.Error{ErrorType: "file error", Message: "file extension must be .csv"}
 		c.IndentedJSON(http.StatusBadRequest, extensionError)
@@ -53,18 +53,3 @@ func UploadFile(c *gin.Context) {
 //	c.IndentedJSON(http.StatusBadRequest, fileReadingError)
 //}
 //log.Println("successfully opened reader on received file")
-
-//// **** code to read content line by line
-//var line []string
-//
-//for {
-//	// reading content line by line
-//	line, err = reader.Read()
-//	if err != nil {
-//		break
-//	}
-//	for _, s := range line {
-//		fmt.Println(s)
-//	}
-//	println() // used as a separator between entries
-//}
