@@ -6,23 +6,34 @@ $border-radius: 20px;
 $input-group-addon-bg: #90c8f1;
 
 /*Custom variables*/
-$bg-gradient-main: linear-gradient(119.36deg, #90c8f1 0%, #6f6cf5 100%);
+$gradient-start: #6f6cf5;
+$gradient-end: #90c8f1;
+$bg-gradient-main: linear-gradient(
+  119.36deg,
+  $gradient-end 0%,
+  $gradient-start 100%
+);
 $btn-height: 45px;
 $box-shadow: #00000033 2px 2px 2px 1px;
 $text-shadow: #000000ff 1px 1px 1px;
 
 /*Custom mixin*/
 @mixin bg-header() {
-  background-color: #6f6cf5;
-  background-image: linear-gradient(90deg, #6f6cf5c6 0%, #90c8f1 100%);
-  border: {
-    bottom: solid 2px #6f6cf5;
-  }
+  background-color: $gradient-start;
+  background-image: linear-gradient(
+    90deg,
+    $gradient-start 0%,
+    $gradient-end 100%
+  );
 }
 
 @mixin bg-footer() {
-  background-color: rgb(144, 200, 241);
-  background-image: linear-gradient(90deg, #90c8f1de 0%, #6f6cf5c7 32%);
+  background-color: $gradient-end;
+  background-image: linear-gradient(
+    90deg,
+    $gradient-end 0%,
+    $gradient-start 32%
+  );
 }
 
 @import '~bootstrap/scss/bootstrap';
