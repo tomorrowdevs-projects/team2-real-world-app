@@ -24,9 +24,8 @@ func UploadFile(c *gin.Context) {
 	// logging successful reception of the file
 	log.Println("file received: " + header.Filename)
 
-	// error check on file extension
-	fileExtension := filepath.Ext(header.Filename)
-	if fileExtension != ".csv" {
+	// error check on file extension  (temporarily here, will be externalized with a function)
+	if filepath.Ext(header.Filename) != ".csv" {
 		extensionError := model.Error{ErrorType: "file error", Message: "file extension must be .csv"}
 		c.IndentedJSON(http.StatusBadRequest, extensionError)
 	}
@@ -38,7 +37,7 @@ func UploadFile(c *gin.Context) {
 	//	fileFormatError := model.Error{ErrorType: "file error", Message: "1 or more entries do not respect the db structure"}
 	//	c.AbortWithStatusJSON(http.StatusBadRequest, fileFormatError)
 	//}
-	//log.Println("entries saved in struct !")
+	//log.Println("entries saved in struct !") // spew.Dump(entries) to show them
 	//// **** TODO invoke function to write entries to DB ****
 
 	// response status for successful upload
