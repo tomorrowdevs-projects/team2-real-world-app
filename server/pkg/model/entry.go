@@ -2,6 +2,8 @@ package model
 
 import "gorm.io/gorm"
 
+// NOTE: only for TESTING/POC PURPOSE (it reflects the exact structure of the CSV
+
 type Entry struct {
 	gorm.Model
 	OrderID   int     `csv:"orderID"`
