@@ -15,6 +15,7 @@ const AppContext = React.createContext();
 
 const defaultState = {
   currentUser: null,
+  isFileUploaded: false,
   isLoading: true,
   alert: {
     show: false,
@@ -43,6 +44,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     state.alert.show && setTimeout(() => handleAlert(false), 3000);
   }, [state.alert.show]);
+
+  useEffect(() => {
+    console.log('File uploaded?', state.isFileUploaded);
+    !state.currentUser && setDispatch('FILE_UPLOADED', false);
+  }, [state.isFileUploaded, state.currentUser]);
 
   //Auth
   const auth = getAuth(appFirebase);
@@ -118,6 +124,7 @@ export const AppProvider = ({ children }) => {
         signInWithProvider,
         GoogleAuthProvider,
         logout,
+        setDispatch,
         handleAlert,
       }}
     >

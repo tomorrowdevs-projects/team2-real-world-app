@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import ProtectedRoute from './ProtectedRoute';
+import ProtectedRouteSearch from './ProtectedRouteSearch';
 import Home from '../pages/Home';
 import UploadFile from '../pages/UploadFile';
 import Search from '../pages/Search';
@@ -10,7 +11,7 @@ import NotFound from '../pages/NotFound';
 import { useAppContext } from '../context/appContext';
 
 function App() {
-  const { currentUser } = useAppContext();
+  const { currentUser, isFileUploaded } = useAppContext();
 
   return (
     <Routes>
@@ -18,6 +19,15 @@ function App() {
         <Route index element={<Home />} />
         <Route element={<ProtectedRoute user={currentUser} />}>
           <Route path='upload' element={<UploadFile />} />
+        </Route>
+        <Route
+          element={
+            <ProtectedRouteSearch
+              user={currentUser}
+              fileUpload={isFileUploaded}
+            />
+          }
+        >
           <Route path='search' element={<Search />} />
         </Route>
         <Route path='login' element={<Login />} />

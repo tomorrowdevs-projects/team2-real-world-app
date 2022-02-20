@@ -6,7 +6,7 @@ import UploadFileSection from './UploadFile';
 const UploadFile = () => {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
-  const { handleAlert } = useAppContext();
+  const { handleAlert, setDispatch, isFileUploaded } = useAppContext();
 
   //Cancel file upload
   const cancelFileUpload = useRef(null);
@@ -14,7 +14,7 @@ const UploadFile = () => {
 
   //Hide the progress bar at the end of the upload
   useEffect(() => {
-    progress === 100 && setTimeout(() => setProgress(null), 3000);
+    progress === 100 && setTimeout(() => setProgress(null), 500);
   }, [progress, setProgress]);
 
   const handleInputFile = event => {
@@ -26,7 +26,7 @@ const UploadFile = () => {
     event.preventDefault();
 
     if (!file) {
-      handleAlert(true, 'Please, choose a file first.', 'danger', true);
+      handleAlert(true, 'Please, choose a file first.', 'danger');
       return;
     }
     const fileData = new FormData();
@@ -58,6 +58,7 @@ const UploadFile = () => {
       .post('//localhost:8080/upload', fileData, option)
       .then(response => {
         console.log(response);
+        setDispatch('FILE_UPLOADED', true);
         handleAlert(true, `File was uploaded succesfully`, 'success', false);
       })
       .catch(error => {
@@ -83,6 +84,7 @@ const UploadFile = () => {
       handleSubmit={handleSubmit}
       progress={progress}
       cancelUpload={cancelUpload}
+      isFileUploaded={isFileUploaded}
     />
   );
 };

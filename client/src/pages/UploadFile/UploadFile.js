@@ -6,6 +6,7 @@ const UploadFileSection = ({
   handleSubmit,
   handleInputFile,
   cancelUpload,
+  isFileUploaded,
 }) => {
   return (
     <main>
@@ -35,13 +36,20 @@ const UploadFileSection = ({
             </div>
           </div>
           <div className='button-box'>
-            <Button variant='primary' type='submit' disabled={progress}>
+            <Button
+              variant='primary'
+              type='submit'
+              disabled={progress || isFileUploaded}
+            >
               Upload
             </Button>
             {progress && progress < 100 && (
               <Button variant='outline-primary' onClick={() => cancelUpload()}>
                 Cancel
               </Button>
+            )}
+            {isFileUploaded && (
+              <h2 className='pt-2 fst-italic'>File already uploaded</h2>
             )}
           </div>
         </Form>

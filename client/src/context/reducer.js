@@ -6,6 +6,11 @@ const reducer = (state, action) => {
         ...state,
         currentUser: payload,
       };
+    case 'FILE_UPLOADED':
+      return {
+        ...state,
+        isFileUploaded: payload,
+      };
     case 'SET_LOADING':
       return {
         ...state,
