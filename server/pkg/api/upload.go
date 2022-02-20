@@ -17,7 +17,8 @@ func UploadFile(c *gin.Context) {
 	file, header, err := c.Request.FormFile("file")
 	if err != nil {
 		formError := model.Error{ErrorType: "request form error", Message: "request form key not valid"}
-		c.IndentedJSON(http.StatusBadRequest, formError)
+		c.AbortWithStatusJSON(http.StatusBadRequest, formError)
+		return
 	}
 	defer file.Close()
 
@@ -27,7 +28,8 @@ func UploadFile(c *gin.Context) {
 	// file extension check (NOTE: temporarily here, will be externalized invoking check function)
 	if filepath.Ext(header.Filename) != ".csv" {
 		extensionError := model.Error{ErrorType: "file error", Message: "file extension must be .csv"}
-		c.IndentedJSON(http.StatusBadRequest, extensionError)
+		c.AbortWithStatusJSON(http.StatusBadRequest, extensionError)
+		return
 	}
 
 	//// uncomment this to save csv entries into struct Entry (NOTE: slow with millions entries)
