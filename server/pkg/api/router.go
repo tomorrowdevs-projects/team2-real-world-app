@@ -16,7 +16,7 @@ func Router() {
 	// linking paths to api handlers
 	router.POST("/upload", UploadFile)
 	router.GET("/products", GetProducts)
-	router.GET("/products/revenue", GetOrdersAndRevenue)
+	router.GET("/product_metrics", GetOrdersAndRevenue)
 
 	// launching server
 	err := router.Run("localhost:8080")
