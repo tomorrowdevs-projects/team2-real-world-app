@@ -20,6 +20,7 @@ const UploadFileSection = ({
               size='lg'
               onChange={handleInputFile}
               accept='.csv'
+              disabled={progress}
             />
           </Form.Group>
           <div
@@ -34,7 +35,7 @@ const UploadFileSection = ({
             </div>
           </div>
           <div className='button-box'>
-            <Button variant='primary' type='submit'>
+            <Button variant='primary' type='submit' disabled={progress}>
               Upload
             </Button>
             {progress && progress < 100 && (
