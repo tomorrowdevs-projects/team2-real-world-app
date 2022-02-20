@@ -32,10 +32,10 @@ func TestProducts(t *testing.T) {
 		Header: make(http.Header),
 	}
 
-	// Check if the response status code is 200.
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("Returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	// Check if the response status code is 200 or 400.
+	if status := rr.Code; (status != http.StatusOK) && (status != http.StatusBadRequest) {
+		t.Errorf("Returned wrong status code: got %v want %v or %v",
+			status, http.StatusOK, http.StatusBadRequest)
 	}
 
 	// Check if the response JSON structure is correct.
