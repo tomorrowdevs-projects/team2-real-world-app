@@ -9,16 +9,25 @@ const Home = () => {
   return (
     <main className='container-home d-flex align-items-center'>
       <section className='section-main'>
-        <h1>X-Comm App improves your business</h1>
-        <h3 className='fst-italic mb-3'>Try our services</h3>
-        <p>
-          <Link to={'/upload'}>Upload of large order lists</Link>
-        </p>
-        <p>
-          <Link to={'/search'}>
-            Consultation and statistics of the uploaded data
+        <h1>X-Comm App services</h1>
+        <div className='info-app'>
+          <Link to={'/upload'}>
+            <h3>Upload file</h3>
+            <p>Upload of large order lists, via a .csv file than 2GB</p>{' '}
           </Link>
-        </p>
+        </div>
+        <div className='info-app'>
+          <Link to={'/search'}>
+            <h3>Search</h3>
+            <p>Consultation and statistics of the uploaded data</p>
+          </Link>
+        </div>
+        <div className='info-app'>
+          <Link to={'/login'}>
+            <h3>Data security</h3>
+            <p>Access to data only with authentication</p>
+          </Link>
+        </div>
         {!currentUser && (
           <div className='d-flex justify-content-start d-lg-none mt-4'>
             <Link to='/login'>

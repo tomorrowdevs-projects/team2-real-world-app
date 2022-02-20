@@ -21,6 +21,10 @@ body {
     }
   }
   main {
+    padding: {
+      top: 0.5rem;
+      bottom: 0.5rem;
+    }
     section {
       border: {
         left: $blue-800 solid 3px;
@@ -45,6 +49,9 @@ body {
     @include bg-footer;
     border: {
       top: solid 2px $blue-800;
+    }
+    margin: {
+      top: 1rem;
     }
   }
 }
