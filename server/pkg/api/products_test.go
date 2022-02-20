@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestProducts(t *testing.T) {
+func TestGetProducts(t *testing.T) {
 
 	type Products struct {
 		ID   int
