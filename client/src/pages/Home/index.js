@@ -11,21 +11,19 @@ const Home = () => {
       <section className='section-main'>
         <h1>X-Comm App services</h1>
         <div className='info-app'>
+          <h3>Data security</h3>
+          <p>Access to data only with authentication</p>
+        </div>
+        <div className='info-app info-link'>
           <Link to={'/upload'}>
             <h3>Upload file</h3>
             <p>Upload of large order lists, via a .csv file than 2GB</p>{' '}
           </Link>
         </div>
-        <div className='info-app'>
+        <div className='info-app info-link'>
           <Link to={'/search'}>
             <h3>Search</h3>
             <p>Consultation and statistics of the uploaded data</p>
-          </Link>
-        </div>
-        <div className='info-app'>
-          <Link to={'/login'}>
-            <h3>Data security</h3>
-            <p>Access to data only with authentication</p>
           </Link>
         </div>
         {!currentUser && (
