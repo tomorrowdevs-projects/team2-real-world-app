@@ -5,7 +5,7 @@ export const searchList = [
     responseLabel: ['Product Name', 'Total orders', 'Revenue'],
   },
   {
-    label: 'Number of customenrs by date',
+    label: 'Number of customers by date',
     select: false,
     responseLabel: 'Customers',
   },

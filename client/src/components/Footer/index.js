@@ -12,7 +12,7 @@ const Footer = () => {
     <footer className='container-footer d-flex align-items-center'>
       <Container>
         <div className='d-sm-flex justify-content-between text-center'>
-          <span>© 2021 Company, Inc. All rights reserved.</span>
+          <span>© 2022 Company, Inc. All rights reserved.</span>
           <div className='social-icon'>
             <AiFillGithub />
             <AiFillLinkedin />

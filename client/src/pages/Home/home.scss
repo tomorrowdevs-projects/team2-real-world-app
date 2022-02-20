@@ -19,4 +19,20 @@
     z-index: -1;
     border-radius: $border-radius;
   }
+  .info-app {
+    padding: {
+      top: 3px;
+      left: 15px;
+      right: 15px;
+    }
+  }
+  .info-link {
+    width: fit-content;
+    border-radius: $border-radius;
+    &:hover {
+      background-color: #90c9f128;
+      box-shadow: $box-shadow;
+      transform: scale(1.03);
+    }
+  }
 }
