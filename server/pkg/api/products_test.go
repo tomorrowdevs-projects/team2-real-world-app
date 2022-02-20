@@ -2,8 +2,10 @@ package api
 
 import (
 	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
 )
 
@@ -20,9 +22,15 @@ func TestProducts(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// Set the header request
+	req.Header.Set("Content-Type", "application/json")
+
 	// Create a new recorder to record the response received by the /products endpoint.
 	rr := httptest.NewRecorder()
-	GetProducts(rr, req)
+	ctx, _ := gin.CreateTestContext(rr)
+	ctx.Request = &http.Request{
+		Header: make(http.Header),
+	}
 
 	// Check if the response status code is 200.
 	if status := rr.Code; status != http.StatusOK {
@@ -30,18 +38,18 @@ func TestProducts(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	// Check if the (static) response body is what we expect.
-	expected := []Products{
-		{ID: 1, Name: "Remote Tuner"},
-		{ID: 2, Name: "Direct Case"},
-		{ID: 3, Name: "Audible Bridge"},
-	}
-	jsonExpected, _ := json.Marshal(expected)
+	// Check if the response JSON structure is correct.
+	var products []Products
+	json.Unmarshal(rr.Body.Bytes(), &products)
 
-	jsonBody := rr.Body.String()
-
-	if jsonBody != string(jsonExpected) {
-		t.Errorf("Returned an unexpected body: got %v want %v",
-			rr.Body.String(), string(jsonExpected))
+	for i := 0; i < len(products); i++ {
+		if reflect.TypeOf(products[i].ID) != (reflect.TypeOf(0)) {
+			t.Errorf("Returned an unexpected ID (see line %v)", i)
+			break
+		} else if reflect.TypeOf(products[i].Name) != (reflect.TypeOf("string")) {
+			t.Errorf("Returned an unexpected Name (see line %v)", i)
+			break
+		}
 	}
+
 }
