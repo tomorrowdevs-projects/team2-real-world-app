@@ -55,22 +55,19 @@ const UploadFile = () => {
     };
 
     axios
-      .post('//localhost:8000/upload', fileData, option)
+      .post('//localhost:8080/upload', fileData, option)
       .then(response => {
-        handleAlert(
-          true,
-          `File ${response.data.filename.slice(14)} loaded successfully`,
-          'success',
-          false
-        );
+        console.log(response);
+        handleAlert(true, `File was uploaded succesfully`, 'success', false);
       })
       .catch(error => {
+        console.log(error.response);
         if (isCancel(error)) {
           console.log('Request cancelled successfully.');
-          handleAlert(true, 'File upload is canceled', 'danger', true);
+          handleAlert(true, 'File upload is canceled', 'danger');
           return;
         }
-        handleAlert(true, `Sorry... ${error}`, 'danger', true);
+        handleAlert(true, `Something went wrong, please try again`, 'danger');
       });
   };
   const cancelUpload = () => {
