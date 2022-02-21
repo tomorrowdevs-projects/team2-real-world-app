@@ -25,10 +25,10 @@ const Search = () => {
     responseReady,
     response,
     //url
-    urlGetProduct,
-    //localUrlGetProduct,
-    urlGetProduct_Metrics,
-    //localUrlProduct_metrics,
+    //urlGetProduct,
+    localUrlGetProduct,
+    //urlGetProduct_Metrics,
+    localUrlProduct_metrics,
     urlGetCustomers,
     urlGetAverage,
     urlCurrent,
@@ -53,7 +53,7 @@ const Search = () => {
   useEffect(() => {
     const getProductList = async () => {
       try {
-        const FetchResponse = await fetch(urlGetProduct);
+        const FetchResponse = await fetch(localUrlGetProduct);
         if (FetchResponse.ok) {
           const fetchData = await FetchResponse.json();
           const formattedList = [];
@@ -78,7 +78,7 @@ const Search = () => {
     if (showProductList) {
       getProductList();
     }
-  }, [setDispatch, showProductList, urlGetProduct]);
+  }, [setDispatch, showProductList, localUrlGetProduct]);
 
   //Fetch query data
   useEffect(() => {
@@ -197,7 +197,7 @@ const Search = () => {
             start_date: dateFrom,
             end_date: dateTo,
           });
-          setDispatch('SET_CURRENT_URL', urlGetProduct_Metrics);
+          setDispatch('SET_CURRENT_URL', localUrlProduct_metrics);
           setDispatch('SET_QUERY_PARAM_READY', true);
         } else {
           handleAlertSearch(true, 'Please, select a product.', 'danger', false);
