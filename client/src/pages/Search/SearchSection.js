@@ -1,10 +1,13 @@
 import { Accordion, Form, Button, Stack } from 'react-bootstrap';
 import SelectAutocomplete from '../../components/SelectAutocomplete/SelectAutomplete';
 import DateRange from '../../components/DataRange/DateRange';
-import AlertMessage from '../../components/AlertMessage/AlertMessage';
 import SearchResult from '../../components/SearchResult/SearchResult';
+import AlertMessageSearch from '../../components/AlertMessageSearch/AlertMessageSearch';
 
 const SearchSection = ({
+  //Alert
+  alertSearch,
+  handleAlertSearch,
   //List for render accordion items
   searchList,
 
@@ -12,13 +15,9 @@ const SearchSection = ({
   handleLabelClick,
 
   //react-select control
-  setInput,
-  setSelected,
-
-  handleSubmit,
-
-  //Search alert
-  handleAccordion,
+  productList,
+  //setInput,
+  setProductSelected,
 
   //Date Component control
   dateFrom,
@@ -26,22 +25,24 @@ const SearchSection = ({
   dateTo,
   setDateTo,
 
-  //Context
-  productList,
+  //Queries
   responseReady,
   response,
-  alertSearch,
-  handleAlertSearch,
+
+  //Search alert and submit
+  handleAccordionAlert,
+  handleSubmit,
 }) => {
   return (
     <main>
       <section>
         <h1>Search data</h1>
         <div className='forms-search'>
-          <Accordion onSelect={handleAccordion}>
+          <Accordion onSelect={handleAccordionAlert}>
             {searchList.map((item, index) => {
               return (
                 <Accordion.Item
+                  eventKey={index}
                   onClick={event =>
                     event.target.innerHTML === searchList[0].label &&
                     handleLabelClick()
@@ -51,12 +52,12 @@ const SearchSection = ({
                 >
                   <Accordion.Header>{item.label}</Accordion.Header>
                   <Accordion.Body>
-                    <Form id='search-form-product' onSubmit={handleSubmit}>
+                    <Form id={item.formId} onSubmit={handleSubmit}>
                       {item.select && (
                         <SelectAutocomplete
                           options={productList}
-                          setInput={setInput}
-                          setSelected={setSelected}
+                          // setInput={setInput}
+                          setProductSelected={setProductSelected}
                         />
                       )}
                       <DateRange
@@ -66,7 +67,7 @@ const SearchSection = ({
                         setDateTo={setDateTo}
                       />
                       <Stack className='mt-4' direction='horizontal' gap={3}>
-                        <AlertMessage
+                        <AlertMessageSearch
                           alert={alertSearch}
                           handleAlert={handleAlertSearch}
                         />
