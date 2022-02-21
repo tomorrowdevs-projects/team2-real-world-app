@@ -45,7 +45,7 @@ const defaultState = {
     animation: '',
   },
   //Url
-  localUrlGetProduct: 'http://localhost:8080/product',
+  localUrlGetProduct: 'http://localhost:8080/products',
   urlGetProduct: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
   localUrlProduct_metrics: 'http://localhost:8080/product_metrics',
   urlGetProduct_Metrics:

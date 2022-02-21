@@ -2,7 +2,6 @@ package main
 
 import (
 	"team2-real-world-app/server/pkg/api"
-	file "team2-real-world-app/server/pkg/file"
 )
 
 func main() {
@@ -13,11 +12,6 @@ func main() {
 	if err != nil {
 		return
 	}
-
-	filePath := "C:/Users/Isabel/Desktop/ecommerce.csv"
-
-	importFile := file.NewImportFile()
-	importFile.SplitFile(filePath)
 
 	/*
 		this comment will be removed,
