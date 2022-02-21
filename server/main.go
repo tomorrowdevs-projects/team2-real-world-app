@@ -1,10 +1,18 @@
 package main
 
 import (
+	"team2-real-world-app/server/pkg/api"
 	file "team2-real-world-app/server/pkg/file"
 )
 
 func main() {
+
+	// launching server
+	router := api.Router()
+	err := router.Run("localhost:8080")
+	if err != nil {
+		return
+	}
 
 	filePath := "C:/Users/Isabel/Desktop/ecommerce.csv"
 
