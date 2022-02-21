@@ -5,7 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Router() {
+func Router() *gin.Engine {
+
 	router := gin.Default()
 
 	// enabling CORS
@@ -18,9 +19,5 @@ func Router() {
 	router.GET("/products", GetProducts)
 	router.GET("/product_metrics", GetOrdersAndRevenue)
 
-	// launching server
-	err := router.Run("localhost:8080")
-	if err != nil {
-		return
-	}
+	return router
 }
