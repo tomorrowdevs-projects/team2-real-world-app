@@ -66,19 +66,27 @@ const Search = () => {
           });
           setDispatch('SET_PRODUCT_LIST', formattedList);
         } else {
+          handleAlertSearch(
+            true,
+            'Sorry, there are no products at the moment.',
+            'danger',
+            false
+          );
           throw new Error('Sorry, no order data.');
         }
       } catch (error) {
+        handleAlertSearch(true, 'Sorry, network error...', 'Danger');
         console.log(error);
       } finally {
         setDispatch('SHOW_PRODUCT_LIST', false);
+        handleAlertSearch(false);
       }
     };
 
     if (showProductList) {
       getProductList();
     }
-  }, [setDispatch, showProductList, localUrlGetProduct]);
+  }, [setDispatch, showProductList, localUrlGetProduct, handleAlertSearch]);
 
   //Fetch query data
   useEffect(() => {
@@ -119,19 +127,15 @@ const Search = () => {
             }
             setDispatch('SET_QUERY_PARAM_READY', false);
           } else {
-            handleAlertSearch(
-              true,
-              'Sorry, network error...',
-              'Danger',
-              true,
-              'border'
-            );
+            handleAlertSearch(true, 'Sorry, network error...', 'Danger', false);
             setDispatch('SET_QUERY_PARAM_READY', false);
             throw new Error('Sorry, network error... please try again later.');
           }
         } catch (error) {
           console.log(error);
           setDispatch('SET_QUERY_PARAM_READY', false);
+        } finally {
+          handleAlertSearch(false);
         }
       };
       setDispatch('SET_QUERY_PARAM_READY', false);
@@ -142,40 +146,42 @@ const Search = () => {
   //Handle accordion alert
   const handleAcordionAlert = event => {
     setDispatch('SET_RESPONSE_READY', false);
-    switch (event.toString()) {
-      case '0':
-        handleAlertSearch(
-          true,
-          'Please, select product and date.',
-          'primary',
-          false
-        );
-        break;
-      case '1':
-        handleAlertSearch(
-          true,
-          'Please, select a date range.',
-          'primary',
-          false
-        );
-        break;
-      case '2':
-        handleAlertSearch(
-          true,
-          'Please, select a date range.',
-          'primary',
-          false
-        );
-        break;
-      case null:
-        break;
-      default:
-        handleAlertSearch(
-          true,
-          'Please, select product and date.',
-          'primary',
-          false
-        );
+    if (event) {
+      switch (event.toString()) {
+        case '0':
+          handleAlertSearch(
+            true,
+            'Please, select product and date.',
+            'primary',
+            false
+          );
+          break;
+        case '1':
+          handleAlertSearch(
+            true,
+            'Please, select a date range.',
+            'primary',
+            false
+          );
+          break;
+        case '2':
+          handleAlertSearch(
+            true,
+            'Please, select a date range.',
+            'primary',
+            false
+          );
+          break;
+        case null:
+          break;
+        default:
+          handleAlertSearch(
+            true,
+            'Please, select product and date.',
+            'primary',
+            false
+          );
+      }
     }
   };
 
