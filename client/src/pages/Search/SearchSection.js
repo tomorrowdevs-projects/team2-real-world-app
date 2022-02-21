@@ -48,7 +48,6 @@ const SearchSection = ({
                     handleLabelClick()
                   }
                   key={index}
-                  eventKey={index}
                 >
                   <Accordion.Header>{item.label}</Accordion.Header>
                   <Accordion.Body>
