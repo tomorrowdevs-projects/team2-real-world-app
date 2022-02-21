@@ -14,9 +14,17 @@ import Loading from '../components/Loading/Loading';
 const AppContext = React.createContext();
 
 const defaultState = {
+  //User
   currentUser: null,
-  isFileUploaded: false,
+  //Upload file
+  isFileUploaded: true,
+  //Product list
+  showProductList: false,
+  statusProductListReq: 'idle',
+  productList: null,
+  //Loader
   isLoading: true,
+  //Alert
   alert: {
     show: false,
     message: '',
@@ -24,6 +32,9 @@ const defaultState = {
     dismissibile: true,
     animation: '',
   },
+  //Url
+  localUrlGetProduct: 'localhost:8080/product',
+  urlGetProduct: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
 };
 
 export const AppProvider = ({ children }) => {
@@ -45,9 +56,10 @@ export const AppProvider = ({ children }) => {
     state.alert.show && setTimeout(() => handleAlert(false), 3000);
   }, [state.alert.show]);
 
+  //File uploaded
   useEffect(() => {
     console.log('File uploaded?', state.isFileUploaded);
-    !state.currentUser && setDispatch('FILE_UPLOADED', false);
+    !state.currentUser && setDispatch('FILE_UPLOADED', true);
   }, [state.isFileUploaded, state.currentUser]);
 
   //Auth

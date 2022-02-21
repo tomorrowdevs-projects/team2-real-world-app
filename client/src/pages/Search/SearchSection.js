@@ -5,6 +5,7 @@ import AlertMessage from '../../components/AlertMessage/AlertMessage';
 import SearchResult from '../../components/SearchResult/SearchResult';
 
 const SearchSection = ({
+  handleLabelClick,
   handleSubmit,
   handleAccordion,
   searchList,
@@ -19,7 +20,7 @@ const SearchSection = ({
   setDateTo,
 
   //Context
-  productsList,
+  productList,
   responseReady,
   response,
   alertSearch,
@@ -33,13 +34,20 @@ const SearchSection = ({
           <Accordion onSelect={handleAccordion}>
             {searchList.map((item, index) => {
               return (
-                <Accordion.Item key={index} eventKey={index}>
+                <Accordion.Item
+                  onClick={event =>
+                    event.target.innerHTML === searchList[0].label &&
+                    handleLabelClick()
+                  }
+                  key={index}
+                  eventKey={index}
+                >
                   <Accordion.Header>{item.label}</Accordion.Header>
                   <Accordion.Body>
                     <Form id='search-form-product' onSubmit={handleSubmit}>
                       {item.select && (
                         <SelectAutocomplete
-                          options={productsList}
+                          options={productList}
                           setValue={setSelected}
                         />
                       )}
