@@ -14,9 +14,22 @@ import Loading from '../components/Loading/Loading';
 const AppContext = React.createContext();
 
 const defaultState = {
+  //User
   currentUser: null,
+  //Upload file
   isFileUploaded: false,
+  //Product list
+  showProductList: false,
+  statusProductListReq: 'idle',
+  productList: null,
+  //Queries
+  queryParam: '',
+  queryParamReady: false,
+  response: {},
+  responseReady: false,
+  //Loader
   isLoading: true,
+  //Alerts
   alert: {
     show: false,
     message: '',
@@ -24,6 +37,24 @@ const defaultState = {
     dismissibile: true,
     animation: '',
   },
+  alertSearch: {
+    show: false,
+    message: '',
+    variant: '',
+    dismissibile: true,
+    animation: '',
+  },
+  //Url
+  localUrlGetProduct: 'http://localhost:8080/product',
+  urlGetProduct: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
+  localUrlProduct_metrics: 'http://localhost:8080/product_metrics',
+  urlGetProduct_Metrics:
+    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/product_metrics',
+  urlGetCustomers:
+    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customers',
+  urlGetAverage:
+    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average',
+  urlCurrent: '',
 };
 
 export const AppProvider = ({ children }) => {
@@ -42,9 +73,12 @@ export const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const timeout = setTimeout(() => handleAlert(false), 3000);
+    clearInterval(timeout);
     state.alert.show && setTimeout(() => handleAlert(false), 3000);
   }, [state.alert.show]);
 
+  //File uploaded
   useEffect(() => {
     console.log('File uploaded?', state.isFileUploaded);
     !state.currentUser && setDispatch('FILE_UPLOADED', false);
@@ -100,7 +134,6 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, userData => {
-      console.log(userData);
       if (userData) {
         setDispatch('UPDATE_USER_DATA', {
           accessToken: userData.accessToken,
@@ -114,7 +147,7 @@ export const AppProvider = ({ children }) => {
   }, [auth]);
 
   useEffect(() => {
-    console.log(state.currentUser);
+    console.log('Current user: ', state.currentUser);
   }, [state.currentUser]);
 
   return (

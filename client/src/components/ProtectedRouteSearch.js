@@ -6,13 +6,11 @@ const ProtectedRouteSearch = ({ user, fileUpload, children }) => {
   const { handleAlert } = useAppContext();
 
   useEffect(() => {
-    let isMounted = true;
     if (!user) {
       handleAlert(true, 'Please, log in first.', 'info', false);
     } else if (user && !fileUpload) {
       handleAlert(true, 'Please, upload the file first.', 'info', false);
     }
-    return () => (isMounted = false);
   }, [user, fileUpload, handleAlert]);
 
   if (!user) {

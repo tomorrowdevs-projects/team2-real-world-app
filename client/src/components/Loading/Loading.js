@@ -5,7 +5,7 @@ import Layout from '../Layout';
 const Loading = () => {
   return (
     <Layout dNone='d-none'>
-      <Spinner animation='border' className='align-items-center' />
+      <Spinner animation='border' className='align-items-center main-loading' />
     </Layout>
   );
 };

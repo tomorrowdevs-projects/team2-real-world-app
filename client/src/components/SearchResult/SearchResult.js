@@ -6,11 +6,11 @@ const SearchResult = ({ response, select, responseLabel }) => {
     return <></>;
   }
 
-  const { date_from, date_to } = response[0];
+  const { start_date, end_date } = response[0];
 
   return (
     <div className='container-result mt-4'>
-      <DateLabel dateFrom={date_from} dateTo={date_to} />
+      <DateLabel dateFrom={start_date} dateTo={end_date} />
       <Table striped bordered hover size='sm'>
         {select ? (
           <>
@@ -24,8 +24,8 @@ const SearchResult = ({ response, select, responseLabel }) => {
             <tbody>
               <tr>
                 <td>{response[0].product_name}</td>
-                <td>{response[0].orders}</td>
-                <td>€ {response[0].price}</td>
+                <td>{response[0].total_orders}</td>
+                <td>€ {response[0].total_revenue}</td>
               </tr>
             </tbody>
           </>

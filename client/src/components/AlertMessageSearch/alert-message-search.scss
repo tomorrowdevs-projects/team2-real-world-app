@@ -1,13 +1,15 @@
 @import '../../assets/style/custom';
+.alert-box {
+  height: 60px;
+}
 
 .container-center {
-  .spinner-border.main-loading {
+  .spinner-border.minor-loading {
     background-image: $bg-gradient-main;
     border-right-color: unset;
-    width: 100px;
-    height: 100px;
+    width: 25px;
+    height: 25px;
     color: $info;
     animation: 0.4s linear infinite spinner-border;
-    margin-top: 10vh;
   }
 }

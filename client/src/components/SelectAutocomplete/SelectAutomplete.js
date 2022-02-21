@@ -1,7 +1,7 @@
 import { Row, Col, Form } from 'react-bootstrap';
 import Select from 'react-select';
 
-const SelectAutocomplete = ({ options, setValue }) => {
+const SelectAutocomplete = ({ options, setInput, setProductSelected }) => {
   return (
     <Row>
       <Col>
@@ -9,7 +9,8 @@ const SelectAutocomplete = ({ options, setValue }) => {
           <Form.Label>Choose a product</Form.Label>
           <Select
             options={options}
-            onChange={event => setValue(event)}
+            // onInputChange={event => setInput(event)}
+            onChange={event => setProductSelected(event)}
             isClearable
           />
         </Form.Group>
