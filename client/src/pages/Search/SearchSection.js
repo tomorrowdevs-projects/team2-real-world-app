@@ -5,13 +5,20 @@ import AlertMessage from '../../components/AlertMessage/AlertMessage';
 import SearchResult from '../../components/SearchResult/SearchResult';
 
 const SearchSection = ({
-  handleLabelClick,
-  handleSubmit,
-  handleAccordion,
+  //List for render accordion items
   searchList,
 
+  //Fetch product list
+  handleLabelClick,
+
   //react-select control
+  setInput,
   setSelected,
+
+  handleSubmit,
+
+  //Search alert
+  handleAccordion,
 
   //Date Component control
   dateFrom,
@@ -48,7 +55,8 @@ const SearchSection = ({
                       {item.select && (
                         <SelectAutocomplete
                           options={productList}
-                          setValue={setSelected}
+                          setInput={setInput}
+                          setSelected={setSelected}
                         />
                       )}
                       <DateRange

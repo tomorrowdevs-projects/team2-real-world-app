@@ -1,9 +1,13 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SearchSection from './SearchSection';
 import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
 
 const Search = () => {
+  //react-select control
+  const [input, setInput] = useState();
+  const [selected, setSelected] = useState({});
+  //Context
   const {
     setDispatch,
     showProductList,
@@ -11,6 +15,7 @@ const Search = () => {
     //localUrlGetProduct,
     productList,
   } = useAppContext();
+
   const responseReady = true;
   const response =
     //'';
@@ -26,10 +31,10 @@ const Search = () => {
       },
     ];
 
+  //Fetch productlist
   const handleLabelClick = () => {
     setDispatch('SHOW_PRODUCT_LIST', true);
   };
-  //Fetch productlist
   //Product list
   useEffect(() => {
     console.log(productList);
@@ -68,8 +73,14 @@ const Search = () => {
 
   return (
     <SearchSection
+      //List for render accordion items
       searchList={searchList}
+      //Fetch product list
       handleLabelClick={handleLabelClick}
+      //react-select control
+      setInput={setInput}
+      setSelected={setSelected}
+      //Context
       productList={productList}
       responseReady={responseReady}
       response={response}
