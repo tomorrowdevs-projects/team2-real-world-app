@@ -9,6 +9,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/icrowley/fake v0.0.0-20180203215853-4178557ae428
 	github.com/joho/godotenv v1.4.0
+	github.com/stretchr/testify v1.4.0
 	gorm.io/gorm v1.23.1
 )
 

@@ -2,7 +2,6 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/response"
@@ -24,7 +23,7 @@ func GetOrdersAndRevenue(c *gin.Context) {
 	}
 	// TODO add regex check on date formats
 
-	log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
+	// log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
 
 	// TODO link to database query function with the three params (product, start date, end date)
 
