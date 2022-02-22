@@ -22,6 +22,7 @@ func Router() *gin.Engine {
 	router.GET("/products", GetProducts)
 	router.GET("/product_metrics", GetOrdersAndRevenue)
 	router.GET("/customers_count", GetCustomersNumber)
+	router.GET("/orders_avg", GetOrdersAvg)
 
 	return router
 }

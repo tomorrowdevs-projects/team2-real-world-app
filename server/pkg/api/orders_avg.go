@@ -7,7 +7,7 @@ import (
 	"team2-real-world-app/server/pkg/model/response"
 )
 
-func GetCustomersNumber(c *gin.Context) {
+func GetOrdersAvg(c *gin.Context) {
 
 	startDate, isStartDateQueried := c.GetQuery("start_date")
 	endDate, isEndDateQueried := c.GetQuery("end_date")
@@ -22,9 +22,9 @@ func GetCustomersNumber(c *gin.Context) {
 
 	// TODO link to database query function with two params (start date, end date)
 
-	// NOTE: temporary customers number (for POC purpose)
-	var Customers = response.CustomersNumber{
-		NumCustomers: 50, StartDate: startDate, EndDate: endDate,
+	// NOTE: temporary average orders (for POC purpose)
+	var Orders = response.OrdersAvg{
+		OrdersValue: 50.50, StartDate: startDate, EndDate: endDate,
 	}
-	c.IndentedJSON(http.StatusOK, Customers)
+	c.IndentedJSON(http.StatusOK, Orders)
 }
