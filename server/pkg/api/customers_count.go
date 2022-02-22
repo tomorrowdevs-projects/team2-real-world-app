@@ -7,12 +7,7 @@ import (
 	"team2-real-world-app/server/pkg/model/response"
 )
 
-func GetOrdersAndRevenue(c *gin.Context) {
-	product, isProductQueried := c.GetQuery("product_name")
-	// consider all products if no product is queried
-	if !isProductQueried {
-		product = "*"
-	}
+func GetCustomersNumber(c *gin.Context) {
 
 	startDate, isStartDateQueried := c.GetQuery("start_date")
 	endDate, isEndDateQueried := c.GetQuery("end_date")
@@ -23,13 +18,13 @@ func GetOrdersAndRevenue(c *gin.Context) {
 	}
 	// TODO add regex check on date formats
 
-	// log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
+	//log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
 
 	// TODO link to database query function with the three params (product, start date, end date)
 
-	// NOTE: temporary stub of product metrics response (for POC purpose)
-	var ordersAndRevenue = []response.OrdersAndRevenueByProduct{
-		{ProductName: product, TotalOrders: 30, Revenue: 350.45, StartDate: startDate, EndDate: endDate},
+	// NOTE: temporary num customers (for POC purpose)
+	var Customers = response.CustomersNumber{
+		NumCustomers: 50, StartDate: startDate, EndDate: endDate,
 	}
-	c.IndentedJSON(http.StatusOK, ordersAndRevenue)
+	c.IndentedJSON(http.StatusOK, Customers)
 }
