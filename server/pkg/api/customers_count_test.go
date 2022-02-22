@@ -19,10 +19,10 @@ func TestGetCustomersNumber(t *testing.T) {
 
 	router := Router()
 
-	// Create a new recorder to record the response received by the /product_metrics endpoint.
+	// Create a new recorder to record the response received by the /customers_count endpoint.
 	rr := httptest.NewRecorder()
 
-	// Create a new request to the /product_metrics endpoint
+	// Create a new request to the /customers_count endpoint
 	req, err := http.NewRequest("GET", "/customers_count", nil)
 	if err != nil {
 		t.Fatal(err)
