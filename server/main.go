@@ -13,9 +13,15 @@ func main() {
 		return
 	}
 
+	/*path := ""
+	var newFile = file.NewImportFile()
+	err := newFile.SplitFile(path)
+	if err != nil {
+		return
+	}*/
+
 	/*
-		this comment will be removed,
-		at the moment I leave it here so that you all can better understand
+		this comment will be removed, at the moment I leave it here so that you all can better understand
 		how to use the structure created in database.go
 
 		/// LEt's suppose I run Docker in this way:
