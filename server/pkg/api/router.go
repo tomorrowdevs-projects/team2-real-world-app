@@ -7,7 +7,10 @@ import (
 
 func Router() *gin.Engine {
 
-	router := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(gin.Recovery())
+	//router := gin.Default()
 
 	// enabling CORS
 	config := cors.DefaultConfig()
@@ -18,6 +21,8 @@ func Router() *gin.Engine {
 	router.POST("/upload", UploadFile)
 	router.GET("/products", GetProducts)
 	router.GET("/product_metrics", GetOrdersAndRevenue)
+	router.GET("/customers_count", GetCustomersNumber)
+	router.GET("/orders_avg", GetOrdersAvg)
 
 	return router
 }
