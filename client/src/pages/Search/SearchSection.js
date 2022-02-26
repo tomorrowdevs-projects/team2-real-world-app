@@ -7,7 +7,6 @@ import AlertMessageSearch from '../../components/AlertMessageSearch/AlertMessage
 const SearchSection = ({
   //Alert
   alertSearch,
-  handleAlertSearch,
   //List for render accordion items
   searchList,
 
@@ -16,8 +15,9 @@ const SearchSection = ({
 
   //react-select control
   productList,
-  //setInput,
+  //setInputSelected,
   setProductSelected,
+  isFetchLoading,
 
   //Date Component control
   dateFrom,
@@ -30,7 +30,7 @@ const SearchSection = ({
   response,
 
   //Search alert and submit
-  handleAccordionAlert,
+  setAccordionSelected,
   handleSubmit,
 }) => {
   return (
@@ -38,14 +38,14 @@ const SearchSection = ({
       <section>
         <h1>Search data</h1>
         <div className='forms-search'>
-          <Accordion onSelect={handleAccordionAlert}>
+          <Accordion onSelect={event => setAccordionSelected(event)}>
             {searchList.map((item, index) => {
               return (
                 <Accordion.Item
                   eventKey={index}
                   onClick={event =>
                     event.target.innerHTML === searchList[0].label &&
-                    handleLabelClick()
+                    handleLabelClick(event)
                   }
                   key={index}
                 >
@@ -55,8 +55,10 @@ const SearchSection = ({
                       {item.select && (
                         <SelectAutocomplete
                           options={productList}
-                          // setInput={setInput}
-                          setProductSelected={setProductSelected}
+                          // setInput={setInputSelected}
+                          setSelected={setProductSelected}
+                          isDisabled={isFetchLoading}
+                          isLoading={isFetchLoading}
                         />
                       )}
                       <DateRange
@@ -65,11 +67,12 @@ const SearchSection = ({
                         dateTo={dateTo}
                         setDateTo={setDateTo}
                       />
-                      <Stack className='mt-4' direction='horizontal' gap={3}>
-                        <AlertMessageSearch
-                          alert={alertSearch}
-                          handleAlert={handleAlertSearch}
-                        />
+                      <Stack
+                        className='mt-3 ps-3'
+                        direction='horizontal'
+                        gap={3}
+                      >
+                        <AlertMessageSearch alert={alertSearch} />
                         <Button
                           className='ms-auto'
                           variant='primary'
