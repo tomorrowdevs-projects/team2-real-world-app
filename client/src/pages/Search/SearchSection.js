@@ -68,7 +68,7 @@ const SearchSection = ({
                         setDateTo={setDateTo}
                       />
                       <Stack
-                        className='mt-3 ps-3'
+                        className='mt-3 ps-3 mb-2'
                         direction='horizontal'
                         gap={3}
                       >
