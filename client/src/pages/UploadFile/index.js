@@ -57,7 +57,7 @@ const UploadFile = () => {
     axios
       .post('//localhost:8080/upload', fileData, option)
       .then(response => {
-        console.log(response);
+        console.log('Response upload file: ', response);
         setDispatch('FILE_UPLOADED', true);
         handleAlert(true, `File was uploaded succesfully`, 'success', false);
       })
