@@ -7,7 +7,7 @@ const AlertMessageSearch = ({ alert, handleAlert }) => {
     <div className='alert-box'>
       {show && (
         <Alert
-          className='d-flex align-items-center alert-message-box'
+          className='alert-message-box'
           variant={variant}
           onClose={() => handleAlert(false)}
           dismissible={dismissible}

@@ -68,7 +68,8 @@ const SearchSection = ({
                         setDateTo={setDateTo}
                       />
                       <Stack
-                        className='mt-3 ps-3 mb-2'
+                        className='align-items-start mt-3 ps-3 mb-3'
+                        style={{ minHeight: '100px' }}
                         direction='horizontal'
                         gap={3}
                       >
