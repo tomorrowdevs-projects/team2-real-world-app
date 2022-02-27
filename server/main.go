@@ -1,19 +1,20 @@
 package main
 
 import (
-	"team2-real-world-app/server/pkg/api"
-	//"team2-real-world-app/server/pkg/database"
-	//"team2-real-world-app/server/pkg/file"
+	"fmt"
+	"team2-real-world-app/server/pkg/query"
 )
 
 func main() {
 
 	// launching server
-	router := api.Router()
+	/*router := api.Router()
 	err := router.Run("localhost:8080")
 	if err != nil {
 		return
-	}
+	}*/
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	// Create struct with the data and bulk it into the Database tables
 	/*path := ""
@@ -24,14 +25,21 @@ func main() {
 	if err != nil {
 		fmt.Printf("error")
 		//return err
-	}
+	}*/
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
-	var db = dbmanager.NewDBManager()
+	// return the products JSON
+	products, err := query.AllProducts()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(products))
+
+	/* var db = dbmanager.NewDBManager()
 	log.Printf("** Try to connected\n")
 
-	err = db.Connect(dbmanager.DBParameters{
+	/*err := db.Connect(dbmanager.DBParameters{
 		UserName: "root",
 		Password: "root",
 		Host:     "localhost",
@@ -44,48 +52,17 @@ func main() {
 	}
 	log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
 
-	err = db.PopulateStruct(entries)*/
+	//err = db.PopulateStruct(entries)
 
-	/*
-		this comment will be removed, at the moment I leave it here so that you all can better understand
-		how to use the structure created in database.go
+	if err != nil {
+		fmt.Println(err)
+	}
+	products, err := query.AllProducts(dbx)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(products))*/
 
-		/// LEt's suppose I run Docker in this way:
-		///  docker run  --name db -p 3306:3306 \
-		//   -e MYSQL_ROOT_PASSWORD=root \
-		//   -e MYSQL_DATABASE=myapp \
-		//   -e MYSQL_USER=test \
-		//   -e MYSQL_PASSWORD=test \
-		//   mysql
-
-		var db = dbmanager.GetDBManager()
-		fmt.Printf("Try to connected\n")
-
-		err := db.Connect(dbmanager.DBParameters{
-			UserName: "test",
-			Password: "test",
-			Host:     "localhost",
-			Port:     3306,
-			DbName:   "myapp",
-		})
-		if err != nil {
-			fmt.Printf("Connection error: %s \n", err)
-			return
-		}
-		fmt.Printf("I should be connected. Status connection: %t\n", db.IsConnected())
-
-		err = db.Disconnect()
-		if err != nil {
-			fmt.Printf("Disconnection error: %s\n", err)
-			return
-		}
-		fmt.Printf("I should be disconneted. Status connection: %t\n", db.IsConnected())
-
-		// Here I am trying to use a closed connection
-		err = db.DoSomething()
-		if err != nil {
-			fmt.Printf("I should receive the connection close error. error: %s\n", err)
-			return
-		}*/
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 }
