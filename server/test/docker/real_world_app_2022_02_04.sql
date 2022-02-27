@@ -28,10 +28,10 @@ CREATE TABLE `client` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `order`
+-- Struttura della tabella `orders`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` int NOT NULL,
   `date` date NOT NULL,
   `client_id` int NOT NULL,
@@ -61,12 +61,12 @@ ALTER TABLE `client`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `order`
+-- Indici per le tabelle `orders`
 --
-ALTER TABLE `order`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_client_client_client_id` (`client_id`),
-  ADD KEY `fk_order_product_product_product_id` (`product_id`);
+  ADD KEY `fk_orders_client_client_client_id` (`client_id`),
+  ADD KEY `fk_orders_product_product_product_id` (`product_id`);
 
 --
 -- Indici per le tabelle `product`
@@ -85,9 +85,9 @@ ALTER TABLE `client`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `order`
+-- AUTO_INCREMENT per la tabella `orders`
 --
-ALTER TABLE `order`
+ALTER TABLE `orders`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -101,11 +101,11 @@ ALTER TABLE `product`
 --
 
 --
--- Limiti per la tabella `order`
+-- Limiti per la tabella `orders`
 --
-ALTER TABLE `order`
-  ADD CONSTRAINT `fk_order_client_client_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_order_product_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_orders_client_client_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_orders_product_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
