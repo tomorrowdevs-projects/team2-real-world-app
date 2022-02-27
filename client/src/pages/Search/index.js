@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchSection from './SearchSection';
 import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
+import { isValidJson, formatList } from './search-data-utils';
 
 const Search = () => {
   //react-select control
@@ -46,18 +47,14 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (!dataFetch) return;
-    const formattedList = [];
     if (isFetchLoading) return;
-    dataFetch.forEach(item => {
-      formattedList.push({
-        value: item.product_name,
-        label: item.product_name,
-        id: item.product_id,
-      });
-    });
-    dispatch({ type: 'SET_PRODUCT_LIST', payload: formattedList });
+    if (isValidJson(dataFetch))
+      dispatch({ type: 'SET_PRODUCT_LIST', payload: formatList(dataFetch) });
   }, [dataFetch, isFetchLoading, dispatch]);
+
+  useEffect(() => {
+    console.log('Product list: ', productList);
+  }, [productList]);
 
   //Handle alert search page
   useEffect(() => {
@@ -81,6 +78,16 @@ const Search = () => {
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, `Sorry... ${errorFetch}, try again.`, 'danger', true],
+        })
+      : !isValidJson(dataFetch)
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [
+            true,
+            'Sorry, unavailable or invalid product list, try later.',
+            'danger',
+            false,
+          ],
         })
       : !isFetchLoading && productList && accordionSelected === 0
       ? dispatch({
@@ -107,7 +114,14 @@ const Search = () => {
           }),
         4000
       );
-  }, [isFetchLoading, productList, dispatch, accordionSelected, errorFetch]);
+  }, [
+    isFetchLoading,
+    dataFetch,
+    productList,
+    dispatch,
+    accordionSelected,
+    errorFetch,
+  ]);
 
   //Fetch query data
   useEffect(() => {
