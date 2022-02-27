@@ -14,13 +14,7 @@ const reducer = (state, action) => {
         isFileUploaded: payload,
       };
     //Product list
-    case 'SHOW_PRODUCT_LIST':
-      return {
-        ...state,
-        showProductList: payload,
-      };
     case 'SET_PRODUCT_LIST':
-      console.log(payload);
       return {
         ...state,
         productList: payload,
@@ -83,7 +77,7 @@ const reducer = (state, action) => {
         variantSearch,
         dismissibleSearch,
         animationSearch,
-      ] = action.payload;
+      ] = payload;
       return {
         ...state,
         alertSearch: {
