@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"log"
+	"team2-real-world-app/server/pkg/helpers"
 	"team2-real-world-app/server/pkg/model"
 )
 
@@ -33,6 +34,28 @@ func NewDBManager() *DBManager {
 	return &DBManager{ // to get the address or a pointer variable
 		conn: nil,
 	}
+}
+
+// GetConnection - TEMPORARY
+func (dbm *DBManager) GetConnection() (*sqlx.DB, error) {
+
+	// get Database credentials and create connection
+	parameters := helpers.GetCredentials()
+
+	err := dbm.Connect(DBParameters{
+		UserName: parameters.UserName,
+		Password: parameters.Password,
+		Host:     parameters.Host,
+		Port:     parameters.Port,
+		DbName:   parameters.DbName,
+	})
+
+	if err != nil {
+		log.Printf(" ** Connection error: %s \n", err)
+		return nil, err
+	}
+
+	return dbm.conn, nil
 }
 
 // Connect - create Database connection
