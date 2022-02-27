@@ -1,15 +1,19 @@
 package main
 
+import (
+	"team2-real-world-app/server/pkg/api"
+	//"team2-real-world-app/server/pkg/database"
+	//"team2-real-world-app/server/pkg/file"
+)
+
 func main() {
 
-	/*
-		// launching server
-		router := api.Router()
-		err := router.Run("localhost:8080")
-		if err != nil {
-			return
-		}
-		}*/
+	// launching server
+	router := api.Router()
+	err := router.Run("localhost:8080")
+	if err != nil {
+		return
+	}
 
 	// Create struct with the data and bulk it into the Database tables
 	/*path := ""
