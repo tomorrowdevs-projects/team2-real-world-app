@@ -2,6 +2,8 @@ package main
 
 import (
 	"team2-real-world-app/server/pkg/api"
+	//"team2-real-world-app/server/pkg/database"
+	//"team2-real-world-app/server/pkg/file"
 )
 
 func main() {
@@ -13,12 +15,36 @@ func main() {
 		return
 	}
 
+	// Create struct with the data and bulk it into the Database tables
 	/*path := ""
-	var newFile = file.NewImportFile()
-	err := newFile.SplitFile(path)
+
+	var newFile = file.NewFile()
+	entries, err := newFile.HandleFile(path)
+
 	if err != nil {
+		fmt.Printf("error")
+		//return err
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	var db = dbmanager.NewDBManager()
+	log.Printf("** Try to connected\n")
+
+	err = db.Connect(dbmanager.DBParameters{
+		UserName: "root",
+		Password: "root",
+		Host:     "localhost",
+		Port:     3306,
+		DbName:   "test_db",
+	})
+	if err != nil {
+		log.Printf(" ** Connection error: %s \n", err)
 		return
-	}*/
+	}
+	log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
+
+	err = db.PopulateStruct(entries)*/
 
 	/*
 		this comment will be removed, at the moment I leave it here so that you all can better understand

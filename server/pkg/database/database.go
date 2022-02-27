@@ -1,11 +1,12 @@
 package database
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
-
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
+	"log"
+	"team2-real-world-app/server/pkg/model"
 )
 
 type DBParameters struct {
@@ -16,19 +17,17 @@ type DBParameters struct {
 	DbName   string
 }
 
-/* we can use struct as "class" and add method to it,
-once defined it is passed to a function and processed
-*/
+// DBManager - we can use struct as "class" and add method to it
 type DBManager struct {
-	conn        *sql.DB // declare pointer variable
+	conn        *sqlx.DB // declare pointer variable
 	isConnected bool
 }
 
-/* define expected errors as gloabl variables,
-the gloabl variables should be defined at the top of the function
-*/
-var IsDisconnectedError = errors.New("database not connected")
-var AlreadyConnectedError = errors.New("database already connected")
+// define expected errors at the top
+var (
+	IsDisconnectedError   = errors.New("database not connected")
+	AlreadyConnectedError = errors.New("database already connected")
+)
 
 func NewDBManager() *DBManager {
 	return &DBManager{ // to get the address or a pointer variable
@@ -36,10 +35,7 @@ func NewDBManager() *DBManager {
 	}
 }
 
-/* add method to the DBManger struct
-define the args as the DBParameters struct
-define the return type
-*/
+// Connect - create Database connection
 func (dbm *DBManager) Connect(dBParameters DBParameters) error {
 	// check the db status and if true return the error
 	if dbm.isConnected {
@@ -50,8 +46,10 @@ func (dbm *DBManager) Connect(dBParameters DBParameters) error {
 		dBParameters.Host, dBParameters.Port, dBParameters.DbName)
 
 	// open database connection
-	db, err := sql.Open("mysql", conn)
+	db, err := sqlx.Connect("mysql", conn)
+
 	if err != nil {
+		// HANDLE ERROR
 		return err
 	}
 
@@ -61,7 +59,7 @@ func (dbm *DBManager) Connect(dBParameters DBParameters) error {
 	return nil
 }
 
-// close the db connection
+// Disconnect - close the Database connection
 func (dbm *DBManager) Disconnect() error {
 	if !dbm.isConnected {
 		return IsDisconnectedError
@@ -70,19 +68,41 @@ func (dbm *DBManager) Disconnect() error {
 	return dbm.conn.Close()
 }
 
-// check the db connection
+// IsConnected - check the Database connection
 func (dbm *DBManager) IsConnected() bool {
 	return dbm.conn != nil && dbm.isConnected
 }
 
-/*
-when we need to do something with the db instace (like query, upload, ...) we need to create
-a stcture like this,
-func (dbm *DBManager) DoSomething() error {
+// PopulateStruct - populate the struct with the csv data
+func (dbm *DBManager) PopulateStruct(entries []model.Entry) error {
+
 	// check the connection
 	if !dbm.isConnected {
 		return IsDisconnectedError
 	}
+
+	// batch insert product table
+	_, err := dbm.conn.NamedExec(`INSERT IGNORE INTO product(product_id, product_name, price)
+	VALUES(:product_id, :product_name, :price)`, entries)
+	if err != nil {
+		return err
+	}
+	log.Println(" - Product data added in Database")
+
+	// batch insert client table
+	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO client(client_id, name, surname)
+	VALUES(:client_id, :name, :surname)`, entries)
+	if err != nil {
+		return err
+	}
+	log.Println(" - Client data added in Database")
+
+	// batch insert order table
+	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO orders(order_id, client, product, order_date) 
+	VALUES(:order_id, :client_id, :product_id, :order_date)`, entries)
+	if err != nil {
+		return err
+	}
+	log.Println(" - Orders data added in Database")
 	return nil
 }
-*/

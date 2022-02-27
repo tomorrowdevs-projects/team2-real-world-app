@@ -3,71 +3,66 @@ package file
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"github.com/gocarina/gocsv"
+	"log"
 	"os"
 	"path/filepath" // check file extension
 	helpers "team2-real-world-app/server/pkg/helpers"
 	model "team2-real-world-app/server/pkg/model"
 )
 
+// define expected errors at the top
 var (
 	ErrInvalidFileExtension = errors.New("the file extension is not .csv")
 	ErrInvalidFileSize      = errors.New("the file size exceeds the maximum allowed")
 )
 
-// TEMPORARY struct Entry global var
-var entries []model.Entry
-
-type ImportFile struct {
-	//fileSplitted type
+type NewHandleFile struct {
 }
 
-func NewImportFile() *ImportFile {
-	return &ImportFile{} // to get the address or a pointer variable
+func NewFile() *NewHandleFile {
+	return &NewHandleFile{} // to get the address or a pointer variable
 }
 
-//
-func (importFile ImportFile) SplitFile(filePath string) error {
+func (handleFile NewHandleFile) HandleFile(filePath string) ([]model.Entry, error) {
 
-	if !importFile.isCsvExtension(filePath) { // check file extension
-		return ErrInvalidFileExtension
+	// check file extension
+	if !handleFile.IsCsvExtension(filePath) {
+		return nil, ErrInvalidFileExtension
 	}
 
-	status, err := importFile.isTheRightSize(filePath)
+	// check the fil size
+	status, err := handleFile.IsTheRightSize(filePath)
 	if !status {
-		return ErrInvalidFileSize
+		return nil, ErrInvalidFileSize
 	}
 
 	file, err := os.Open(filePath)
 	defer file.Close()
 
 	if err != nil {
-		// TO DO
-		// handle error
-		return err
+		return nil, err
 	}
 
 	// TO DO
 	// split file in x chunk and pass it to io.Reader
 	fileReader := bufio.NewReader(file) // implements a buffered reader
-	err = importFile.populateStruct(fileReader)
+	entries, err := handleFile.PopulateStruct(fileReader)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	fmt.Println("struct populated")
+	log.Printf(" - Struct populated ")
 
-	fmt.Println(entries)
-	return nil
+	return entries, err
 }
 
-// check if the file is a csv
-func (importFile ImportFile) isCsvExtension(filePath string) bool {
+// IsCsvExtension - check if the file is a csv
+func (handleFile NewHandleFile) IsCsvExtension(filePath string) bool {
 	return filepath.Ext(filePath) == ".csv"
 }
 
-// check if the file size does not exceed the maximum allowed
-func (importFile ImportFile) isTheRightSize(filePath string) (bool, error) {
+// IsTheRightSize - check if the file size does not exceed the maximum allowed
+func (handleFile NewHandleFile) IsTheRightSize(filePath string) (bool, error) {
 
 	maxSize := 10 // max size of the file
 
@@ -83,14 +78,15 @@ func (importFile ImportFile) isTheRightSize(filePath string) (bool, error) {
 	return int64(fileGB) < int64(maxSize), err
 }
 
-// save the file row into a struct
-func (importFile ImportFile) populateStruct(fileReader *bufio.Reader) error {
+// PopulateStruct - save the file row into a struct
+func (handleFile NewHandleFile) PopulateStruct(fileReader *bufio.Reader) ([]model.Entry, error) {
+
+	var entries []model.Entry
 
 	err := gocsv.Unmarshal(fileReader, &entries)
 
 	if err != nil {
-		// handle returned errors
-		return err
+		return nil, err
 	}
-	return err
+	return entries, nil
 }

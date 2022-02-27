@@ -1,9 +1,6 @@
 package model
 
-//import "gorm.io/gorm"
-
-// NOTE: only for TESTING/POC PURPOSE (it reflects the exact structure of the CSV
-
+// Entry struct used to save the data in the file and load them all into the Database
 type Entry struct {
 	// multiple name tags
 	OrderID   int     `csv:"orderID"  db:"order_id"`
