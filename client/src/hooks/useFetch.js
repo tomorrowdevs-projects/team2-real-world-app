@@ -9,9 +9,10 @@ export const useFetch = url => {
     let didCancel = false;
     if (!url) return;
     setIsFetchLoading(true);
+    console.log('Fetch started...');
     const fetchData = async () => {
       const response = await fetch(url);
-      console.log('Product fetch');
+      console.log('Response: ', response);
       try {
         if (response.ok) {
           const responseBody = await response.json();
@@ -19,17 +20,23 @@ export const useFetch = url => {
           setTimeout(() => {
             setDataFetch(responseBody);
             setIsFetchLoading(false);
-          }, 5000);
+          }, 3000);
+          console.log('Response body: ', responseBody);
         } else {
           if (didCancel) return;
-          console.log(response);
+          console.log('Response body: ', response);
           throw new Error(response.status);
         }
       } catch (error) {
         if (didCancel) return;
-        setIsFetchLoading(false);
-        console.log(error);
-        setErrorFetch(error);
+        setTimeout(() => {
+          setIsFetchLoading(false);
+          setErrorFetch(error);
+        }, 3000);
+
+        console.log('Response != 200: ', error);
+      } finally {
+        setTimeout(() => setErrorFetch(''), 5000);
       }
     };
     fetchData();
