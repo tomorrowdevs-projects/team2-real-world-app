@@ -14,7 +14,8 @@ func Router() *gin.Engine {
 
 	// enabling CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000", "https://localhost:3000"} // "*" to allow all
+	config.AllowOrigins = []string{"*"} // to allow all
+	//config.AllowOrigins = []string{"http://localhost:3000", "https://localhost:3000"}
 	router.Use(cors.New(config))
 
 	// linking paths to api handlers

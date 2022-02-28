@@ -1,18 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"team2-real-world-app/server/pkg/query"
+	//"fmt"
+	//"log"
+	"team2-real-world-app/server/pkg/api"
+	//dbmanager "team2-real-world-app/server/pkg/database"
+	//"team2-real-world-app/server/pkg/file"
 )
 
 func main() {
 
 	// launching server
-	/*router := api.Router()
+	router := api.Router()
 	err := router.Run("localhost:8080")
 	if err != nil {
 		return
-	}*/
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,44 +28,48 @@ func main() {
 	if err != nil {
 		fmt.Printf("error")
 		//return err
-	}*/
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
+	/*
 	// return the products JSON
 	products, err := query.AllProducts()
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println(string(products))
+	*/
 
-	/* var db = dbmanager.NewDBManager()
-	log.Printf("** Try to connected\n")
+	/*
+		var db = dbmanager.NewDBManager()
+		//log.Printf("** Try to connected\n")
 
-	/*err := db.Connect(dbmanager.DBParameters{
-		UserName: "root",
-		Password: "root",
-		Host:     "localhost",
-		Port:     3306,
-		DbName:   "test_db",
-	})
-	if err != nil {
-		log.Printf(" ** Connection error: %s \n", err)
-		return
-	}
-	log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
+		err = db.Connect(dbmanager.DBParameters{
+			UserName: "root",
+			Password: "root",
+			Host:     "localhost",
+			Port:     3306,
+			DbName:   "real_world_app",
+		})
+		if err != nil {
+			log.Printf(" ** Connection error: %s \n", err)
+			return
+		}
+		log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
 
-	//err = db.PopulateStruct(entries)
+		err = db.PopulateStruct(entries)
 
+		if err != nil {
+			fmt.Println(err)
+		}
+	*/
+	/*products, err := query.AllProducts(dbx)
 	if err != nil {
 		fmt.Println(err)
 	}
-	products, err := query.AllProducts(dbx)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(products))*/
-
+	fmt.Println(string(products))
+	*/
 	///////////////////////////////////////////////////////////////////////////////////////////
 
 }

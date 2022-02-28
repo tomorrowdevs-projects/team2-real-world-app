@@ -105,7 +105,7 @@ func (dbm *DBManager) PopulateStruct(entries []model.Entry) error {
 	}
 
 	// batch insert product table
-	_, err := dbm.conn.NamedExec(`INSERT IGNORE INTO product(product_id, product_name, price)
+	_, err := dbm.conn.NamedExec(`INSERT IGNORE INTO product(id, name, price)
 	VALUES(:product_id, :product_name, :price)`, entries)
 	if err != nil {
 		return err
@@ -113,7 +113,7 @@ func (dbm *DBManager) PopulateStruct(entries []model.Entry) error {
 	log.Println(" - Product data added in Database")
 
 	// batch insert client table
-	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO client(client_id, name, surname)
+	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO client(id, name, surname)
 	VALUES(:client_id, :name, :surname)`, entries)
 	if err != nil {
 		return err
@@ -121,7 +121,7 @@ func (dbm *DBManager) PopulateStruct(entries []model.Entry) error {
 	log.Println(" - Client data added in Database")
 
 	// batch insert order table
-	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO orders(order_id, client, product, order_date) 
+	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO orders(id, client_id, product_id, date) 
 	VALUES(:order_id, :client_id, :product_id, :order_date)`, entries)
 	if err != nil {
 		return err
