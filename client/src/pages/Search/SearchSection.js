@@ -15,9 +15,12 @@ const SearchSection = ({
 
   //react-select control
   productList,
-  //setInputSelected,
+  setInputSelected,
   setProductSelected,
   isFetchLoading,
+  isFetchLoadingMetrics,
+  accordionSelected,
+  handleClickReset,
 
   //Date Component control
   dateFrom,
@@ -55,10 +58,11 @@ const SearchSection = ({
                       {item.select && (
                         <SelectAutocomplete
                           options={productList}
-                          // setInput={setInputSelected}
+                          setInput={setInputSelected}
                           setSelected={setProductSelected}
                           isDisabled={isFetchLoading}
                           isLoading={isFetchLoading}
+                          handleClickReset={handleClickReset}
                         />
                       )}
                       <DateRange
@@ -66,6 +70,7 @@ const SearchSection = ({
                         setDateFrom={setDateFrom}
                         dateTo={dateTo}
                         setDateTo={setDateTo}
+                        handleClickReset={handleClickReset}
                       />
                       <Stack
                         className='align-items-start mt-3 ps-3 mb-3'
@@ -78,6 +83,11 @@ const SearchSection = ({
                           className='ms-auto'
                           variant='primary'
                           type='submit'
+                          disabled={
+                            isFetchLoading ||
+                            isFetchLoadingMetrics ||
+                            (!productList && accordionSelected === 0)
+                          }
                         >
                           Submit
                         </Button>

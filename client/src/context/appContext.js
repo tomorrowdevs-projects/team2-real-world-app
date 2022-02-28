@@ -11,6 +11,7 @@ import {
 import { appFirebase } from '../services/auth/firebase-config';
 import Loading from '../components/Loading/Loading';
 import { useFetch } from '../hooks/useFetch';
+import { useFetchMetrics } from '../hooks/useFetchMetrics';
 
 const AppContext = React.createContext();
 
@@ -21,12 +22,11 @@ const defaultState = {
   isFileUploaded: false,
   //Product list
   showProductList: false,
-  statusProductListReq: 'idle',
-  productList: [],
+  productList: null,
   //Queries
+  alreadyRequested: false,
   queryParam: '',
-  queryParamReady: false,
-  response: {},
+  response: null,
   responseReady: false,
   //Loader
   isLoading: true,
@@ -46,17 +46,20 @@ const defaultState = {
     animation: '',
   },
   //Url
-  localUrlGetProducts: 'http://localhost:8080/products',
-  urlGetProducts: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
-  localUrlProduct_metrics: 'http://localhost:8080/product_metrics',
-  urlGetProduct_Metrics:
-    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/product_metrics',
-  urlGetCustomers:
-    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customers',
-  urlGetAverage:
-    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average',
+  //urlGetProducts: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
+  UrlGetProducts: 'http://localhost:8080/products',
+  //urlGetProductMetrics:
+  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/product_metrics',
+  urlGetProductMetrics: 'http://localhost:8080/product_metrics',
+  //urlGetCustomerMetrics:
+  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customer_metrics',
+  urlGetCustomerCount: 'http://localhost:8080/customers_count',
+  //urlGetAverageMetrics:
+  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
   urlError: 'http://httpstat.us/404',
+  urlGetOrderAvg: 'http://localhost:8080/orders_avg',
   urlCurrent: '',
+  urlCurrentMetrics: '',
 };
 
 export const AppProvider = ({ children }) => {
@@ -65,6 +68,9 @@ export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const { dataFetch, isFetchLoading, errorFetch } = useFetch(state.urlCurrent);
+
+  const { dataFetchMetrics, isFetchLoadingMetrics, errorFetchMetrics } =
+    useFetchMetrics(state.urlCurrentMetrics);
 
   //Generic dispatch
   const setDispatch = (type, payload) => {
@@ -175,6 +181,9 @@ export const AppProvider = ({ children }) => {
         dataFetch,
         isFetchLoading,
         errorFetch,
+        dataFetchMetrics,
+        isFetchLoadingMetrics,
+        errorFetchMetrics,
       }}
     >
       {state.isLoading ? <Loading /> : children}

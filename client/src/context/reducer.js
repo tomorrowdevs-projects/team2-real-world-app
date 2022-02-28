@@ -20,28 +20,28 @@ const reducer = (state, action) => {
         productList: payload,
       };
     //Queries
+    case 'SET_ALREADY_REQUESTED':
+      return {
+        ...state,
+        alreadyRequested: payload,
+      };
     case 'SET_QUERY_PARAM':
-      console.log('Query object:', payload);
       const param = new URLSearchParams(payload).toString();
-      console.log('Query parameters:', param);
       return {
         ...state,
         queryParam: param,
       };
     case 'SET_CURRENT_URL':
-      console.log('Current url', payload);
       return {
         ...state,
         urlCurrent: payload,
       };
-    case 'SET_QUERY_PARAM_READY':
-      console.log('Query ready?', payload);
+    case 'SET_CURRENT_METRICS_URL':
       return {
         ...state,
-        queryParamReady: payload,
+        urlCurrentMetrics: payload,
       };
     case 'SET_RESPONSE':
-      console.log('Response Object:', payload);
       return {
         ...state,
         response: payload,
