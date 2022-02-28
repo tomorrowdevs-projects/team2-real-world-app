@@ -7,11 +7,11 @@ const SelectAutocomplete = ({
   setSelected,
   isDisabled,
   isLoading,
-  handleClickAutocomplete,
+  handleClickReset,
 }) => {
   return (
     <Row>
-      <Col onClick={handleClickAutocomplete}>
+      <Col onClick={handleClickReset}>
         <Form.Group>
           <Form.Label>Choose a product</Form.Label>
           <Select

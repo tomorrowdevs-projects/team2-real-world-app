@@ -20,7 +20,7 @@ const SearchSection = ({
   isFetchLoading,
   isFetchLoadingMetrics,
   accordionSelected,
-  handleClickAutocomplete,
+  handleClickReset,
 
   //Date Component control
   dateFrom,
@@ -62,7 +62,7 @@ const SearchSection = ({
                           setSelected={setProductSelected}
                           isDisabled={isFetchLoading}
                           isLoading={isFetchLoading}
-                          handleClickAutocomplete={handleClickAutocomplete}
+                          handleClickReset={handleClickReset}
                         />
                       )}
                       <DateRange
@@ -70,6 +70,7 @@ const SearchSection = ({
                         setDateFrom={setDateFrom}
                         dateTo={dateTo}
                         setDateTo={setDateTo}
+                        handleClickReset={handleClickReset}
                       />
                       <Stack
                         className='align-items-start mt-3 ps-3 mb-3'

@@ -1,10 +1,16 @@
 import { Row, Col, Form } from 'react-bootstrap';
 import './date-range.scss';
 
-const DateRange = ({ dateFrom, setDateFrom, dateTo, setDateTo }) => {
+const DateRange = ({
+  dateFrom,
+  setDateFrom,
+  dateTo,
+  setDateTo,
+  handleClickReset,
+}) => {
   return (
     <Row className='search-date-box'>
-      <Col>
+      <Col onClick={handleClickReset}>
         <Form.Group>
           <Form.Label>From</Form.Label>
           <Form.Control

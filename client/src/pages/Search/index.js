@@ -217,7 +217,7 @@ const Search = () => {
   ]);
 
   //Reset url metrics and response ready
-  const handleClickAutocomplete = () => {
+  const handleClickReset = () => {
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
   };
 
@@ -281,7 +281,7 @@ const Search = () => {
       isFetchLoading={isFetchLoading}
       isFetchLoadingMetrics={isFetchLoadingMetrics}
       accordionSelected={accordionSelected}
-      handleClickAutocomplete={handleClickAutocomplete}
+      handleClickReset={handleClickReset}
       //Date Component control
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}

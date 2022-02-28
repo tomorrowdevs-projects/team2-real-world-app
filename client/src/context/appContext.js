@@ -22,7 +22,6 @@ const defaultState = {
   isFileUploaded: false,
   //Product list
   showProductList: false,
-  statusProductListReq: 'idle',
   productList: null,
   //Queries
   alreadyRequested: false,
