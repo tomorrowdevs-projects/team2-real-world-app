@@ -175,7 +175,7 @@ const Search = () => {
           dispatch({
             type: 'SET_QUERY_PARAM',
             payload: {
-              product_name: productSelected.value,
+              product_name: productSelected.id,
               start_date: dateFrom,
               end_date: dateTo,
             },
