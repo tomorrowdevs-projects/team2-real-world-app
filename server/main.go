@@ -36,6 +36,22 @@ func main() {
 	}
 	fmt.Println(string(products))
 
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	// request example
+	var request = query.Request{
+		ProductID: 1,
+		StartDate: "2019-01-22",
+		EndDate:   "2022-02-26",
+	}
+
+	// return the product MTRICS JSON
+	productsMetrics, err := query.ProductMetrics(request) // <---
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	fmt.Println(string(productsMetrics))
+
 	/* var db = dbmanager.NewDBManager()
 	log.Printf("** Try to connected\n")
 
