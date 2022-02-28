@@ -3,13 +3,12 @@ package query
 import (
 	"log"
 	dbmanager "team2-real-world-app/server/pkg/database"
-	"team2-real-world-app/server/pkg/helpers"
 )
 
 type CustomersCountResponse struct {
-	NumCustomers int    `db:"COUNT(client)"        json:"num_clients"`
-	StartDate    string `db:"MIN(order_date)"      json:"start_date"`
-	EndDate      string `db:"MAX(order_date)"      json:"end_date"`
+	NumCustomers int    `db:"COUNT(client_id)"        json:"num_clients"`
+	StartDate    string `db:"MIN(date)"      json:"start_date"`
+	EndDate      string `db:"MAX(date)"      json:"end_date"`
 }
 
 type CustomersCountRequest struct {
@@ -17,7 +16,7 @@ type CustomersCountRequest struct {
 	EndDate   string
 }
 
-func CustomersCount(request CustomersCountRequest) ([]byte, error) {
+func CustomersCount(request CustomersCountRequest) ([]CustomersCountResponse, error) {
 
 	// create Database connection
 	var db = dbmanager.NewDBManager()
@@ -31,16 +30,25 @@ func CustomersCount(request CustomersCountRequest) ([]byte, error) {
 	var response []CustomersCountResponse
 
 	err = dbx.Select(&response, "SELECT "+
-		"COUNT(client), MIN(order_date), MAX(order_date) "+
+		"COUNT(client_id), MIN(date), MAX(date) "+
 		"FROM client "+
-		"JOIN orders ON client.client_id = orders.client "+
-		"WHERE order_date BETWEEN ? and ? ",
+		"JOIN orders ON client.id = orders.client_id "+
+		"WHERE date BETWEEN ? and ? ",
 		request.StartDate, request.EndDate)
 
 	if err != nil {
 		return nil, err
 	}
-	productsMetrics, err := helpers.StructToJSON(response)
+	// productsMetrics, err := helpers.StructToJSON(response)
 
-	return productsMetrics, err
+	// return productsMetrics, err
+	return response, err
 }
+
+// Row 34 -> client -> client_id
+//		     order_date -> date
+// Row 36 -> client.client_id ->  client.id
+//			 orders.client -> orders.client_id
+// Row 37 -> order_date -> date
+
+// Rows 10 -> 12 -> Modify prefix orders and add client_id (vs client)
