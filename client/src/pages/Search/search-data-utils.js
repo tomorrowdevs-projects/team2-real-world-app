@@ -31,6 +31,7 @@ export const formatList = jsonData => {
       formattedList.push({
         value: item.product_name,
         label: item.product_name,
+        id: item.product_id
       });
     }
   });

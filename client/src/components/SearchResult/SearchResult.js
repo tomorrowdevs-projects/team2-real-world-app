@@ -25,7 +25,7 @@ const SearchResult = ({ response, select, responseLabel }) => {
               <tr>
                 <td>{response[0].product_name}</td>
                 <td>{response[0].total_orders}</td>
-                <td>€ {response[0].total_revenue}</td>
+                <td>€ {response[0].revenue}</td>
               </tr>
             </tbody>
           </>
@@ -36,7 +36,7 @@ const SearchResult = ({ response, select, responseLabel }) => {
                 <h5>{responseLabel}</h5>
               </td>
               <td>
-                <h5>{response[0].customers || response[0].average}</h5>
+                <h5>{response[0].num_clients || response[0].orders_avg}</h5>
               </td>
             </tr>
           </tbody>
