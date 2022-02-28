@@ -6,7 +6,7 @@ import (
 	"team2-real-world-app/server/pkg/helpers"
 )
 
-type Response struct {
+type ProductMetricsResponse struct {
 	ProductName string  `db:"product_name"         json:"product_name"`
 	TotalOrders int     `db:"COUNT(product_id)"    json:"total_orders"`
 	Revenue     float64 `db:"SUM(price)"           json:"revenue"`
@@ -14,13 +14,13 @@ type Response struct {
 	EndDate     string  `db:"MAX(order_date)"      json:"end_date"`
 }
 
-type Request struct {
+type ProductMetricsRequest struct {
 	ProductID int
 	StartDate string
 	EndDate   string
 }
 
-func ProductMetrics(request Request) ([]byte, error) {
+func ProductMetrics(request ProductMetricsRequest) ([]byte, error) {
 
 	// create Database connection
 	var db = dbmanager.NewDBManager()
@@ -31,7 +31,7 @@ func ProductMetrics(request Request) ([]byte, error) {
 		return nil, err
 	}
 
-	var response []Response
+	var response []ProductMetricsResponse
 
 	err = dbx.Select(&response, "SELECT "+
 		"COUNT(product_id), SUM(price), product.product_name, MIN(order_date), MAX(order_date) "+
