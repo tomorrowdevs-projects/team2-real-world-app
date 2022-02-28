@@ -6,45 +6,134 @@ import { isValidJson, formatList } from './search-data-utils';
 
 const Search = () => {
   //react-select control
-  //const [inputSelected, setInputSelected] = useState();
+  const [inputSelected, setInputSelected] = useState('');
   const [accordionSelected, setAccordionSelected] = useState(null);
-  const [productSelected, setProductSelected] = useState({});
+  const [productSelected, setProductSelected] = useState(null);
   //Date range
   //const todayDate = () => new Date().toISOString().slice(0, 10);
   const [dateFrom, setDateFrom] = useState('2022-01-01');
   const [dateTo, setDateTo] = useState('2022-02-20');
   //Context
   const {
+    //Reducer
+    dispatch,
+    setDispatch,
+    //Fetch data
+    alreadyRequested,
     dataFetch,
     isFetchLoading,
     errorFetch,
-    dispatch,
-    setDispatch,
+    dataFetchMetrics,
+    isFetchLoadingMetrics,
+    errorFetchMetrics,
     //Alerts
     alertSearch,
     //Product list
     productList,
     //Queries
     queryParam,
-    queryParamReady,
     responseReady,
     response,
     //URL
     urlGetProducts,
-    //localUrlGetProducts,
-    //urlGetProduct_Metrics,
-    localUrlProduct_metrics,
-    urlGetCustomers,
-    urlGetAverage,
+    urlGetProductMetrics,
+    urlGetCustomerMetrics,
+    urlGetAverageMetrics,
+    urlCurrent,
+    urlCurrentMetrics,
     //urlError,
   } = useAppContext();
 
-  const [currentUrlQuery, setCurrentUrlQuery] = useState('');
+  //Handle alert search page
+  useEffect(() => {
+    isFetchLoading && !productList && accordionSelected === 0
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [
+            true,
+            'Loading product list...',
+            'primary',
+            false,
+            'border',
+          ],
+        })
+      : isFetchLoading || isFetchLoadingMetrics
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Loading...', 'primary', false, 'border'],
+        })
+      : errorFetch
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, `Sorry... ${errorFetch}, try again.`, 'danger', true],
+        })
+      : errorFetchMetrics
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [
+            true,
+            `Sorry... ${errorFetchMetrics}, try again.`,
+            'danger',
+            true,
+          ],
+        })
+      : !isValidJson(dataFetch) && accordionSelected === 0
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [
+            true,
+            '...sorry, unavailable or invalid product list, try later.',
+            'danger',
+            false,
+          ],
+        })
+      : !isFetchLoading &&
+        productList &&
+        accordionSelected === 0 &&
+        !productSelected &&
+        alreadyRequested
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Please choose a product.', 'danger', false],
+        })
+      : !isValidJson(dataFetchMetrics) && alreadyRequested
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Sorry, no result...', 'danger', false],
+        })
+      : !isFetchLoading && accordionSelected === 0
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Please, select product and date.', 'primary', false],
+        })
+      : !isFetchLoading && (accordionSelected === 1 || accordionSelected === 2)
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Please, select a date range.', 'primary', false],
+        })
+      : dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [false],
+        });
+  }, [
+    isFetchLoading,
+    isFetchLoadingMetrics,
+    dataFetch,
+    dataFetchMetrics,
+    alreadyRequested,
+    responseReady,
+    productSelected,
+    productList,
+    dispatch,
+    accordionSelected,
+    errorFetch,
+    errorFetchMetrics,
+  ]);
 
-  //Product list
-  const handleLabelClick = () => {
-    setDispatch('SET_CURRENT_URL', urlGetProducts);
-  };
+  //Set product list
+  useEffect(() => {
+    console.log('Current url: ', urlCurrent);
+  }, [urlCurrent]);
 
   useEffect(() => {
     if (isFetchLoading) return;
@@ -56,150 +145,124 @@ const Search = () => {
     console.log('Product list: ', productList);
   }, [productList]);
 
-  //Handle alert search page
-  useEffect(() => {
-    isFetchLoading && productList.length === 0 && accordionSelected === 0
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [
-            true,
-            'Loading product list...',
-            'primary',
-            false,
-            'border',
-          ],
-        })
-      : isFetchLoading && productList
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, 'Loading...', 'primary', false, 'border'],
-        })
-      : errorFetch
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, `Sorry... ${errorFetch}, try again.`, 'danger', true],
-        })
-      : !isValidJson(dataFetch)
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [
-            true,
-            'Sorry, unavailable or invalid product list, try later.',
-            'danger',
-            false,
-          ],
-        })
-      : !isFetchLoading && productList && accordionSelected === 0
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, 'Please, select product and date.', 'primary', false],
-        })
-      : !isFetchLoading &&
-        productList &&
-        (accordionSelected === 1 || accordionSelected === 2)
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, 'Please, select a date range.', 'primary', false],
-        })
-      : dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [false],
-        });
-    errorFetch &&
-      setTimeout(
-        () =>
-          dispatch({
-            type: 'HANDLE_ALERT_SEARCH',
-            payload: [false],
-          }),
-        4000
-      );
-  }, [
-    isFetchLoading,
-    dataFetch,
-    productList,
-    dispatch,
-    accordionSelected,
-    errorFetch,
-  ]);
+  const handleLabelClick = () => {
+    dispatch({ type: 'SET_CURRENT_URL', payload: urlGetProducts });
+  };
 
-  //Fetch query data
+  //Set metrics response
   useEffect(() => {
-    if (queryParamReady) {
-      const getDataFetch = async () => {
-        try {
-          const response = await fetch(currentUrlQuery + '?' + queryParam);
-          if (response.ok) {
-            const fetchData = await response.json();
-            if (fetchData.length > 0) {
-              setDispatch('SET_RESPONSE', fetchData);
-              setDispatch('SET_RESPONSE_READY', true);
-              setDispatch('SET_QUERY_PARAM_READY', false);
-            } else {
-              setTimeout(() => {
-                setDispatch('SET_RESPONSE_READY', false);
-                setDispatch('SET_QUERY_PARAM_READY', false);
-              }, 500);
-            }
-            setDispatch('SET_QUERY_PARAM_READY', false);
-          } else {
-            setDispatch('SET_QUERY_PARAM_READY', false);
-            throw new Error('Sorry, network error... please try again later.');
-          }
-        } catch (error) {
-          console.log(error);
-          setDispatch('SET_QUERY_PARAM_READY', false);
-        }
-      };
-      setDispatch('SET_QUERY_PARAM_READY', false);
-      getDataFetch();
+    if (isFetchLoadingMetrics) return;
+    if (isValidJson(dataFetchMetrics)) {
+      dispatch({ type: 'SET_RESPONSE', payload: dataFetchMetrics });
+      dispatch({ type: 'SET_RESPONSE_READY', payload: true });
+      dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
     }
-  }, [setDispatch, queryParamReady, currentUrlQuery, queryParam]);
+  }, [dataFetchMetrics, isFetchLoadingMetrics, response, dispatch]);
 
   useEffect(() => {
-    console.log('Product selected: ', productSelected);
-  }, [productSelected]);
+    console.log('Response: ', response);
+    console.log('Response ready? ', responseReady);
+  }, [response, responseReady]);
 
-  //Handle submit
-  const handleSubmit = event => {
-    event.preventDefault();
-    //handleAlertSearch(false);
-    switch (event.target.id) {
-      case 'search-form-product':
-        //Set query parameters
-        if (productSelected.value) {
-          console.log('Form id: ' + event.target.id);
-          setDispatch('SET_QUERY_PARAM', {
-            product_name: productSelected.value,
+  //Set query parameters
+  useEffect(() => {
+    console.log('Query param: ', queryParam);
+    console.log('Current url metrics: ', urlCurrentMetrics);
+
+    switch (accordionSelected) {
+      case 0:
+        if (productSelected) {
+          dispatch({
+            type: 'SET_QUERY_PARAM',
+            payload: {
+              product_name: productSelected.value,
+              start_date: dateFrom,
+              end_date: dateTo,
+            },
+          });
+        }
+        return;
+      case 1:
+        dispatch({
+          type: 'SET_QUERY_PARAM',
+          payload: {
             start_date: dateFrom,
             end_date: dateTo,
-          });
-          setDispatch('SET_CURRENT_URL', localUrlProduct_metrics);
-          setDispatch('SET_QUERY_PARAM_READY', true);
-        } else {
-          // handleAlertSearch(true, 'Please, select a product.', 'danger', false);
+          },
+        });
+        return;
+      case 2:
+        dispatch({
+          type: 'SET_QUERY_PARAM',
+          payload: {
+            start_date: dateFrom,
+            end_date: dateTo,
+          },
+        });
+        return;
+      default:
+        dispatch({
+          type: 'SET_QUERY_PARAM',
+          payload: {},
+        });
+    }
+  }, [
+    accordionSelected,
+    productSelected,
+    dateFrom,
+    dateTo,
+    queryParam,
+    urlCurrentMetrics,
+    dispatch,
+  ]);
+
+  //Reset url metrics and response ready
+  const handleClickAutocomplete = () => {
+    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+  };
+
+  useEffect(() => {
+    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
+    dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
+    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+  }, [accordionSelected, dispatch]);
+
+  useEffect(() => {
+    console.log('Input selected: ', inputSelected);
+    console.log('ProductSelect: ', productSelected);
+    console.log('Already requested? ', alreadyRequested);
+  }, [inputSelected, productSelected, accordionSelected, alreadyRequested]);
+
+  //Submit queries
+  const handleSubmit = event => {
+    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
+    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
+    dispatch({ type: 'SET_RESPONSE', payload: null });
+    event.preventDefault();
+    switch (event.target.id) {
+      case 'search-form-product':
+        if (productSelected) {
+          setDispatch(
+            'SET_CURRENT_METRICS_URL',
+            urlGetProductMetrics + '?' + queryParam
+          );
         }
         return;
       case 'search-form-customers':
-        //Set query parameters
-        setDispatch('SET_QUERY_PARAM', {
-          start_date: dateFrom,
-          end_date: dateTo,
-        });
-        setDispatch('SET_CURRENT_URL', urlGetCustomers);
-        setDispatch('SET_QUERY_PARAM_READY', true);
+        setDispatch(
+          'SET_CURRENT_METRICS_URL',
+          urlGetCustomerMetrics + '?' + queryParam
+        );
         return;
       case 'search-form-average':
-        //Set query parameters
-        setDispatch('SET_QUERY_PARAM', {
-          start_date: dateFrom,
-          end_date: dateTo,
-        });
-        setDispatch('SET_CURRENT_URL', urlGetAverage);
-        setDispatch('SET_QUERY_PARAM_READY', true);
+        setDispatch(
+          'SET_CURRENT_METRICS_URL',
+          urlGetAverageMetrics + '?' + queryParam
+        );
+        console.log('Bang!');
         return;
       default:
-      // handleAlertSearch(true, 'Please, select your data.', 'primary', false);
+        return;
     }
   };
 
@@ -213,9 +276,12 @@ const Search = () => {
       handleLabelClick={handleLabelClick}
       //react-select control
       productList={productList}
-      //setInputSelected={setInputSelected}
+      setInputSelected={setInputSelected}
       setProductSelected={setProductSelected}
       isFetchLoading={isFetchLoading}
+      isFetchLoadingMetrics={isFetchLoadingMetrics}
+      accordionSelected={accordionSelected}
+      handleClickAutocomplete={handleClickAutocomplete}
       //Date Component control
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}
