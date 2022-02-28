@@ -39,16 +39,7 @@ func CustomersCount(request CustomersCountRequest) ([]CustomersCountResponse, er
 	if err != nil {
 		return nil, err
 	}
-	// productsMetrics, err := helpers.StructToJSON(response)
 
 	// return productsMetrics, err
 	return response, err
 }
-
-// Row 34 -> client -> client_id
-//		     order_date -> date
-// Row 36 -> client.client_id ->  client.id
-//			 orders.client -> orders.client_id
-// Row 37 -> order_date -> date
-
-// Rows 10 -> 12 -> Modify prefix orders and add client_id (vs client)
