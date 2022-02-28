@@ -42,61 +42,61 @@ func main() {
 	*/
 
 	/*
-		var db = dbmanager.NewDBManager()
-		//log.Printf("** Try to connected\n")
-  
-	///////////////////////////////////////////////////////////////////////////////////////////
+			var db = dbmanager.NewDBManager()
+			//log.Printf("** Try to connected\n")
 
-  // request example
-	//var request = query.ProductMetricsRequest{
-	//	ProductID: 1,
-	//	StartDate: "2019-01-22",
-	//	EndDate:   "2022-02-26",
-	//}
+		///////////////////////////////////////////////////////////////////////////////////////////
 
-	// return the product METRICS JSON
-	//productsMetrics, err := query.ProductMetrics(request) // <---
-	//if err != nil {
-	//	fmt.Println("Error", err)
-	//}
-	//fmt.Println(string(productsMetrics))
-  
-  
-	// request example
-	var requestProductMetrics = query.ProductMetricsRequest{
-		ProductID: 1,
-		StartDate: "2019-01-22",
-		EndDate:   "2022-02-26",
-	}
+	  // request example
+		//var request = query.ProductMetricsRequest{
+		//	ProductID: 1,
+		//	StartDate: "2019-01-22",
+		//	EndDate:   "2022-02-26",
+		//}
 
-	// return the product METRICS JSON
-	productsMetrics, err := query.ProductMetrics(requestProductMetrics) // <---
-	if err != nil {
-		fmt.Println("Error", err)
-	}
-	fmt.Println(string(productsMetrics))
+		// return the product METRICS JSON
+		//productsMetrics, err := query.ProductMetrics(request) // <---
+		//if err != nil {
+		//	fmt.Println("Error", err)
+		//}
+		//fmt.Println(string(productsMetrics))
 
-	/* var db = dbmanager.NewDBManager()
-	log.Printf("** Try to connected\n")
 
-		err = db.Connect(dbmanager.DBParameters{
-			UserName: "root",
-			Password: "root",
-			Host:     "localhost",
-			Port:     3306,
-			DbName:   "real_world_app",
-		})
-		if err != nil {
-			log.Printf(" ** Connection error: %s \n", err)
-			return
+		// request example
+		var requestProductMetrics = query.ProductMetricsRequest{
+			ProductID: 1,
+			StartDate: "2019-01-22",
+			EndDate:   "2022-02-26",
 		}
-		log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
 
-		err = db.PopulateStruct(entries)
-
+		// return the product METRICS JSON
+		productsMetrics, err := query.ProductMetrics(requestProductMetrics) // <---
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("Error", err)
 		}
+		fmt.Println(string(productsMetrics))
+
+		/* var db = dbmanager.NewDBManager()
+		log.Printf("** Try to connected\n")
+
+			err = db.Connect(dbmanager.DBParameters{
+				UserName: "root",
+				Password: "root",
+				Host:     "localhost",
+				Port:     3306,
+				DbName:   "real_world_app",
+			})
+			if err != nil {
+				log.Printf(" ** Connection error: %s \n", err)
+				return
+			}
+			log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
+
+			err = db.PopulateStruct(entries)
+
+			if err != nil {
+				fmt.Println(err)
+			}
 	*/
 	/*products, err := query.AllProducts(dbx)
 	if err != nil {
@@ -106,15 +106,15 @@ func main() {
 	*/
 	///////////////////////////////////////////////////////////////////////////////////////////
 
-	var requestCustomersCount = query.CustomersCountRequest{
-		StartDate: "2019-01-22",
-		EndDate:   "2022-02-26",
-	}
-
-	// return the customers count JSON
-	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
-	if err != nil {
-		fmt.Println("Error", err)
-	}
-	fmt.Println(string(customersCount))
+	// var requestCustomersCount = query.CustomersCountRequest{
+	// 	StartDate: "2019-01-22",
+	// 	EndDate:   "2022-02-26",
+	// }
+	//
+	// // return the customers count JSON
+	// customersCount, err := query.CustomersCount(requestCustomersCount) // <---
+	// if err != nil {
+	// 	fmt.Println("Error", err)
+	// }
+	// fmt.Println(string(customersCount))
 }
