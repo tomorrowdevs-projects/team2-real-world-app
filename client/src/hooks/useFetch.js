@@ -17,10 +17,8 @@ export const useFetch = url => {
         if (response.ok) {
           const responseBody = await response.json();
           if (didCancel) return;
-          setTimeout(() => {
-            setDataFetch(responseBody);
-            setIsFetchLoading(false);
-          }, 3000);
+          setDataFetch(responseBody);
+          setIsFetchLoading(false);
           console.log('Response body: ', responseBody);
         } else {
           if (didCancel) return;
@@ -29,11 +27,8 @@ export const useFetch = url => {
         }
       } catch (error) {
         if (didCancel) return;
-        setTimeout(() => {
-          setIsFetchLoading(false);
-          setErrorFetch(error);
-        }, 3000);
-
+        setIsFetchLoading(false);
+        setErrorFetch(error);
         console.log('Response != 200: ', error);
       } finally {
         setTimeout(() => setErrorFetch(''), 5000);
