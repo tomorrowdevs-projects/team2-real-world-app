@@ -44,6 +44,40 @@ func main() {
 	/*
 		var db = dbmanager.NewDBManager()
 		//log.Printf("** Try to connected\n")
+  
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+  // request example
+	//var request = query.ProductMetricsRequest{
+	//	ProductID: 1,
+	//	StartDate: "2019-01-22",
+	//	EndDate:   "2022-02-26",
+	//}
+
+	// return the product METRICS JSON
+	//productsMetrics, err := query.ProductMetrics(request) // <---
+	//if err != nil {
+	//	fmt.Println("Error", err)
+	//}
+	//fmt.Println(string(productsMetrics))
+  
+  
+	// request example
+	var requestProductMetrics = query.ProductMetricsRequest{
+		ProductID: 1,
+		StartDate: "2019-01-22",
+		EndDate:   "2022-02-26",
+	}
+
+	// return the product METRICS JSON
+	productsMetrics, err := query.ProductMetrics(requestProductMetrics) // <---
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	fmt.Println(string(productsMetrics))
+
+	/* var db = dbmanager.NewDBManager()
+	log.Printf("** Try to connected\n")
 
 		err = db.Connect(dbmanager.DBParameters{
 			UserName: "root",
@@ -72,4 +106,15 @@ func main() {
 	*/
 	///////////////////////////////////////////////////////////////////////////////////////////
 
+	var requestCustomersCount = query.CustomersCountRequest{
+		StartDate: "2019-01-22",
+		EndDate:   "2022-02-26",
+	}
+
+	// return the customers count JSON
+	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	fmt.Println(string(customersCount))
 }
