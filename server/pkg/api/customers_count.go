@@ -1,10 +1,11 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
-	"team2-real-world-app/server/pkg/model/response"
+	"team2-real-world-app/server/pkg/query"
 )
 
 func GetCustomersNumber(c *gin.Context) {
@@ -20,11 +21,23 @@ func GetCustomersNumber(c *gin.Context) {
 
 	//log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
 
-	// TODO link to database query function with two params (start date, end date)
+	// Query function with two params (start date, end date)
+
+	var requestCustomersCount = query.CustomersCountRequest{
+		StartDate: startDate,
+		EndDate:   endDate,
+	}
+
+	// return the customers count JSON
+	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	//fmt.Println(customersCount)
 
 	// NOTE: temporary customers number (for POC purpose)
-	var Customers = response.CustomersNumber{
-		NumCustomers: 50, StartDate: startDate, EndDate: endDate,
-	}
-	c.IndentedJSON(http.StatusOK, Customers)
+	// var Customers = response.CustomersNumber{
+	//	NumCustomers: 50, StartDate: startDate, EndDate: endDate,
+	// }
+	c.IndentedJSON(http.StatusOK, customersCount)
 }
