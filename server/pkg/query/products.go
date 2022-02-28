@@ -22,22 +22,13 @@ func AllProducts() ([]Product, error) {
 		return nil, err
 	}
 
-  ///// MERGE CONFLICT  
-	//return dbx, err
-  // }
-  // AllProducts - query that return all product in the Database
-  //func AllProducts() ([]Product, error) {
-	//dbx, err := DBConnection()
-	
-  defer dbx.Close()
+	defer dbx.Close()
 
 	var product []Product
 	err = dbx.Select(&product, "SELECT id, name FROM product")
 	if err != nil {
 		return nil, err
 	}
-
-	// products, err := helpers.StructToJSON(product)
 
 	// to read the JSON as key: value
 	//fmt.Println(string(products))
