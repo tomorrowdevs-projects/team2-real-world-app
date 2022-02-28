@@ -39,14 +39,14 @@ func main() {
 	///////////////////////////////////////////////////////////////////////////////////////////
 
 	// request example
-	var request = query.Request{
+	var requestProductMetrics = query.ProductMetricsRequest{
 		ProductID: 1,
 		StartDate: "2019-01-22",
 		EndDate:   "2022-02-26",
 	}
 
-	// return the product MTRICS JSON
-	productsMetrics, err := query.ProductMetrics(request) // <---
+	// return the product METRICS JSON
+	productsMetrics, err := query.ProductMetrics(requestProductMetrics) // <---
 	if err != nil {
 		fmt.Println("Error", err)
 	}
@@ -81,4 +81,15 @@ func main() {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
+	var requestCustomersCount = query.CustomersCountRequest{
+		StartDate: "2019-01-22",
+		EndDate:   "2022-02-26",
+	}
+
+	// return the customers count JSON
+	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	fmt.Println(string(customersCount))
 }
