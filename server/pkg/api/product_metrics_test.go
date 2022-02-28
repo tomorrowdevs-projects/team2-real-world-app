@@ -60,7 +60,7 @@ func TestGetOrdersAndRevenue(t *testing.T) {
 			t.Errorf("Returned an unexpected Date (see line %v)", i)
 			break
 		}
-		if metrics[i].ProductName != "*" {
+		if metrics[i].ProductName != "0" {
 			t.Errorf("Returned an unexpected Product (see line %v)", i)
 		}
 	}
