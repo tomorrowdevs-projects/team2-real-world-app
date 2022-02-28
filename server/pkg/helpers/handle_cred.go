@@ -17,7 +17,7 @@ func GetCredentials() Credentials {
 		Password: "root",
 		Host:     "localhost",
 		Port:     3306,
-		DbName:   "test_db",
+		DbName:   "real_world_app",
 	}
 
 	return credentials
