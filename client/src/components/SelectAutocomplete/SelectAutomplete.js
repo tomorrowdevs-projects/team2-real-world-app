@@ -7,15 +7,16 @@ const SelectAutocomplete = ({
   setSelected,
   isDisabled,
   isLoading,
+  handleClickAutocomplete,
 }) => {
   return (
     <Row>
-      <Col>
+      <Col onClick={handleClickAutocomplete}>
         <Form.Group>
           <Form.Label>Choose a product</Form.Label>
           <Select
             options={options}
-            // onInputChange={event => setInput(event)}
+            onInputChange={event => setInput(event)}
             onChange={event => setSelected(event)}
             isClearable
             isDisabled={isDisabled}
