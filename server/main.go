@@ -38,6 +38,21 @@ func main() {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
+  // request example
+	//var request = query.ProductMetricsRequest{
+	//	ProductID: 1,
+	//	StartDate: "2019-01-22",
+	//	EndDate:   "2022-02-26",
+	//}
+
+	// return the product METRICS JSON
+	//productsMetrics, err := query.ProductMetrics(request) // <---
+	//if err != nil {
+	//	fmt.Println("Error", err)
+	//}
+	//fmt.Println(string(productsMetrics))
+  
+  
 	// request example
 	var requestProductMetrics = query.ProductMetricsRequest{
 		ProductID: 1,
