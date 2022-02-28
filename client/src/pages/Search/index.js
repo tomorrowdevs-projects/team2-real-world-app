@@ -35,10 +35,10 @@ const Search = () => {
     responseReady,
     response,
     //URL
-    urlGetProducts,
+    UrlGetProducts,
     urlGetProductMetrics,
-    urlGetCustomerMetrics,
-    urlGetAverageMetrics,
+    urlGetCustomerCount,
+    urlGetOrderAvg,
     urlCurrent,
     urlCurrentMetrics,
     //urlError,
@@ -146,7 +146,7 @@ const Search = () => {
   }, [productList]);
 
   const handleLabelClick = () => {
-    dispatch({ type: 'SET_CURRENT_URL', payload: urlGetProducts });
+    dispatch({ type: 'SET_CURRENT_URL', payload: UrlGetProducts });
   };
 
   //Set metrics response
@@ -219,6 +219,7 @@ const Search = () => {
   //Reset url metrics and response ready
   const handleClickReset = () => {
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
   };
 
   useEffect(() => {
@@ -251,13 +252,13 @@ const Search = () => {
       case 'search-form-customers':
         setDispatch(
           'SET_CURRENT_METRICS_URL',
-          urlGetCustomerMetrics + '?' + queryParam
+          urlGetCustomerCount + '?' + queryParam
         );
         return;
       case 'search-form-average':
         setDispatch(
           'SET_CURRENT_METRICS_URL',
-          urlGetAverageMetrics + '?' + queryParam
+          urlGetOrderAvg + '?' + queryParam
         );
         console.log('Bang!');
         return;
