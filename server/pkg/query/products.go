@@ -1,7 +1,6 @@
 package query
 
 import (
-	"github.com/jmoiron/sqlx"
 	"log"
 	dbmanager "team2-real-world-app/server/pkg/database"
 	"team2-real-world-app/server/pkg/helpers"
@@ -12,20 +11,18 @@ type Product struct {
 	ProductName string `db:"product_name" json:"product_name"`
 }
 
-func DBConnection() (*sqlx.DB, error) {
+// AllProducts - query that return all product in the Database
+func AllProducts() ([]byte, error) {
 
+	// create Database connection
 	var db = dbmanager.NewDBManager()
 	log.Printf("** Try to connected\n")
 
 	dbx, err := db.GetConnection()
+	if err != nil {
+		return nil, err
+	}
 
-	return dbx, err
-}
-
-// AllProducts - query that return all product in the Database
-func AllProducts() ([]byte, error) {
-
-	dbx, err := DBConnection()
 	defer dbx.Close()
 
 	var product []Product
