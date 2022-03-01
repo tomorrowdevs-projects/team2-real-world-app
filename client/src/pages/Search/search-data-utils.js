@@ -15,7 +15,7 @@ export const isValidJson = data => {
 
 /**
  * Format a json data according to React Select options
- * @param {array of objects} list
+ * @param {array of objects} jsonData
  * @returns array
  */
 export const formatList = jsonData => {
@@ -31,7 +31,7 @@ export const formatList = jsonData => {
       formattedList.push({
         value: item.product_name,
         label: item.product_name,
-        id: item.product_id
+        id: item.product_id,
       });
     }
   });

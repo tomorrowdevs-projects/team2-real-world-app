@@ -43,9 +43,9 @@ test(`It should return true if the format of the input data is a valid json form
 //Transform the product list contained in the json
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataFormat)).toEqual([
-    { value: 'Remote Tuner', label: 'Remote Tuner' },
-    { value: 'Direct Case', label: 'Direct Case' },
-    { value: 'Audible Bridge', label: 'Audible Bridge' },
+    { value: 'Remote Tuner', label: 'Remote Tuner', id: 1 },
+    { value: 'Direct Case', label: 'Direct Case', id: 2 },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
   ]);
 });
 
@@ -71,8 +71,8 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError1)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case' },
-    { value: 'Audible Bridge', label: 'Audible Bridge' },
+    { value: 'Direct Case', label: 'Direct Case', id: 2 },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
   ]);
 });
 
@@ -98,8 +98,8 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError2)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case' },
-    { value: 'Audible Bridge', label: 'Audible Bridge' },
+    { value: 'Direct Case', label: 'Direct Case', id: 2 },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
   ]);
 });
 
@@ -125,8 +125,8 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError3)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case' },
-    { value: 'Audible Bridge', label: 'Audible Bridge' },
+    { value: 'Direct Case', label: 'Direct Case', id: 2 },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
   ]);
 });
 
@@ -152,8 +152,8 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError4)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case' },
-    { value: 'Audible Bridge', label: 'Audible Bridge' },
+    { value: 'Direct Case', label: 'Direct Case', id: 2 },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
   ]);
 });
 
@@ -179,7 +179,7 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError5)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case' },
-    { value: 'Audible Bridge', label: 'Audible Bridge' },
+    { value: 'Direct Case', label: 'Direct Case', id: 2 },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
   ]);
 });
