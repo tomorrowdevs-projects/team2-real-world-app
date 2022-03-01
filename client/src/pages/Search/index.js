@@ -20,9 +20,9 @@ const Search = () => {
     setDispatch,
     //Fetch data
     alreadyRequested,
-    dataFetch,
-    isFetchLoading,
-    errorFetch,
+    dataFetchProducts,
+    isFetchLoadingProducts,
+    errorFetchProducts,
     dataFetchMetrics,
     isFetchLoadingMetrics,
     errorFetchMetrics,
@@ -46,7 +46,7 @@ const Search = () => {
 
   //Handle alert search page
   useEffect(() => {
-    isFetchLoading && !productList && accordionSelected === 0
+    isFetchLoadingProducts && !productList && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
@@ -57,15 +57,20 @@ const Search = () => {
             'border',
           ],
         })
-      : isFetchLoading || isFetchLoadingMetrics
+      : isFetchLoadingProducts || isFetchLoadingMetrics
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Loading...', 'primary', false, 'border'],
         })
-      : errorFetch
+      : errorFetchProducts
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, `Sorry... ${errorFetch}, try again.`, 'danger', true],
+          payload: [
+            true,
+            `Sorry... ${errorFetchProducts}, try again.`,
+            'danger',
+            true,
+          ],
         })
       : errorFetchMetrics
       ? dispatch({
@@ -77,7 +82,7 @@ const Search = () => {
             true,
           ],
         })
-      : !isValidJson(dataFetch) && accordionSelected === 0
+      : !isValidJson(dataFetchProducts) && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
@@ -87,7 +92,7 @@ const Search = () => {
             false,
           ],
         })
-      : !isFetchLoading &&
+      : !isFetchLoadingProducts &&
         productList &&
         accordionSelected === 0 &&
         !productSelected &&
@@ -101,12 +106,13 @@ const Search = () => {
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Sorry, no result...', 'danger', false],
         })
-      : !isFetchLoading && accordionSelected === 0
+      : !isFetchLoadingProducts && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please, select product and date.', 'primary', false],
         })
-      : !isFetchLoading && (accordionSelected === 1 || accordionSelected === 2)
+      : !isFetchLoadingProducts &&
+        (accordionSelected === 1 || accordionSelected === 2)
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please, select a date range.', 'primary', false],
@@ -116,9 +122,9 @@ const Search = () => {
           payload: [false],
         });
   }, [
-    isFetchLoading,
+    isFetchLoadingProducts,
     isFetchLoadingMetrics,
-    dataFetch,
+    dataFetchProducts,
     dataFetchMetrics,
     alreadyRequested,
     responseReady,
@@ -126,20 +132,23 @@ const Search = () => {
     productList,
     dispatch,
     accordionSelected,
-    errorFetch,
+    errorFetchProducts,
     errorFetchMetrics,
   ]);
 
   //Set product list
   useEffect(() => {
-    console.log('Current url: ', urlCurrentProducts);
+    console.log('Current url products: ', urlCurrentProducts);
   }, [urlCurrentProducts]);
 
   useEffect(() => {
-    if (isFetchLoading) return;
-    if (isValidJson(dataFetch))
-      dispatch({ type: 'SET_PRODUCT_LIST', payload: formatList(dataFetch) });
-  }, [dataFetch, isFetchLoading, dispatch]);
+    if (isFetchLoadingProducts) return;
+    if (isValidJson(dataFetchProducts))
+      dispatch({
+        type: 'SET_PRODUCT_LIST',
+        payload: formatList(dataFetchProducts),
+      });
+  }, [dataFetchProducts, isFetchLoadingProducts, dispatch]);
 
   useEffect(() => {
     console.log('Product list: ', productList);
@@ -160,8 +169,8 @@ const Search = () => {
   }, [dataFetchMetrics, isFetchLoadingMetrics, response, dispatch]);
 
   useEffect(() => {
-    console.log('Response: ', response);
-    console.log('Response ready? ', responseReady);
+    console.log('Request result: ', response);
+    console.log('Result ready? ', responseReady);
   }, [response, responseReady]);
 
   //Set query parameters
@@ -230,7 +239,7 @@ const Search = () => {
 
   useEffect(() => {
     console.log('Input selected: ', inputSelected);
-    console.log('ProductSelect: ', productSelected);
+    console.log('Product selected: ', productSelected);
     console.log('Already requested? ', alreadyRequested);
   }, [inputSelected, productSelected, accordionSelected, alreadyRequested]);
 
@@ -260,7 +269,6 @@ const Search = () => {
           'SET_CURRENT_METRICS_URL',
           urlGetOrderAvg + '?' + queryParam
         );
-        console.log('Bang!');
         return;
       default:
         return;
@@ -279,7 +287,7 @@ const Search = () => {
       productList={productList}
       setInputSelected={setInputSelected}
       setProductSelected={setProductSelected}
-      isFetchLoading={isFetchLoading}
+      isFetchLoadingProducts={isFetchLoadingProducts}
       isFetchLoadingMetrics={isFetchLoadingMetrics}
       accordionSelected={accordionSelected}
       handleClickReset={handleClickReset}
