@@ -35,11 +35,11 @@ const Search = () => {
     responseReady,
     response,
     //URL
-    UrlGetProducts,
+    urlGetProducts,
     urlGetProductMetrics,
     urlGetCustomerCount,
     urlGetOrderAvg,
-    urlCurrent,
+    urlCurrentProducts,
     urlCurrentMetrics,
     //urlError,
   } = useAppContext();
@@ -132,8 +132,8 @@ const Search = () => {
 
   //Set product list
   useEffect(() => {
-    console.log('Current url: ', urlCurrent);
-  }, [urlCurrent]);
+    console.log('Current url: ', urlCurrentProducts);
+  }, [urlCurrentProducts]);
 
   useEffect(() => {
     if (isFetchLoading) return;
@@ -146,7 +146,7 @@ const Search = () => {
   }, [productList]);
 
   const handleLabelClick = () => {
-    dispatch({ type: 'SET_CURRENT_URL', payload: UrlGetProducts });
+    dispatch({ type: 'SET_CURRENT_URL', payload: urlGetProducts });
   };
 
   //Set metrics response
