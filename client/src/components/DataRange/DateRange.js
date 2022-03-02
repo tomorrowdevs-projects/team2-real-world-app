@@ -21,7 +21,7 @@ const DateRange = ({
         </Form.Group>
       </Col>
       <Col>
-        <Col>
+        <Col onClick={handleClickReset}>
           <Form.Group>
             <Form.Label>To</Form.Label>
             <Form.Control
