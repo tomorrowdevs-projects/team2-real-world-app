@@ -10,7 +10,11 @@ const SearchResult = ({ response, select, responseLabel }) => {
 
   return (
     <div className='container-result mt-4'>
-      <DateLabel dateFrom={start_date} dateTo={end_date} />
+      <DateLabel
+        dateText={'The search found results'}
+        dateFrom={start_date}
+        dateTo={end_date}
+      />
       <Table striped bordered hover size='sm'>
         {select ? (
           <>
