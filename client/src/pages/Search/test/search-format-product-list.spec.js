@@ -1,4 +1,4 @@
-import { isValidJson, formatList } from './search-data-utils';
+import { isValidJson, formatList } from '../search-utils';
 
 const fetchDataFormat = [
   {
@@ -15,32 +15,11 @@ const fetchDataFormat = [
   },
 ];
 
-//Validate json format
+//Transform the product list contained in the json
 test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson(fetchDataFormat)).toEqual(true);
 });
 
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
-  expect(isValidJson(undefined)).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
-  expect(isValidJson(null)).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
-  expect(isValidJson([])).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
-  expect(isValidJson([{}])).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
-  expect(isValidJson([{}, {}])).toEqual(false);
-});
-
-//Transform the product list contained in the json
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataFormat)).toEqual([
     { value: 'Remote Tuner', label: 'Remote Tuner', id: 1 },
