@@ -69,7 +69,7 @@ const Search = () => {
             true,
             `Sorry... ${errorFetchProducts}, try again.`,
             'danger',
-            true,
+            false,
           ],
         })
       : errorFetchMetrics
@@ -79,10 +79,12 @@ const Search = () => {
             true,
             `Sorry... ${errorFetchMetrics}, try again.`,
             'danger',
-            true,
+            false,
           ],
         })
-      : !isValidJson(dataFetchProducts) && accordionSelected === 0
+      : !isValidJson(dataFetchProducts) &&
+        urlCurrentProducts &&
+        accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
@@ -96,12 +98,14 @@ const Search = () => {
         productList &&
         accordionSelected === 0 &&
         !productSelected &&
-        alreadyRequested
+        (alreadyRequested || responseReady)
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please choose a product.', 'danger', false],
         })
-      : !isValidJson(dataFetchMetrics) && alreadyRequested
+      : !isFetchLoadingMetrics &&
+        !isValidJson(dataFetchMetrics) &&
+        alreadyRequested
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Sorry, no result...', 'danger', false],
@@ -122,6 +126,7 @@ const Search = () => {
           payload: [false],
         });
   }, [
+    urlCurrentProducts,
     isFetchLoadingProducts,
     isFetchLoadingMetrics,
     dataFetchProducts,
@@ -130,10 +135,10 @@ const Search = () => {
     responseReady,
     productSelected,
     productList,
-    dispatch,
     accordionSelected,
     errorFetchProducts,
     errorFetchMetrics,
+    dispatch,
   ]);
 
   //Set product list
@@ -160,13 +165,28 @@ const Search = () => {
 
   //Set metrics response
   useEffect(() => {
+    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
     if (isFetchLoadingMetrics) return;
     if (isValidJson(dataFetchMetrics)) {
       dispatch({ type: 'SET_RESPONSE', payload: dataFetchMetrics });
-      dispatch({ type: 'SET_RESPONSE_READY', payload: true });
-      dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
     }
-  }, [dataFetchMetrics, isFetchLoadingMetrics, response, dispatch]);
+  }, [isFetchLoadingMetrics, dataFetchMetrics, dispatch]);
+
+  useEffect(() => {
+    if (response) {
+      dispatch({ type: 'SET_RESPONSE_READY', payload: true });
+      dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+    } else {
+      dispatch({ type: 'SET_RESPONSE_READY', payload: false });
+    }
+    dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
+  }, [
+    response,
+    // urlCurrentMetrics,
+    alreadyRequested,
+    responseReady,
+    dispatch,
+  ]);
 
   useEffect(() => {
     console.log('Request result: ', response);
@@ -227,14 +247,19 @@ const Search = () => {
 
   //Reset url metrics and response ready
   const handleClickReset = () => {
+    console.log('Reset Click!');
+    dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
     dispatch({ type: 'SET_RESPONSE_READY', payload: false });
+    dispatch({ type: 'HANDLE_ALERT_SEARCH', payload: [false] });
+    dispatch({ type: 'SET_RESPONSE', payload: null });
   };
 
   useEffect(() => {
-    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
+    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+    dispatch({ type: 'SET_RESPONSE', payload: null });
   }, [accordionSelected, dispatch]);
 
   useEffect(() => {
@@ -245,9 +270,8 @@ const Search = () => {
 
   //Submit queries
   const handleSubmit = event => {
-    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
-    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
-    dispatch({ type: 'SET_RESPONSE', payload: null });
+    //dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
+
     event.preventDefault();
     switch (event.target.id) {
       case 'search-form-product':
@@ -256,6 +280,8 @@ const Search = () => {
             'SET_CURRENT_METRICS_URL',
             urlGetProductMetrics + '?' + queryParam
           );
+        } else {
+          dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
         }
         return;
       case 'search-form-customers':

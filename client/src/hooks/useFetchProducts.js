@@ -8,7 +8,7 @@ export const useFetchProducts = url => {
   useEffect(() => {
     if (!url) return;
     setIsFetchLoadingProducts(true);
-    console.log('Fetch started...');
+    console.log('Fetch products started...');
     const fetchData = async () => {
       const response = await fetch(url);
       console.log('Response products: ', response);

@@ -21,7 +21,6 @@ const defaultState = {
   //Upload file
   isFileUploaded: false,
   //Product list
-  showProductList: false,
   productList: null,
   //Queries
   alreadyRequested: false,
