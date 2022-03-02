@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchSection from './SearchSection';
 import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
-import { isValidJson, formatList } from './search-data-utils';
+import { isValidJson, formatList, isValidDateRange } from './search-utils';
 
 const Search = () => {
   //react-select control
@@ -103,6 +103,11 @@ const Search = () => {
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please choose a product.', 'danger', false],
         })
+      : !isFetchLoadingProducts && !isValidDateRange(dateFrom, dateTo)
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Please choose a valid date range.', 'danger', false],
+        })
       : !isFetchLoadingMetrics &&
         !isValidJson(dataFetchMetrics) &&
         alreadyRequested
@@ -138,6 +143,8 @@ const Search = () => {
     accordionSelected,
     errorFetchProducts,
     errorFetchMetrics,
+    dateFrom,
+    dateTo,
     dispatch,
   ]);
 
@@ -275,7 +282,7 @@ const Search = () => {
     event.preventDefault();
     switch (event.target.id) {
       case 'search-form-product':
-        if (productSelected) {
+        if (productSelected && isValidDateRange(dateFrom, dateTo)) {
           setDispatch(
             'SET_CURRENT_METRICS_URL',
             urlGetProductMetrics + '?' + queryParam
@@ -285,16 +292,20 @@ const Search = () => {
         }
         return;
       case 'search-form-customers':
-        setDispatch(
-          'SET_CURRENT_METRICS_URL',
-          urlGetCustomerCount + '?' + queryParam
-        );
+        if (isValidDateRange(dateFrom, dateTo)) {
+          setDispatch(
+            'SET_CURRENT_METRICS_URL',
+            urlGetCustomerCount + '?' + queryParam
+          );
+        }
         return;
       case 'search-form-average':
-        setDispatch(
-          'SET_CURRENT_METRICS_URL',
-          urlGetOrderAvg + '?' + queryParam
-        );
+        if (isValidDateRange(dateFrom, dateTo)) {
+          setDispatch(
+            'SET_CURRENT_METRICS_URL',
+            urlGetOrderAvg + '?' + queryParam
+          );
+        }
         return;
       default:
         return;
