@@ -1,20 +1,21 @@
 import { Table } from 'react-bootstrap';
 import DateLabel from '../DateLabel/DateLabel';
 
-const SearchResult = ({ response, select, responseLabel }) => {
-  if (!response[0]) {
-    return <></>;
-  }
-
-  const { start_date, end_date } = response[0];
-
+const SearchResult = ({
+  select,
+  responseLabel,
+  dateText,
+  startDate,
+  endDate,
+  productName,
+  totalOrders,
+  revenue,
+  numberOfClients,
+  ordersAvg,
+}) => {
   return (
     <div className='container-result mt-4'>
-      <DateLabel
-        dateText={'The search found results'}
-        dateFrom={start_date}
-        dateTo={end_date}
-      />
+      <DateLabel dateText={dateText} dateFrom={startDate} dateTo={endDate} />
       <Table striped bordered hover size='sm'>
         {select ? (
           <>
@@ -27,9 +28,9 @@ const SearchResult = ({ response, select, responseLabel }) => {
             </thead>
             <tbody>
               <tr>
-                <td>{response[0].product_name}</td>
-                <td>{response[0].total_orders}</td>
-                <td>€ {response[0].revenue}</td>
+                <td>{productName}</td>
+                <td>{totalOrders}</td>
+                <td>€ {revenue}</td>
               </tr>
             </tbody>
           </>
@@ -40,7 +41,10 @@ const SearchResult = ({ response, select, responseLabel }) => {
                 <h5>{responseLabel}</h5>
               </td>
               <td>
-                <h5>{response[0].num_clients || response[0].orders_avg}</h5>
+                <h5 className='text-center'>
+                  {responseLabel === 'Customers' && numberOfClients}
+                  {responseLabel === 'Average' && ordersAvg}
+                </h5>
               </td>
             </tr>
           </tbody>

@@ -31,7 +31,13 @@ const SearchSection = ({
 
   //Queries
   responseReady,
-  response,
+  startDate,
+  endDate,
+  productName,
+  totalOrders,
+  revenue,
+  numberOfClients,
+  ordersAvg,
 
   //Search alert and submit
   setAccordionSelected,
@@ -99,9 +105,16 @@ const SearchSection = ({
                     </Form>
                     {responseReady && (
                       <SearchResult
-                        response={response}
                         select={item.select}
                         responseLabel={item.responseLabel}
+                        dateText={'The search found results'}
+                        startDate={startDate}
+                        endDate={endDate}
+                        productName={productName}
+                        totalOrders={totalOrders}
+                        revenue={revenue}
+                        numberOfClients={numberOfClients}
+                        ordersAvg={ordersAvg}
                       />
                     )}
                   </Accordion.Body>

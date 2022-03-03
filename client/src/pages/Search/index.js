@@ -5,6 +5,7 @@ import { useAppContext } from '../../context/appContext';
 import { formatList } from './search-utils';
 import { isValidJson } from '../../assets/scripts/utils/json_utility/json_utility';
 import { isValidDateRange } from '../../assets/scripts/utils/date_utility/date_utility';
+import { getResponseData } from '../../assets/scripts/utils/dataManagement';
 
 const Search = () => {
   //react-select control
@@ -334,7 +335,50 @@ const Search = () => {
       handleSubmit={handleSubmit}
       //Queries
       responseReady={responseReady}
-      response={response}
+      startDate={getResponseData(
+        metricsResult,
+        'start_date',
+        'string',
+        'Data not available',
+        'date'
+      )}
+      endDate={getResponseData(
+        metricsResult,
+        'end_date',
+        'string',
+        'Data not available',
+        'date'
+      )}
+      productName={getResponseData(
+        metricsResult,
+        'product_name',
+        'string',
+        'Data not available'
+      )}
+      totalOrders={getResponseData(
+        metricsResult,
+        'total_orders',
+        'number',
+        'Data not available'
+      )}
+      revenue={getResponseData(
+        metricsResult,
+        'revenue',
+        'number',
+        'Data not available'
+      )}
+      numberOfClients={getResponseData(
+        metricsResult,
+        'num_clients',
+        'number',
+        'Data not available'
+      )}
+      ordersAvg={getResponseData(
+        metricsResult,
+        'orders_avg',
+        'number',
+        'Data not available'
+      )}
     />
   );
 };
