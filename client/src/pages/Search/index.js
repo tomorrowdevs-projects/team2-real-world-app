@@ -35,7 +35,7 @@ const Search = () => {
     //Queries
     queryParam,
     responseReady,
-    response,
+    metricsResult,
     //URL
     urlGetProducts,
     urlGetProductMetrics,
@@ -172,35 +172,29 @@ const Search = () => {
     dispatch({ type: 'SET_CURRENT_URL', payload: urlGetProducts });
   };
 
-  //Set metrics response
+  //Set metrics result
   useEffect(() => {
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
     if (isFetchLoadingMetrics) return;
     if (isValidJson(dataFetchMetrics)) {
-      dispatch({ type: 'SET_RESPONSE', payload: dataFetchMetrics });
+      dispatch({ type: 'SET_METRICS_RESULT', payload: dataFetchMetrics });
     }
   }, [isFetchLoadingMetrics, dataFetchMetrics, dispatch]);
 
   useEffect(() => {
-    if (response) {
+    if (metricsResult) {
       dispatch({ type: 'SET_RESPONSE_READY', payload: true });
       dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
     } else {
       dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     }
     dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
-  }, [
-    response,
-    // urlCurrentMetrics,
-    alreadyRequested,
-    responseReady,
-    dispatch,
-  ]);
+  }, [metricsResult, alreadyRequested, responseReady, dispatch]);
 
   useEffect(() => {
-    console.log('Request result: ', response);
+    console.log('Request result: ', metricsResult);
     console.log('Result ready? ', responseReady);
-  }, [response, responseReady]);
+  }, [metricsResult, responseReady]);
 
   //Set query parameters
   useEffect(() => {
@@ -261,14 +255,14 @@ const Search = () => {
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
     dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'HANDLE_ALERT_SEARCH', payload: [false] });
-    dispatch({ type: 'SET_RESPONSE', payload: null });
+    dispatch({ type: 'SET_METRICS_RESULT', payload: null });
   };
 
   useEffect(() => {
     dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
     dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
-    dispatch({ type: 'SET_RESPONSE', payload: null });
+    dispatch({ type: 'SET_METRICS_RESULT', payload: null });
   }, [accordionSelected, dispatch]);
 
   useEffect(() => {

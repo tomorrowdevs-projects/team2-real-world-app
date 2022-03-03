@@ -25,7 +25,7 @@ const defaultState = {
   //Queries
   alreadyRequested: false,
   queryParam: '',
-  response: null,
+  metricsResult: null,
   responseReady: false,
   //Loader
   isLoading: true,
