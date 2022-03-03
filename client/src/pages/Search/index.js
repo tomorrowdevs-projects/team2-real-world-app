@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import SearchSection from './SearchSection';
 import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
-import { isValidJson, formatList, isValidDateRange } from './search-utils';
+import { formatList } from './search-utils';
+import { isValidJson } from '../../assets/scripts/utils/json_utility/json_utility';
 
 const Search = () => {
   //react-select control

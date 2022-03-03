@@ -1,4 +1,4 @@
-import { isValidJson, formatList } from '../search-utils';
+import { isValidJson } from './json_utility';
 
 const fetchDataFormat = [
   {
