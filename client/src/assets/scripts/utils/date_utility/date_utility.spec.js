@@ -1,4 +1,4 @@
-import { isValidDate, isValidDateRange } from '../search-utils';
+import { isValidDate, isValidDateRange } from './date_utility';
 
 const fetchDate = '2022-03-01';
 

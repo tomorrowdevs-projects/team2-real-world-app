@@ -4,6 +4,7 @@ import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
 import { formatList } from './search-utils';
 import { isValidJson } from '../../assets/scripts/utils/json_utility/json_utility';
+import { isValidDateRange } from '../../assets/scripts/utils/date_utility/date_utility';
 
 const Search = () => {
   //react-select control
