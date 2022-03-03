@@ -1,4 +1,5 @@
 import { Accordion, Form, Button, Stack } from 'react-bootstrap';
+import './search.scss';
 import SelectAutocomplete from '../../components/SelectAutocomplete/SelectAutomplete';
 import DateRange from '../../components/DataRange/DateRange';
 import SearchResult from '../../components/SearchResult/SearchResult';
@@ -40,8 +41,11 @@ const SearchSection = ({
     <main>
       <section>
         <h1>Search data</h1>
-        <div className='forms-search'>
-          <Accordion onSelect={event => setAccordionSelected(event)}>
+        <div className='search-accordion'>
+          <Accordion
+            onSelect={event => setAccordionSelected(event)}
+            className=''
+          >
             {searchList.map((item, index) => {
               return (
                 <Accordion.Item
@@ -73,7 +77,7 @@ const SearchSection = ({
                         handleClickReset={handleClickReset}
                       />
                       <Stack
-                        className='align-items-start mt-3 ps-3 mb-3'
+                        className='align-items-start mt-5 ps-3 mb-3'
                         style={{ minHeight: '100px' }}
                         direction='horizontal'
                         gap={3}

@@ -1,4 +1,12 @@
+@import '../../assets/style/custom';
+
 .upload-file-section {
+  .form-control {
+    border-radius: $border-radius;
+    @media all and (min-width: 576px) {
+      min-width: 500px;
+    }
+  }
   .button-box {
     position: relative;
     display: flex;
