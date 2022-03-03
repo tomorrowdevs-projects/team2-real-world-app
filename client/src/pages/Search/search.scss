@@ -1,12 +1,5 @@
-@import '../../assets/style/custom';
-
 .search-accordion {
   @media all and (min-width: 576px) {
     min-width: 500px;
   }
-}
-
-.css-1s2u09g-control {
-  border-radius: $border-radius;
-  border: solid 2px #ced4da;
 }
