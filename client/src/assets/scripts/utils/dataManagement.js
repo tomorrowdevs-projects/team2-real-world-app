@@ -27,10 +27,18 @@ export const getUserData = (user, data, defaultPhoto) => {
  * @param {string} date
  * @returns {any}
  */
-export const getResponseData = (prop, type, text, date = null) => {
-  if (date === 'date') {
-    return prop && typeof prop === type && isValidDate(prop) ? prop : text;
+export const getResponseData = (list, prop, type, text, date = null) => {
+  if (!list) {
+    return '';
+  } else if (date === 'date') {
+    return list[0][prop] &&
+      typeof list[0][prop] === type &&
+      isValidDate(list[0][prop])
+      ? list[0][prop]
+      : text;
   } else {
-    return prop && typeof prop === type ? prop : text;
+    return list[0][prop] && typeof list[0][prop] === type
+      ? list[0][prop]
+      : text;
   }
 };
