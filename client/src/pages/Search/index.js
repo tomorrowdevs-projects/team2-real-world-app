@@ -4,8 +4,12 @@ import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
 import { formatList } from './search-utils';
 import { isValidJson } from '../../assets/scripts/utils/json_utility/json_utility';
-import { isValidDateRange } from '../../assets/scripts/utils/date_utility/date_utility';
+import {
+  isValidDateRange,
+  isInvalidDateRangeProp,
+} from '../../assets/scripts/utils/date_utility/date_utility';
 import { getResponseData } from '../../assets/scripts/utils/dataManagement';
+import { convertDateDMY } from '../../assets/scripts/utils/date_utility/date_utility';
 
 const Search = () => {
   //react-select control
@@ -274,8 +278,6 @@ const Search = () => {
 
   //Submit queries
   const handleSubmit = event => {
-    //dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
-
     event.preventDefault();
     switch (event.target.id) {
       case 'search-form-product':
@@ -335,19 +337,39 @@ const Search = () => {
       handleSubmit={handleSubmit}
       //Queries
       responseReady={responseReady}
-      startDate={getResponseData(
-        metricsResult,
-        'start_date',
-        'string',
-        'Data not available',
-        'date'
+      isInvalidDateRangeProp={isInvalidDateRangeProp(
+        getResponseData(
+          metricsResult,
+          'start_date',
+          'string',
+          'Data not available',
+          'date'
+        ),
+        getResponseData(
+          metricsResult,
+          'start_date',
+          'string',
+          'Data not available',
+          'date'
+        )
       )}
-      endDate={getResponseData(
-        metricsResult,
-        'end_date',
-        'string',
-        'Data not available',
-        'date'
+      startDate={convertDateDMY(
+        getResponseData(
+          metricsResult,
+          'start_date',
+          'string',
+          '<data not available>',
+          'date'
+        )
+      )}
+      endDate={convertDateDMY(
+        getResponseData(
+          metricsResult,
+          'end_date',
+          'string',
+          '<data not available>',
+          'date'
+        )
       )}
       productName={getResponseData(
         metricsResult,

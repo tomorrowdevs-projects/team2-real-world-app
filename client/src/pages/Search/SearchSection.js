@@ -31,6 +31,7 @@ const SearchSection = ({
 
   //Queries
   responseReady,
+  isInvalidDateRangeProp,
   startDate,
   endDate,
   productName,
@@ -106,6 +107,7 @@ const SearchSection = ({
                     {responseReady && (
                       <SearchResult
                         select={item.select}
+                        isInvalidDateRangeProp={isInvalidDateRangeProp}
                         responseLabel={item.responseLabel}
                         dateText={'The search found results'}
                         startDate={startDate}
