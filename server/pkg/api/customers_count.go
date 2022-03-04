@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
+	"team2-real-world-app/server/pkg/model/request"
 	"team2-real-world-app/server/pkg/query"
 )
 
@@ -23,7 +24,7 @@ func GetCustomersNumber(c *gin.Context) {
 
 	// Query function with two params (start date, end date)
 
-	var requestCustomersCount = query.CustomersCountRequest{
+	var requestCustomersCount = request.CustomersCount{
 		StartDate: startDate,
 		EndDate:   endDate,
 	}
