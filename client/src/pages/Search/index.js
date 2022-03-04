@@ -342,14 +342,14 @@ const Search = () => {
           metricsResult,
           'start_date',
           'string',
-          'Data not available',
+          '<data not available>',
           'date'
         ),
         getResponseData(
           metricsResult,
           'start_date',
           'string',
-          'Data not available',
+          '<data not available>',
           'date'
         )
       )}
@@ -375,31 +375,31 @@ const Search = () => {
         metricsResult,
         'product_name',
         'string',
-        'Data not available'
+        '<data not available>'
       )}
       totalOrders={getResponseData(
         metricsResult,
-        'total_orders',
+        'total_ordersx',
         'number',
-        'Data not available'
+        '<data not available>'
       )}
       revenue={getResponseData(
         metricsResult,
         'revenue',
         'number',
-        'Data not available'
+        '<data not available>'
       )}
       numberOfClients={getResponseData(
         metricsResult,
         'num_clients',
         'number',
-        'Data not available'
+        '<data not available>'
       )}
       ordersAvg={getResponseData(
         metricsResult,
         'orders_avg',
         'number',
-        'Data not available'
+        '<data not available>'
       )}
     />
   );
