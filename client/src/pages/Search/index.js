@@ -48,7 +48,6 @@ const Search = () => {
     urlGetOrderAvg,
     urlCurrentProducts,
     urlCurrentMetrics,
-    //urlError,
   } = useAppContext();
 
   //Handle alert search page
@@ -69,22 +68,12 @@ const Search = () => {
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Loading...', 'primary', false, 'border'],
         })
-      : errorFetchProducts
+      : errorFetchProducts && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
             true,
-            `Sorry... ${errorFetchProducts}, try again.`,
-            'danger',
-            false,
-          ],
-        })
-      : errorFetchMetrics
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [
-            true,
-            `Sorry... ${errorFetchMetrics}, try again.`,
+            `Sorry... ${errorFetchProducts}. Unavailable product list, try later.`,
             'danger',
             false,
           ],
@@ -96,10 +85,15 @@ const Search = () => {
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
             true,
-            '...sorry, unavailable or invalid product list, try later.',
+            'Sorry, invalid product list, try later.',
             'danger',
             false,
           ],
+        })
+      : errorFetchMetrics
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, `Sorry... ${errorFetchMetrics}.`, 'danger', false],
         })
       : !isFetchLoadingProducts &&
         productList &&
@@ -120,7 +114,7 @@ const Search = () => {
         alreadyRequested
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, 'Sorry, no result...', 'danger', false],
+          payload: [true, 'Sorry, no result. Try again.', 'danger', false],
         })
       : !isFetchLoadingProducts && accordionSelected === 0
       ? dispatch({
@@ -332,6 +326,7 @@ const Search = () => {
       isFetchLoadingMetrics={isFetchLoadingMetrics}
       accordionSelected={accordionSelected}
       handleClickReset={handleClickReset}
+      errorFetchProducts={errorFetchProducts}
       //Date Component control
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}

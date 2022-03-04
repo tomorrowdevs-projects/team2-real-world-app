@@ -22,6 +22,7 @@ const SearchSection = ({
   isFetchLoadingMetrics,
   accordionSelected,
   handleClickReset,
+  errorFetchProducts,
 
   //Date Component control
   dateFrom,
@@ -71,7 +72,7 @@ const SearchSection = ({
                           options={productList}
                           setInput={setInputSelected}
                           setSelected={setProductSelected}
-                          isDisabled={isFetchLoading}
+                          isDisabled={isFetchLoading || errorFetchProducts}
                           isLoading={isFetchLoading}
                           handleClickReset={handleClickReset}
                         />
