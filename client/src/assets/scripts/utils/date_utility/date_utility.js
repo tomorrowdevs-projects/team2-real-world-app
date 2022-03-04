@@ -38,3 +38,20 @@ export const isInvalidDateRangeProp = (dateInput1, dateInput2) => {
   }
 };
 
+/**
+ * Convert date from ISO YYY-MM-DD in DD/MM/YYYY
+ * The validity of the parameter must have already been checked
+ * If the format of the parameter is YYYY-MM-DD returns DD/MM/YYYY
+ * otherwise returns the parameter
+ * @param {string} dateInput
+ * @returns {string}
+ */
+export const convertDateDMY = dateInput => {
+  if (isValidDate(dateInput)) {
+    return `${dateInput.split('-')[2]}/${dateInput.split('-')[1]}/${
+      dateInput.split('-')[0]
+    }`;
+  } else {
+    return dateInput;
+  }
+};
