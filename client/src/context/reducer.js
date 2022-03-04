@@ -31,7 +31,7 @@ const reducer = (state, action) => {
         ...state,
         queryParam: param,
       };
-    case 'SET_CURRENT_URL':
+    case 'SET_CURRENT_PRODUCTS_URL':
       return {
         ...state,
         urlCurrent: payload,

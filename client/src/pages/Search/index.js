@@ -162,19 +162,22 @@ const Search = () => {
 
   useEffect(() => {
     if (isFetchLoadingProducts) return;
+    if (errorFetchProducts) {
+      dispatch({ type: 'SET_CURRENT_PRODUCTS_URL', payload: '' });
+    }
     if (isValidJson(dataFetchProducts))
       dispatch({
         type: 'SET_PRODUCT_LIST',
         payload: formatList(dataFetchProducts),
       });
-  }, [dataFetchProducts, isFetchLoadingProducts, dispatch]);
+  }, [dataFetchProducts, isFetchLoadingProducts, errorFetchProducts, dispatch]);
 
   useEffect(() => {
     console.log('Product list: ', productList);
   }, [productList]);
 
   const handleLabelClick = () => {
-    dispatch({ type: 'SET_CURRENT_URL', payload: urlGetProducts });
+    dispatch({ type: 'SET_CURRENT_PRODUCTS_URL', payload: urlGetProducts });
   };
 
   //Set metrics result
@@ -261,6 +264,8 @@ const Search = () => {
     dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'HANDLE_ALERT_SEARCH', payload: [false] });
     dispatch({ type: 'SET_METRICS_RESULT', payload: null });
+    errorFetchProducts &&
+      dispatch({ type: 'SET_CURRENT_PRODUCTS_URL', payload: urlGetProducts });
   };
 
   useEffect(() => {
