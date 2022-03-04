@@ -10,9 +10,9 @@ export const useFetchProducts = url => {
     setIsFetchLoadingProducts(true);
     console.log('Fetch products started...');
     const fetchData = async () => {
-      const response = await fetch(url);
-      console.log('Response products: ', response);
       try {
+        const response = await fetch(url);
+        console.log('Response products: ', response);
         if (response.ok) {
           const responseBody = await response.json();
           setDataFetchProducts(responseBody);
@@ -26,8 +26,6 @@ export const useFetchProducts = url => {
         setIsFetchLoadingProducts(false);
         setErrorFetchProducts(error);
         console.log('Response products request!= 200: ', error);
-      } finally {
-        setTimeout(() => setErrorFetchProducts(''), 5000);
       }
     };
     fetchData();

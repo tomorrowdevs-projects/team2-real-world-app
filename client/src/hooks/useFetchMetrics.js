@@ -13,9 +13,9 @@ export const useFetchMetrics = url => {
     setIsFetchLoadingMetrics(true);
     console.log('Fetch metrics started...');
     const fetchData = async () => {
-      const response = await fetch(url);
-      console.log('Response metrics: ', response);
       try {
+        const response = await fetch(url);
+        console.log('Response metrics: ', response);
         if (response.ok) {
           const responseBody = await response.json();
           setDataFetchMetrics(responseBody);
@@ -30,7 +30,7 @@ export const useFetchMetrics = url => {
         setIsFetchLoadingMetrics(false);
         console.log('Response metrics request != 200 metrics: ', error);
       } finally {
-        setTimeout(() => setErrorFetchMetrics(''), 1500);
+        setTimeout(() => setErrorFetchMetrics(''), 2000);
       }
     };
     fetchData();
