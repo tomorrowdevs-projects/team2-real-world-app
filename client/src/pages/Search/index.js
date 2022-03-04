@@ -337,6 +337,14 @@ const Search = () => {
       handleSubmit={handleSubmit}
       //Queries
       responseReady={responseReady}
+      isInvalidProductName={
+        getResponseData(
+          metricsResult,
+          'product_name',
+          'string',
+          '<data not available>'
+        ) === '<data not available>' && accordionSelected === 0
+      }
       isInvalidDateRangeProp={isInvalidDateRangeProp(
         getResponseData(
           metricsResult,
@@ -347,7 +355,7 @@ const Search = () => {
         ),
         getResponseData(
           metricsResult,
-          'start_date',
+          'end_date',
           'string',
           '<data not available>',
           'date'
@@ -379,7 +387,7 @@ const Search = () => {
       )}
       totalOrders={getResponseData(
         metricsResult,
-        'total_ordersx',
+        'total_orders',
         'number',
         '<data not available>'
       )}

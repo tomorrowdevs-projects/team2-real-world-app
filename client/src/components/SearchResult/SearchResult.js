@@ -3,6 +3,7 @@ import DateLabel from '../DateLabel/DateLabel';
 
 const SearchResult = ({
   select,
+  isInvalidProductName,
   isInvalidDateRangeProp,
   responseLabel,
   dateText,
@@ -14,7 +15,10 @@ const SearchResult = ({
   numberOfClients,
   ordersAvg,
 }) => {
-  if (isInvalidDateRangeProp) {
+  console.log(isInvalidProductName);
+  if (isInvalidProductName) {
+    return <h4>There is no data available for the selected product.</h4>;
+  } else if (isInvalidDateRangeProp) {
     return <h4>Invalid date range. Data not available.</h4>;
   } else
     return (
