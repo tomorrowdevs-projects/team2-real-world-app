@@ -1,8 +1,8 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/request"
@@ -32,7 +32,7 @@ func GetCustomersNumber(c *gin.Context) {
 	// return the customers count JSON
 	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
 	if err != nil {
-		fmt.Println("Error", err)
+		log.Println(" ▸ Error: ", err)
 	}
 	//fmt.Println(customersCount)
 
