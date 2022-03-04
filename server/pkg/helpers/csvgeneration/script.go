@@ -9,8 +9,7 @@ import (
 	"os"
 	"strconv"
 
-	//"strings"
-
+	"github.com/google/uuid"
 	"github.com/icrowley/fake"
 )
 
@@ -53,16 +52,16 @@ func BuildCSV(nOrders int, percentageUniqueClients int) {
 			// adding product only if not already present
 			if contains(products, product) == false {
 				products = append(products, product)
-				productIds = append(productIds, strconv.Itoa(i+1))
+				productIds = append(productIds, uuid.New().String())
 			}
 		}
 		clientNames[i] = fake.FirstName()
 		clientSurnames[i] = fake.LastName()
-		clientIds[i] = strconv.Itoa(i + 1)
+		clientIds[i] = uuid.New().String()
 	}
 
 	println(strconv.Itoa(nOrders) + " total orders")
-	println(strconv.Itoa(len(products)) + " avilable products")
+	println(strconv.Itoa(len(products)) + " available products")
 	println(strconv.Itoa(len(clientNames)) + " unique clients")
 
 	// populating the columns with as many entries as number of orders
@@ -70,7 +69,7 @@ func BuildCSV(nOrders int, percentageUniqueClients int) {
 		productRandomIndex := rand.Intn(len(products))
 		clientRandomIndex := rand.Intn(nUniqueClients)
 		row := []string{
-			strconv.Itoa(i + 1),
+			uuid.New().String(),
 			clientIds[clientRandomIndex],
 			clientNames[clientRandomIndex],
 			clientSurnames[clientRandomIndex],

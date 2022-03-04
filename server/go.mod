@@ -8,6 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gocarina/gocsv v0.0.0-20211203214250-4735fba0c1d9
+	github.com/google/uuid v1.3.0
 	github.com/icrowley/fake v0.0.0-20180203215853-4178557ae428
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/joho/godotenv v1.4.0
