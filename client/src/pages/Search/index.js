@@ -17,9 +17,9 @@ const Search = () => {
   const [accordionSelected, setAccordionSelected] = useState(null);
   const [productSelected, setProductSelected] = useState(null);
   //Date range
-  //const todayDate = () => new Date().toISOString().slice(0, 10);
-  const [dateFrom, setDateFrom] = useState('2022-01-01');
-  const [dateTo, setDateTo] = useState('2022-02-20');
+  const todayDate = () => new Date().toISOString().slice(0, 10);
+  const [dateFrom, setDateFrom] = useState(todayDate);
+  const [dateTo, setDateTo] = useState(todayDate);
   //Context
   const {
     //Reducer
