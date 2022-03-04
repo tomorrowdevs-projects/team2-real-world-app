@@ -1,4 +1,5 @@
 import { Accordion, Form, Button, Stack } from 'react-bootstrap';
+import './search.scss';
 import SelectAutocomplete from '../../components/SelectAutocomplete/SelectAutomplete';
 import DateRange from '../../components/DataRange/DateRange';
 import SearchResult from '../../components/SearchResult/SearchResult';
@@ -21,6 +22,7 @@ const SearchSection = ({
   isFetchLoadingMetrics,
   accordionSelected,
   handleClickReset,
+  errorFetchProducts,
 
   //Date Component control
   dateFrom,
@@ -30,7 +32,15 @@ const SearchSection = ({
 
   //Queries
   responseReady,
-  response,
+  isInvalidProductName,
+  isInvalidDateRangeProp,
+  startDate,
+  endDate,
+  productName,
+  totalOrders,
+  revenue,
+  numberOfClients,
+  ordersAvg,
 
   //Search alert and submit
   setAccordionSelected,
@@ -40,8 +50,11 @@ const SearchSection = ({
     <main>
       <section>
         <h1>Search data</h1>
-        <div className='forms-search'>
-          <Accordion onSelect={event => setAccordionSelected(event)}>
+        <div className='search-accordion'>
+          <Accordion
+            onSelect={event => setAccordionSelected(event)}
+            className=''
+          >
             {searchList.map((item, index) => {
               return (
                 <Accordion.Item
@@ -60,7 +73,7 @@ const SearchSection = ({
                           options={productList}
                           setInput={setInputSelected}
                           setSelected={setProductSelected}
-                          isDisabled={isFetchLoading}
+                          isDisabled={isFetchLoading || errorFetchProducts}
                           isLoading={isFetchLoading}
                           handleClickReset={handleClickReset}
                         />
@@ -73,7 +86,7 @@ const SearchSection = ({
                         handleClickReset={handleClickReset}
                       />
                       <Stack
-                        className='align-items-start mt-3 ps-3 mb-3'
+                        className='align-items-start mt-5 ps-3 mb-3'
                         style={{ minHeight: '100px' }}
                         direction='horizontal'
                         gap={3}
@@ -95,9 +108,18 @@ const SearchSection = ({
                     </Form>
                     {responseReady && (
                       <SearchResult
-                        response={response}
                         select={item.select}
+                        isInvalidProductName={isInvalidProductName}
+                        isInvalidDateRangeProp={isInvalidDateRangeProp}
                         responseLabel={item.responseLabel}
+                        dateText={'The search found results'}
+                        startDate={startDate}
+                        endDate={endDate}
+                        productName={productName}
+                        totalOrders={totalOrders}
+                        revenue={revenue}
+                        numberOfClients={numberOfClients}
+                        ordersAvg={ordersAvg}
                       />
                     )}
                   </Accordion.Body>

@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import SearchSection from './SearchSection';
 import { searchList } from './search-list';
 import { useAppContext } from '../../context/appContext';
-import { isValidJson, formatList } from './search-data-utils';
+import { formatList } from './search-utils';
+import { isValidJson } from '../../assets/scripts/utils/json_utility/json_utility';
+import {
+  isValidDateRange,
+  isInvalidDateRangeProp,
+} from '../../assets/scripts/utils/date_utility/date_utility';
+import { getResponseData } from '../../assets/scripts/utils/dataManagement';
+import { convertDateDMY } from '../../assets/scripts/utils/date_utility/date_utility';
 
 const Search = () => {
   //react-select control
@@ -10,9 +17,9 @@ const Search = () => {
   const [accordionSelected, setAccordionSelected] = useState(null);
   const [productSelected, setProductSelected] = useState(null);
   //Date range
-  //const todayDate = () => new Date().toISOString().slice(0, 10);
-  const [dateFrom, setDateFrom] = useState('2022-01-01');
-  const [dateTo, setDateTo] = useState('2022-02-20');
+  const todayDate = () => new Date().toISOString().slice(0, 10);
+  const [dateFrom, setDateFrom] = useState(todayDate);
+  const [dateTo, setDateTo] = useState(todayDate);
   //Context
   const {
     //Reducer
@@ -20,9 +27,9 @@ const Search = () => {
     setDispatch,
     //Fetch data
     alreadyRequested,
-    dataFetch,
-    isFetchLoading,
-    errorFetch,
+    dataFetchProducts,
+    isFetchLoadingProducts,
+    errorFetchProducts,
     dataFetchMetrics,
     isFetchLoadingMetrics,
     errorFetchMetrics,
@@ -33,20 +40,19 @@ const Search = () => {
     //Queries
     queryParam,
     responseReady,
-    response,
+    metricsResult,
     //URL
-    UrlGetProducts,
+    urlGetProducts,
     urlGetProductMetrics,
     urlGetCustomerCount,
     urlGetOrderAvg,
-    urlCurrent,
+    urlCurrentProducts,
     urlCurrentMetrics,
-    //urlError,
   } = useAppContext();
 
   //Handle alert search page
   useEffect(() => {
-    isFetchLoading && !productList && accordionSelected === 0
+    isFetchLoadingProducts && !productList && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
@@ -57,56 +63,66 @@ const Search = () => {
             'border',
           ],
         })
-      : isFetchLoading || isFetchLoadingMetrics
+      : isFetchLoadingProducts || isFetchLoadingMetrics
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Loading...', 'primary', false, 'border'],
         })
-      : errorFetch
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, `Sorry... ${errorFetch}, try again.`, 'danger', true],
-        })
-      : errorFetchMetrics
+      : errorFetchProducts && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [
             true,
-            `Sorry... ${errorFetchMetrics}, try again.`,
-            'danger',
-            true,
-          ],
-        })
-      : !isValidJson(dataFetch) && accordionSelected === 0
-      ? dispatch({
-          type: 'HANDLE_ALERT_SEARCH',
-          payload: [
-            true,
-            '...sorry, unavailable or invalid product list, try later.',
+            `Sorry... ${errorFetchProducts}. Unavailable product list, try later.`,
             'danger',
             false,
           ],
         })
-      : !isFetchLoading &&
+      : !isValidJson(dataFetchProducts) &&
+        urlCurrentProducts &&
+        accordionSelected === 0
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [
+            true,
+            'Sorry, invalid product list, try later.',
+            'danger',
+            false,
+          ],
+        })
+      : errorFetchMetrics
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, `Sorry... ${errorFetchMetrics}.`, 'danger', false],
+        })
+      : !isFetchLoadingProducts &&
         productList &&
         accordionSelected === 0 &&
         !productSelected &&
-        alreadyRequested
+        (alreadyRequested || responseReady)
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please choose a product.', 'danger', false],
         })
-      : !isValidJson(dataFetchMetrics) && alreadyRequested
+      : !isFetchLoadingProducts && !isValidDateRange(dateFrom, dateTo)
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
-          payload: [true, 'Sorry, no result...', 'danger', false],
+          payload: [true, 'Please choose a valid date range.', 'danger', false],
         })
-      : !isFetchLoading && accordionSelected === 0
+      : !isFetchLoadingMetrics &&
+        !isValidJson(dataFetchMetrics) &&
+        alreadyRequested
+      ? dispatch({
+          type: 'HANDLE_ALERT_SEARCH',
+          payload: [true, 'Sorry, no result. Try again.', 'danger', false],
+        })
+      : !isFetchLoadingProducts && accordionSelected === 0
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please, select product and date.', 'primary', false],
         })
-      : !isFetchLoading && (accordionSelected === 1 || accordionSelected === 2)
+      : !isFetchLoadingProducts &&
+        (accordionSelected === 1 || accordionSelected === 2)
       ? dispatch({
           type: 'HANDLE_ALERT_SEARCH',
           payload: [true, 'Please, select a date range.', 'primary', false],
@@ -116,53 +132,71 @@ const Search = () => {
           payload: [false],
         });
   }, [
-    isFetchLoading,
+    urlCurrentProducts,
+    isFetchLoadingProducts,
     isFetchLoadingMetrics,
-    dataFetch,
+    dataFetchProducts,
     dataFetchMetrics,
     alreadyRequested,
     responseReady,
     productSelected,
     productList,
-    dispatch,
     accordionSelected,
-    errorFetch,
+    errorFetchProducts,
     errorFetchMetrics,
+    dateFrom,
+    dateTo,
+    dispatch,
   ]);
 
   //Set product list
   useEffect(() => {
-    console.log('Current url: ', urlCurrent);
-  }, [urlCurrent]);
+    console.log('Current url products: ', urlCurrentProducts);
+  }, [urlCurrentProducts]);
 
   useEffect(() => {
-    if (isFetchLoading) return;
-    if (isValidJson(dataFetch))
-      dispatch({ type: 'SET_PRODUCT_LIST', payload: formatList(dataFetch) });
-  }, [dataFetch, isFetchLoading, dispatch]);
+    if (isFetchLoadingProducts) return;
+    if (errorFetchProducts) {
+      dispatch({ type: 'SET_CURRENT_PRODUCTS_URL', payload: '' });
+    }
+    if (isValidJson(dataFetchProducts))
+      dispatch({
+        type: 'SET_PRODUCT_LIST',
+        payload: formatList(dataFetchProducts),
+      });
+  }, [dataFetchProducts, isFetchLoadingProducts, errorFetchProducts, dispatch]);
 
   useEffect(() => {
     console.log('Product list: ', productList);
   }, [productList]);
 
   const handleLabelClick = () => {
-    dispatch({ type: 'SET_CURRENT_URL', payload: UrlGetProducts });
+    dispatch({ type: 'SET_CURRENT_PRODUCTS_URL', payload: urlGetProducts });
   };
 
-  //Set metrics response
+  //Set metrics result
   useEffect(() => {
+    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
     if (isFetchLoadingMetrics) return;
     if (isValidJson(dataFetchMetrics)) {
-      dispatch({ type: 'SET_RESPONSE', payload: dataFetchMetrics });
-      dispatch({ type: 'SET_RESPONSE_READY', payload: true });
-      dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
+      dispatch({ type: 'SET_METRICS_RESULT', payload: dataFetchMetrics });
     }
-  }, [dataFetchMetrics, isFetchLoadingMetrics, response, dispatch]);
+  }, [isFetchLoadingMetrics, dataFetchMetrics, dispatch]);
 
   useEffect(() => {
-    console.log('Response: ', response);
-    console.log('Response ready? ', responseReady);
-  }, [response, responseReady]);
+    if (metricsResult) {
+      dispatch({ type: 'SET_RESPONSE_READY', payload: true });
+      dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+    } else {
+      dispatch({ type: 'SET_RESPONSE_READY', payload: false });
+    }
+    dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
+  }, [metricsResult, alreadyRequested, responseReady, dispatch]);
+
+  useEffect(() => {
+    console.log('Request result: ', metricsResult);
+    console.log('Result ready? ', responseReady);
+  }, [metricsResult, responseReady]);
 
   //Set query parameters
   useEffect(() => {
@@ -218,49 +252,58 @@ const Search = () => {
 
   //Reset url metrics and response ready
   const handleClickReset = () => {
+    console.log('Reset Click!');
+    dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
     dispatch({ type: 'SET_RESPONSE_READY', payload: false });
+    dispatch({ type: 'HANDLE_ALERT_SEARCH', payload: [false] });
+    dispatch({ type: 'SET_METRICS_RESULT', payload: null });
+    errorFetchProducts &&
+      dispatch({ type: 'SET_CURRENT_PRODUCTS_URL', payload: urlGetProducts });
   };
 
   useEffect(() => {
-    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'SET_CURRENT_METRICS_URL', payload: '' });
+    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
     dispatch({ type: 'SET_ALREADY_REQUESTED', payload: false });
+    dispatch({ type: 'SET_METRICS_RESULT', payload: null });
   }, [accordionSelected, dispatch]);
 
   useEffect(() => {
     console.log('Input selected: ', inputSelected);
-    console.log('ProductSelect: ', productSelected);
+    console.log('Product selected: ', productSelected);
     console.log('Already requested? ', alreadyRequested);
   }, [inputSelected, productSelected, accordionSelected, alreadyRequested]);
 
   //Submit queries
   const handleSubmit = event => {
-    dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
-    dispatch({ type: 'SET_RESPONSE_READY', payload: false });
-    dispatch({ type: 'SET_RESPONSE', payload: null });
     event.preventDefault();
     switch (event.target.id) {
       case 'search-form-product':
-        if (productSelected) {
+        if (productSelected && isValidDateRange(dateFrom, dateTo)) {
           setDispatch(
             'SET_CURRENT_METRICS_URL',
             urlGetProductMetrics + '?' + queryParam
           );
+        } else {
+          dispatch({ type: 'SET_ALREADY_REQUESTED', payload: true });
         }
         return;
       case 'search-form-customers':
-        setDispatch(
-          'SET_CURRENT_METRICS_URL',
-          urlGetCustomerCount + '?' + queryParam
-        );
+        if (isValidDateRange(dateFrom, dateTo)) {
+          setDispatch(
+            'SET_CURRENT_METRICS_URL',
+            urlGetCustomerCount + '?' + queryParam
+          );
+        }
         return;
       case 'search-form-average':
-        setDispatch(
-          'SET_CURRENT_METRICS_URL',
-          urlGetOrderAvg + '?' + queryParam
-        );
-        console.log('Bang!');
+        if (isValidDateRange(dateFrom, dateTo)) {
+          setDispatch(
+            'SET_CURRENT_METRICS_URL',
+            urlGetOrderAvg + '?' + queryParam
+          );
+        }
         return;
       default:
         return;
@@ -279,10 +322,11 @@ const Search = () => {
       productList={productList}
       setInputSelected={setInputSelected}
       setProductSelected={setProductSelected}
-      isFetchLoading={isFetchLoading}
+      isFetchLoadingProducts={isFetchLoadingProducts}
       isFetchLoadingMetrics={isFetchLoadingMetrics}
       accordionSelected={accordionSelected}
       handleClickReset={handleClickReset}
+      errorFetchProducts={errorFetchProducts}
       //Date Component control
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}
@@ -293,7 +337,78 @@ const Search = () => {
       handleSubmit={handleSubmit}
       //Queries
       responseReady={responseReady}
-      response={response}
+      isInvalidProductName={
+        getResponseData(
+          metricsResult,
+          'product_name',
+          'string',
+          '<data not available>'
+        ) === '<data not available>' && accordionSelected === 0
+      }
+      isInvalidDateRangeProp={isInvalidDateRangeProp(
+        getResponseData(
+          metricsResult,
+          'start_date',
+          'string',
+          '<data not available>',
+          'date'
+        ),
+        getResponseData(
+          metricsResult,
+          'end_date',
+          'string',
+          '<data not available>',
+          'date'
+        )
+      )}
+      startDate={convertDateDMY(
+        getResponseData(
+          metricsResult,
+          'start_date',
+          'string',
+          '<data not available>',
+          'date'
+        )
+      )}
+      endDate={convertDateDMY(
+        getResponseData(
+          metricsResult,
+          'end_date',
+          'string',
+          '<data not available>',
+          'date'
+        )
+      )}
+      productName={getResponseData(
+        metricsResult,
+        'product_name',
+        'string',
+        '<data not available>'
+      )}
+      totalOrders={getResponseData(
+        metricsResult,
+        'total_orders',
+        'number',
+        '<data not available>'
+      )}
+      revenue={getResponseData(
+        metricsResult,
+        'revenue',
+        'number',
+        '<data not available>'
+      )}
+      numberOfClients={getResponseData(
+        metricsResult,
+        'num_clients',
+        'number',
+        '<data not available>'
+      )}
+      ordersAvg={getResponseData(
+        metricsResult,
+        'orders_avg',
+        'number',
+        '<data not available>'
+      )}
     />
   );
 };

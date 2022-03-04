@@ -1,6 +1,9 @@
 @import '../../assets/style/custom';
 .alert-box {
   height: 60px;
+  .alert-message-box {
+    box-shadow: $box-shadow;
+  }
 }
 
 .container-center {

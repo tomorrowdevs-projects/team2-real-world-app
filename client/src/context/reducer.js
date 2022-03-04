@@ -31,7 +31,7 @@ const reducer = (state, action) => {
         ...state,
         queryParam: param,
       };
-    case 'SET_CURRENT_URL':
+    case 'SET_CURRENT_PRODUCTS_URL':
       return {
         ...state,
         urlCurrent: payload,
@@ -41,10 +41,10 @@ const reducer = (state, action) => {
         ...state,
         urlCurrentMetrics: payload,
       };
-    case 'SET_RESPONSE':
+    case 'SET_METRICS_RESULT':
       return {
         ...state,
-        response: payload,
+        metricsResult: payload,
       };
     case 'SET_RESPONSE_READY':
       return {

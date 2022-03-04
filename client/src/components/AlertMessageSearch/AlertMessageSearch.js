@@ -1,7 +1,7 @@
 import { Alert, Spinner } from 'react-bootstrap';
 import './alert-message-search.scss';
 
-const AlertMessageSearch = ({ alert, handleAlert }) => {
+const AlertMessageSearch = ({ alert }) => {
   const { show, message, variant, dismissible, animation } = alert;
   return (
     <div className='alert-box'>
@@ -9,7 +9,6 @@ const AlertMessageSearch = ({ alert, handleAlert }) => {
         <Alert
           className='alert-message-box'
           variant={variant}
-          onClose={() => handleAlert(false)}
           dismissible={dismissible}
         >
           {message}

@@ -36,11 +36,7 @@ const UploadFileSection = ({
             </div>
           </div>
           <div className='button-box'>
-            <Button
-              variant='primary'
-              type='submit'
-              disabled={progress || isFileUploaded}
-            >
+            <Button variant='primary' type='submit' disabled={progress}>
               Upload
             </Button>
             {progress && progress < 100 && (
@@ -49,7 +45,7 @@ const UploadFileSection = ({
               </Button>
             )}
             {isFileUploaded && (
-              <h2 className='pt-2 fst-italic'>File already uploaded</h2>
+              <h2 className='ms-3 fst-italic'>There is data in memory.</h2>
             )}
           </div>
         </Form>

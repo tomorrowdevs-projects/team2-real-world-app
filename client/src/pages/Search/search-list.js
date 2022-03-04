@@ -14,7 +14,7 @@ export const searchList = [
   {
     label: 'Average order value by date',
     select: false,
-    responseLabel: ' Average',
+    responseLabel: 'Average',
     formId: 'search-form-average',
   },
 ];

@@ -6,13 +6,16 @@ export const useFetchMetrics = url => {
   const [errorFetchMetrics, setErrorFetchMetrics] = useState('');
 
   useEffect(() => {
-    if (!url) return;
+    if (!url) {
+      setDataFetchMetrics(null);
+      return;
+    }
     setIsFetchLoadingMetrics(true);
     console.log('Fetch metrics started...');
     const fetchData = async () => {
-      const response = await fetch(url);
-      console.log('Response metrics: ', response);
       try {
+        const response = await fetch(url);
+        console.log('Response metrics: ', response);
         if (response.ok) {
           const responseBody = await response.json();
           setDataFetchMetrics(responseBody);
@@ -27,7 +30,7 @@ export const useFetchMetrics = url => {
         setIsFetchLoadingMetrics(false);
         console.log('Response metrics request != 200 metrics: ', error);
       } finally {
-        setTimeout(() => setErrorFetchMetrics(''), 5000);
+        setTimeout(() => setErrorFetchMetrics(''), 2000);
       }
     };
     fetchData();

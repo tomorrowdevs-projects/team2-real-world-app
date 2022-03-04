@@ -1,3 +1,5 @@
+import { isValidDate } from './date_utility/date_utility';
+
 /**
  * User data management after authentication
  * Goal: not to create errors in case of corrupted data
@@ -14,4 +16,29 @@ export const getUserData = (user, data, defaultPhoto) => {
     : data !== 'photo'
     ? ''
     : defaultPhoto;
+};
+
+/**
+ * Response query data management
+ * Goal: not to create errors in case of corrupted data
+ * @param {any} prop
+ * @param {string} type
+ * @param {string} text
+ * @param {string} date
+ * @returns {any}
+ */
+export const getResponseData = (list, prop, type, text, date = null) => {
+  if (!list) {
+    return '';
+  } else if (date === 'date') {
+    return list[0][prop] &&
+      typeof list[0][prop] === type &&
+      isValidDate(list[0][prop])
+      ? list[0][prop]
+      : text;
+  } else {
+    return list[0][prop] && typeof list[0][prop] === type
+      ? list[0][prop]
+      : text;
+  }
 };
