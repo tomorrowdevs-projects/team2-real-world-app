@@ -45,7 +45,7 @@ const UploadFileSection = ({
               </Button>
             )}
             {isFileUploaded && (
-              <h2 className='ms-3 fst-italic'>There is data in memory.</h2>
+              <h2 className='ms-3 fst-italic'>There are data in memory.</h2>
             )}
           </div>
         </Form>
