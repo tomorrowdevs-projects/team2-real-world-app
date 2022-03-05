@@ -1,10 +1,11 @@
-package file
+package handlefile
 
 import (
 	"bufio"
 	"errors"
 	"github.com/gocarina/gocsv"
 	"log"
+	"mime/multipart"
 	"os"
 	"path/filepath" // check file extension
 	helpers "team2-real-world-app/server/pkg/helpers"
@@ -24,9 +25,9 @@ func NewFile() *NewHandleFile {
 	return &NewHandleFile{} // to get the address or a pointer variable
 }
 
-func (handleFile NewHandleFile) HandleFile(filePath string) ([]model.Entry, error) {
+func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, error) {
 
-	// check file extension
+	/*// check file extension
 	if !handleFile.IsCsvExtension(filePath) {
 		return nil, ErrInvalidFileExtension
 	}
@@ -42,7 +43,7 @@ func (handleFile NewHandleFile) HandleFile(filePath string) ([]model.Entry, erro
 
 	if err != nil {
 		return nil, err
-	}
+	}*/
 
 	// TO DO
 	// split file in x chunk and pass it to io.Reader

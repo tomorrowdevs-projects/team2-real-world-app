@@ -1,10 +1,10 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
+	"team2-real-world-app/server/pkg/model/request"
 	"team2-real-world-app/server/pkg/query"
 )
 
@@ -23,7 +23,7 @@ func GetCustomersNumber(c *gin.Context) {
 
 	// Query function with two params (start date, end date)
 
-	var requestCustomersCount = query.CustomersCountRequest{
+	var requestCustomersCount = request.CustomersCount{
 		StartDate: startDate,
 		EndDate:   endDate,
 	}
@@ -31,13 +31,10 @@ func GetCustomersNumber(c *gin.Context) {
 	// return the customers count JSON
 	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
 	if err != nil {
-		fmt.Println("Error", err)
+		return
+		// return err
 	}
-	//fmt.Println(customersCount)
 
-	// NOTE: temporary customers number (for POC purpose)
-	// var Customers = response.CustomersNumber{
-	//	NumCustomers: 50, StartDate: startDate, EndDate: endDate,
-	// }
 	c.IndentedJSON(http.StatusOK, customersCount)
+	return
 }
