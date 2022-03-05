@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"path/filepath"
 	dbmanager "team2-real-world-app/server/pkg/database"
-	"team2-real-world-app/server/pkg/file"
+	"team2-real-world-app/server/pkg/handle_file"
 	"team2-real-world-app/server/pkg/model"
 )
 
@@ -46,7 +46,7 @@ func UploadFile(c *gin.Context) {
 	//// **** TODO invoke function to write entries to DB ****
 
 	fmt.Printf(header.Filename)
-	var newFile = handlefile.NewFile()
+	var newFile = handle_file.handlefile.NewFile()
 	entries, err := newFile.HandleFile(file) // <---
 
 	fmt.Println(entries)

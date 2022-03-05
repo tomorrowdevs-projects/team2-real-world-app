@@ -1,4 +1,4 @@
-package handlefile
+package handle_file
 
 import (
 	"bufio"
