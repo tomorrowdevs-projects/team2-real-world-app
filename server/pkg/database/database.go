@@ -36,7 +36,6 @@ func NewDBManager() *DBManager {
 	}
 }
 
-// GetConnection - TEMPORARY
 func (dbm *DBManager) GetConnection() (*sqlx.DB, error) {
 
 	// get Database credentials and create connection
