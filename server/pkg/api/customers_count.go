@@ -2,7 +2,6 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/request"
@@ -32,7 +31,7 @@ func GetCustomersNumber(c *gin.Context) {
 	// return the customers count JSON
 	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
 	if err != nil {
-		log.Println(" ▸ Error: ", err)
+		return
 	}
 	//fmt.Println(customersCount)
 
@@ -41,4 +40,5 @@ func GetCustomersNumber(c *gin.Context) {
 	//	NumCustomers: 50, StartDate: startDate, EndDate: endDate,
 	// }
 	c.IndentedJSON(http.StatusOK, customersCount)
+	return
 }
