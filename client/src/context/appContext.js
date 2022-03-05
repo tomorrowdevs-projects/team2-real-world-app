@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import { appFirebase } from '../services/auth/firebase-config';
 import Loading from '../components/Loading/Loading';
-import { useFetch } from '../hooks/useFetch';
+import { useFetchProducts } from '../hooks/useFetchProducts';
 import { useFetchMetrics } from '../hooks/useFetchMetrics';
 
 const AppContext = React.createContext();
@@ -21,12 +21,11 @@ const defaultState = {
   //Upload file
   isFileUploaded: false,
   //Product list
-  showProductList: false,
   productList: null,
   //Queries
   alreadyRequested: false,
   queryParam: '',
-  response: null,
+  metricsResult: null,
   responseReady: false,
   //Loader
   isLoading: true,
@@ -45,20 +44,19 @@ const defaultState = {
     dismissibile: true,
     animation: '',
   },
-  //Url
+  //URL
+  urlGetProducts: 'http://localhost:8080/products',
   //urlGetProducts: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
-  UrlGetProducts: 'http://localhost:8080/products',
+  urlGetProductMetrics: 'http://localhost:8080/product_metrics',
   //urlGetProductMetrics:
   //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/product_metrics',
-  urlGetProductMetrics: 'http://localhost:8080/product_metrics',
-  //urlGetCustomerMetrics:
-  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customer_metrics',
   urlGetCustomerCount: 'http://localhost:8080/customers_count',
-  //urlGetAverageMetrics:
-  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
-  urlError: 'http://httpstat.us/404',
+  //urlGetCustomerCount:
+  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customer_metrics',
   urlGetOrderAvg: 'http://localhost:8080/orders_avg',
-  urlCurrent: '',
+  //urlGetOrderAvg:
+  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
+  urlCurrentProducts: '',
   urlCurrentMetrics: '',
 };
 
@@ -67,7 +65,8 @@ export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const { dataFetch, isFetchLoading, errorFetch } = useFetch(state.urlCurrent);
+  const { dataFetchProducts, isFetchLoadingProducts, errorFetchProducts } =
+    useFetchProducts(state.urlCurrent);
 
   const { dataFetchMetrics, isFetchLoadingMetrics, errorFetchMetrics } =
     useFetchMetrics(state.urlCurrentMetrics);
@@ -178,9 +177,9 @@ export const AppProvider = ({ children }) => {
         setDispatch,
         handleAlert,
         handleAlertSearch,
-        dataFetch,
-        isFetchLoading,
-        errorFetch,
+        dataFetchProducts,
+        isFetchLoadingProducts,
+        errorFetchProducts,
         dataFetchMetrics,
         isFetchLoadingMetrics,
         errorFetchMetrics,
