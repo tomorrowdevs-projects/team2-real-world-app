@@ -112,7 +112,6 @@ const SearchSection = ({
                         isInvalidProductName={isInvalidProductName}
                         isInvalidDateRangeProp={isInvalidDateRangeProp}
                         responseLabel={item.responseLabel}
-                        dateText={'The search found results'}
                         startDate={startDate}
                         endDate={endDate}
                         productName={productName}
