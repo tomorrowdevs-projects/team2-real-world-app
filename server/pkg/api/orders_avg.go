@@ -1,10 +1,10 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
+	"team2-real-world-app/server/pkg/model/request"
 	"team2-real-world-app/server/pkg/query"
 )
 
@@ -21,7 +21,7 @@ func GetOrdersAvg(c *gin.Context) {
 
 	//log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
 
-	var requestAVGOrders = query.OrdersAVGRequest{
+	var requestAVGOrders = request.OrdersAvg{
 		StartDate: startDate,
 		EndDate:   endDate,
 	}
@@ -29,7 +29,7 @@ func GetOrdersAvg(c *gin.Context) {
 	// return AVG orders JSON
 	OrdersAVG, err := query.OrdersAVG(requestAVGOrders) // <---
 	if err != nil {
-		fmt.Println("Error", err)
+		return
 	}
 
 	// NOTE: temporary average orders (for POC purpose)
@@ -37,4 +37,5 @@ func GetOrdersAvg(c *gin.Context) {
 		OrdersValue: 50.50, StartDate: startDate, EndDate: endDate,
 	}*/
 	c.IndentedJSON(http.StatusOK, OrdersAVG)
+	return
 }
