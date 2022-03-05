@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"path/filepath"
 	dbmanager "team2-real-world-app/server/pkg/database"
-	"team2-real-world-app/server/pkg/file"
+	"team2-real-world-app/server/pkg/handle_file"
 	"team2-real-world-app/server/pkg/model"
 )
 
