@@ -1,5 +1,6 @@
 import { getUserData } from './dataManagement';
 
+//GET USER DATA
 const icon = './user-icon.png';
 
 const userData = {
@@ -35,21 +36,9 @@ const userData7 = {
 //GET USER NAME
 test(`It should return user name`, () => {
   expect(getUserData(userData, 'userName')).toEqual('Domenico Cavaglieri');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData2, 'userName')).toEqual('');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData3, 'userName')).toEqual('');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData4, 'userName')).toEqual('');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData5, 'userName')).toEqual('');
 });
 
@@ -58,21 +47,9 @@ test(`It should return email`, () => {
   expect(getUserData(userData, 'email')).toEqual(
     'cavaglieridomenico@gmail.com'
   );
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData2, 'email')).toEqual('');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData3, 'email')).toEqual('');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData4, 'email')).toEqual('');
-});
-
-test(`It should return '' `, () => {
   expect(getUserData(userData6, 'email')).toEqual('');
 });
 
@@ -81,20 +58,8 @@ test(`It should return photo url`, () => {
   expect(getUserData(userData, 'photo', icon)).toEqual(
     'https://lh3.googleusercontent.com/a-/AOh14Gj2LbZPIR0TJNHDe3qDjsMW5UOcIJbr_F_cnWeK=s96-c'
   );
-});
-
-test(`It should return default icon`, () => {
   expect(getUserData(userData2, 'photo', icon)).toEqual('./user-icon.png');
-});
-
-test(`It should return default icon`, () => {
   expect(getUserData(userData3, 'photo', icon)).toEqual('./user-icon.png');
-});
-
-test(`It should return default icon`, () => {
   expect(getUserData(userData4, 'photo', icon)).toEqual('./user-icon.png');
-});
-
-test(`It should return default icon`, () => {
   expect(getUserData(userData7, 'photo', icon)).toEqual('./user-icon.png');
 });
