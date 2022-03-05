@@ -1,3 +1,12 @@
+@import '../../assets/style/custom';
+
 .alert-box {
-  height: 60px;
+  .alert {
+    max-width: 490px;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+    border: solid 2px $primary;
+  }
 }
