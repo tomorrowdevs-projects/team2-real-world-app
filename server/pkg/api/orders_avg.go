@@ -21,13 +21,13 @@ func GetOrdersAvg(c *gin.Context) {
 
 	//log.Printf("searching KPIs in date range %s -> %s", startDate, endDate)
 
-	var requestAVGOrders = request.OrdersAvg{
+	var requestAvgOrders = request.OrdersAvg{
 		StartDate: startDate,
 		EndDate:   endDate,
 	}
 
 	// return AVG orders JSON
-	OrdersAVG, err := query.OrdersAVG(requestAVGOrders) // <---
+	OrdersAVG, err := query.OrdersAVG(requestAvgOrders) // <---
 	if err != nil {
 		return
 	}
