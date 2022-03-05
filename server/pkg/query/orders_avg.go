@@ -22,6 +22,8 @@ func OrdersAVG(request request.OrdersAvg) ([]response.OrdersAvg, error) {
 		return nil, err
 	}
 
+	defer db.Disconnect() // close connection
+
 	log.Printf(" ▶ Database connected ✔ \n")
 
 	var responseOrdersAVG []response.OrdersAvg
