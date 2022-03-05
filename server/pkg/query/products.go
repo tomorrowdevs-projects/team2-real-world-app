@@ -6,7 +6,7 @@ import (
 )
 
 type Product struct {
-	ProductID   int    `db:"id"   json:"product_id"`
+	ProductID   string `db:"id"   json:"product_id"`
 	ProductName string `db:"name" json:"product_name"`
 }
 

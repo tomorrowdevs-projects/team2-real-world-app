@@ -1,10 +1,13 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"path/filepath"
+	dbmanager "team2-real-world-app/server/pkg/database"
+	"team2-real-world-app/server/pkg/file"
 	"team2-real-world-app/server/pkg/model"
 )
 
@@ -41,6 +44,39 @@ func UploadFile(c *gin.Context) {
 	//}
 	//log.Println("entries saved in struct !") // spew.Dump(entries) to show them
 	//// **** TODO invoke function to write entries to DB ****
+
+	fmt.Printf(header.Filename)
+	var newFile = handlefile.NewFile()
+	entries, err := newFile.HandleFile(file) // <---
+
+	fmt.Println(entries)
+
+	if err != nil {
+		fmt.Printf("error:", err)
+		//return err
+	}
+
+	var db = dbmanager.NewDBManager()
+	log.Printf("** Try to connected\n")
+
+	err = db.Connect(dbmanager.DBParameters{
+		UserName: "root",
+		Password: "root",
+		Host:     "localhost",
+		Port:     3306,
+		DbName:   "real_world_app",
+	})
+	if err != nil {
+		log.Printf(" ** Connection error: %s \n", err)
+		return
+	}
+	log.Printf("** I should be connected. Status connection: %t\n", db.IsConnected())
+
+	err = db.PopulateStruct(entries)
+	if err != nil {
+		fmt.Printf("error:", err)
+		//return err
+	}
 
 	// response status for successful upload
 	c.Status(http.StatusOK)
