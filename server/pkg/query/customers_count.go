@@ -30,6 +30,7 @@ func CustomersCount(request request.CustomersCount) ([]response.CustomersCount, 
 		return nil, err
 	}
 
+	defer db.Disconnect() // close connection
 	log.Printf(" ▶ Database connected ✔ \n")
 
 	var responseCustomersCount []response.CustomersCount
