@@ -1,43 +1,41 @@
 package query
 
 import (
+	"errors"
 	"log"
 	dbmanager "team2-real-world-app/server/pkg/database"
+	"team2-real-world-app/server/pkg/model/request"
+	"team2-real-world-app/server/pkg/model/response"
 )
 
-type OrdersAVGResponse struct {
-	AVGOrders int    `db:"COUNT(id)"           json:"orders_avg"`
-	StartDate string `db:"MIN(date)"           json:"start_date"`
-	EndDate   string `db:"MAX(date)"           json:"end_date"`
-}
+var (
+	OrdersAVGError = errors.New("orders AVG query not executed")
+)
 
-type OrdersAVGRequest struct {
-	StartDate string
-	EndDate   string
-}
-
-func OrdersAVG(request OrdersAVGRequest) ([]OrdersAVGResponse, error) {
+func OrdersAVG(request request.OrdersAvg) ([]response.OrdersAvg, error) {
 	// create Database connection
 	var db = dbmanager.NewDBManager()
-	log.Printf("** Try to connected\n")
+	log.Printf(" ▶ Try to connected ...\n")
 
 	dbx, err := db.GetConnection()
 	if err != nil {
 		return nil, err
 	}
 
-	var response []OrdersAVGResponse
+	log.Printf(" ▶ Database connected ✔ \n")
 
-	err = dbx.Select(&response, "SELECT "+
+	var responseOrdersAVG []response.OrdersAvg
+
+	err = dbx.Select(&responseOrdersAVG, "SELECT "+
 		"COUNT(id), MIN(date), MAX(date) "+
 		"FROM orders "+
 		"WHERE orders.date BETWEEN ? and ?",
 		request.StartDate, request.EndDate)
 
 	if err != nil {
-		return nil, err
+		return nil, OrdersAVGError
 	}
 
-	// return productsMetrics, err
-	return response, err
+	log.Println(" ▸ Orders AVG query executed")
+	return responseOrdersAVG, err
 }
