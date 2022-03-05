@@ -1,17 +1,17 @@
-import { isValidJson } from '../../../assets/scripts/utils/json_utility/json_utility';
-import { formatList } from '../search-utils';
+import { isValidJson } from '../../assets/scripts/utils/json_utility/json_utility';
+import { formatList } from './search-utils';
 
 const fetchDataFormat = [
   {
-    product_id: 1,
+    product_id: '1',
     product_name: 'Remote Tuner',
   },
   {
-    product_id: 2,
+    product_id: '2',
     product_name: 'Direct Case',
   },
   {
-    product_id: 3,
+    product_id: '3',
     product_name: 'Audible Bridge',
   },
 ];
@@ -23,9 +23,9 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataFormat)).toEqual([
-    { value: 'Remote Tuner', label: 'Remote Tuner', id: 1 },
-    { value: 'Direct Case', label: 'Direct Case', id: 2 },
-    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
+    { value: 'Remote Tuner', label: 'Remote Tuner', id: '1' },
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
   ]);
 });
 
@@ -36,11 +36,11 @@ const fetchDataError1 = [
     product_name: 'Remote Tuner',
   },
   {
-    product_id: 2,
+    product_id: '2',
     product_name: 'Direct Case',
   },
   {
-    product_id: 3,
+    product_id: '3',
     product_name: 'Audible Bridge',
   },
 ];
@@ -51,8 +51,8 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError1)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case', id: 2 },
-    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
   ]);
 });
 
@@ -63,11 +63,11 @@ const fetchDataError2 = [
     product_name: 'Remote Tuner',
   },
   {
-    product_id: 2,
+    product_id: '2',
     product_name: 'Direct Case',
   },
   {
-    product_id: 3,
+    product_id: '3',
     product_name: 'Audible Bridge',
   },
 ];
@@ -78,23 +78,23 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError2)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case', id: 2 },
-    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
   ]);
 });
 
 //Test 3
 const fetchDataError3 = [
   {
-    product_id: 1,
+    product_id: '1',
     product_name: '',
   },
   {
-    product_id: 2,
+    product_id: '2',
     product_name: 'Direct Case',
   },
   {
-    product_id: 3,
+    product_id: '3',
     product_name: 'Audible Bridge',
   },
 ];
@@ -105,23 +105,23 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError3)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case', id: 2 },
-    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
   ]);
 });
 
 //Test 4
 const fetchDataError4 = [
   {
-    product_idx: 1,
+    product_idx: '1',
     product_name: 'Remote Tuner',
   },
   {
-    product_id: 2,
+    product_id: '2',
     product_name: 'Direct Case',
   },
   {
-    product_id: 3,
+    product_id: '3',
     product_name: 'Audible Bridge',
   },
 ];
@@ -132,23 +132,23 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError4)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case', id: 2 },
-    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
   ]);
 });
 
 //Test 5
 const fetchDataError5 = [
   {
-    product_id: 1,
+    product_id: '1',
     product_namex: 'Remote Tuner',
   },
   {
-    product_id: 2,
+    product_id: '2',
     product_name: 'Direct Case',
   },
   {
-    product_id: 3,
+    product_id: '3',
     product_name: 'Audible Bridge',
   },
 ];
@@ -159,7 +159,34 @@ test(`It should return true if the format of the input data is a valid json form
 
 test(`It should return an array of objects with a specific format`, () => {
   expect(formatList(fetchDataError5)).toEqual([
-    { value: 'Direct Case', label: 'Direct Case', id: 2 },
-    { value: 'Audible Bridge', label: 'Audible Bridge', id: 3 },
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
+  ]);
+});
+
+//Test 6
+const fetchDataError6 = [
+  {
+    product_id: 1,
+    product_name: 'Remote Tuner',
+  },
+  {
+    product_id: '2',
+    product_name: 'Direct Case',
+  },
+  {
+    product_id: '3',
+    product_name: 'Audible Bridge',
+  },
+];
+
+test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
+  expect(isValidJson(fetchDataError5)).toEqual(true);
+});
+
+test(`It should return an array of objects with a specific format`, () => {
+  expect(formatList(fetchDataError5)).toEqual([
+    { value: 'Direct Case', label: 'Direct Case', id: '2' },
+    { value: 'Audible Bridge', label: 'Audible Bridge', id: '3' },
   ]);
 });
