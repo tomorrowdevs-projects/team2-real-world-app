@@ -46,7 +46,7 @@ func UploadFile(c *gin.Context) {
 	//// **** TODO invoke function to write entries to DB ****
 
 	fmt.Printf(header.Filename)
-	var newFile = handle_file.handlefile.NewFile()
+	var newFile = handlefile.NewFile()
 	entries, err := newFile.HandleFile(file) // <---
 
 	fmt.Println(entries)
