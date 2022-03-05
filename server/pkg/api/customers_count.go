@@ -32,13 +32,9 @@ func GetCustomersNumber(c *gin.Context) {
 	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
 	if err != nil {
 		return
+		// return err
 	}
-	//fmt.Println(customersCount)
 
-	// NOTE: temporary customers number (for POC purpose)
-	// var Customers = response.CustomersNumber{
-	//	NumCustomers: 50, StartDate: startDate, EndDate: endDate,
-	// }
 	c.IndentedJSON(http.StatusOK, customersCount)
 	return
 }
