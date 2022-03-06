@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -14,7 +13,6 @@ func UploadFile(c *gin.Context) {
 	// retrieving csv file from form-data body of http request, key is "file"
 	file, header, err := c.Request.FormFile("file")
 	if err != nil {
-		fmt.Println(err.Error())
 		c.AbortWithStatusJSON(http.StatusBadRequest, model.ErrFileUpload.Error())
 		return
 	}
@@ -24,7 +22,6 @@ func UploadFile(c *gin.Context) {
 
 	// file extension check
 	if !handlefile.IsCsvExtension(filepath.Ext(header.Filename)) {
-		//c.AbortWithStatusJSON(http.StatusBadRequest, model.Error{Message: model.ExtensionError})
 		c.AbortWithStatusJSON(http.StatusBadRequest, model.ErrInvalidFileExtension.Error())
 		return
 	}
