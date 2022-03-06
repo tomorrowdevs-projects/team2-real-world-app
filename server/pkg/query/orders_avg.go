@@ -12,7 +12,7 @@ var (
 	OrdersAVGError = errors.New("orders AVG query not executed")
 )
 
-func OrdersAVG(request request.OrdersAvg) ([]response.OrdersAvg, error) {
+func OrdersAVG(request request.OrdersAvg) (*response.OrdersAvg, error) {
 	// create Database connection
 	var db = dbmanager.NewDBManager()
 	log.Printf(" ▶ Try to connected ...\n")
@@ -26,10 +26,11 @@ func OrdersAVG(request request.OrdersAvg) ([]response.OrdersAvg, error) {
 
 	log.Printf(" ▶ Database connected ✔ \n")
 
-	var responseOrdersAVG []response.OrdersAvg
+	// get the order's avg value from the query result
+	var ordersAvg float64
 
-	err = dbx.Select(&responseOrdersAVG, "SELECT "+
-		"COUNT(id), MIN(date), MAX(date) "+
+	err = dbx.Get(&ordersAvg, "SELECT "+
+		"COUNT(id)"+
 		"FROM orders "+
 		"WHERE orders.date BETWEEN ? and ?",
 		request.StartDate, request.EndDate)
@@ -37,6 +38,12 @@ func OrdersAVG(request request.OrdersAvg) ([]response.OrdersAvg, error) {
 	if err != nil {
 		return nil, OrdersAVGError
 	}
+
+	// create the query response
+	responseOrdersAVG := &response.OrdersAvg{
+		OrdersAvg: ordersAvg,
+		StartDate: request.StartDate,
+		EndDate:   request.EndDate}
 
 	log.Println(" ▸ Orders AVG query executed")
 	return responseOrdersAVG, err
