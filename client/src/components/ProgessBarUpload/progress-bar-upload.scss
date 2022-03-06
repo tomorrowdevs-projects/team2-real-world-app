@@ -3,7 +3,7 @@
 .progress-box {
   background-color: #cff4fc;
   border: solid 2px $primary;
-  max-width: 490px;
+  max-width: 320px;
   padding: {
     top: 3px;
     bottom: 5px;
@@ -11,6 +11,10 @@
     right: 18px;
   }
   border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  @media (min-width: 490px) {
+    max-width: 490px;
+  }
   .progress-text-btn-box {
     position: relative;
     display: flex;
