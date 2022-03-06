@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/request"
+	"team2-real-world-app/server/pkg/model/response"
 	"team2-real-world-app/server/pkg/query"
 )
 
@@ -32,8 +33,10 @@ func GetCustomersNumber(c *gin.Context) {
 	customersCount, err := query.CustomersCount(requestCustomersCount) // <---
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 
-	c.IndentedJSON(http.StatusOK, customersCount)
+	JsonResp := []*response.CustomersCount{customersCount}
+	c.IndentedJSON(http.StatusOK, JsonResp)
 	return
 }
