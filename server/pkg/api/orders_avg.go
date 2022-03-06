@@ -14,7 +14,7 @@ func GetOrdersAvg(c *gin.Context) {
 	endDate, isEndDateQueried := c.GetQuery("end_date")
 	// request is not valid without a date range
 	if !isStartDateQueried || !isEndDateQueried {
-		c.AbortWithStatusJSON(http.StatusBadRequest, model.Error{ErrorType: "query error", Message: "date range not valid"})
+		c.AbortWithStatusJSON(http.StatusBadRequest, model.ErrInvalidDateQuery.Error())
 		return
 	}
 	// TODO add regex check on date formats
@@ -29,7 +29,7 @@ func GetOrdersAvg(c *gin.Context) {
 	// return AVG orders JSON
 	OrdersAVG, err := query.OrdersAVG(requestAvgOrders) // <---
 	if err != nil {
-		return
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 	}
 
 	// NOTE: temporary average orders (for POC purpose)

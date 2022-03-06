@@ -7,12 +7,10 @@ import (
 )
 
 func GetProducts(c *gin.Context) {
-
-	// Return the products JSON
 	products, err := query.AllProducts()
 	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
-		// return err
 	}
 
 	c.IndentedJSON(http.StatusOK, products)

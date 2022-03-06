@@ -1,7 +1,6 @@
 package database
 
 import (
-	"errors"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -23,12 +22,6 @@ type DBManager struct {
 	conn        *sqlx.DB // declare pointer variable
 	isConnected bool
 }
-
-// define expected errors at the top
-var (
-	IsDisconnectedError   = errors.New("database not connected")
-	AlreadyConnectedError = errors.New("database already connected")
-)
 
 func NewDBManager() *DBManager {
 	return &DBManager{ // to get the address or a pointer variable
@@ -61,7 +54,7 @@ func (dbm *DBManager) GetConnection() (*sqlx.DB, error) {
 func (dbm *DBManager) Connect(dBParameters DBParameters) error {
 	// check the db status and if true return the error
 	if dbm.isConnected {
-		return AlreadyConnectedError
+		return model.ErrDbAlreadyConnected
 	}
 
 	conn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dBParameters.UserName, dBParameters.Password,
@@ -84,7 +77,7 @@ func (dbm *DBManager) Connect(dBParameters DBParameters) error {
 // Disconnect - close the Database connection
 func (dbm *DBManager) Disconnect() error {
 	if !dbm.isConnected {
-		return IsDisconnectedError
+		return model.ErrDbDisconnected
 	}
 	dbm.isConnected = false
 	return dbm.conn.Close()
@@ -96,11 +89,11 @@ func (dbm *DBManager) IsConnected() bool {
 }
 
 // PopulateStruct - populate the struct with the csv data
-func (dbm *DBManager) PopulateStruct(entries []model.Entry) error {
+func (dbm *DBManager) PopulateFromStruct(entries []model.Entry) error {
 
 	// check the connection
 	if !dbm.isConnected {
-		return IsDisconnectedError
+		return model.ErrDbDisconnected
 	}
 
 	// batch insert product table

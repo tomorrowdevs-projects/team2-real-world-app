@@ -16,7 +16,7 @@ func GetOrdersAndRevenue(c *gin.Context) {
 	endDate, isEndDateQueried := c.GetQuery("end_date")
 	// request is not valid without a date range
 	if !isStartDateQueried || !isEndDateQueried {
-		c.AbortWithStatusJSON(http.StatusBadRequest, model.Error{ErrorType: "query error", Message: "date range not valid"})
+		c.AbortWithStatusJSON(http.StatusBadRequest, model.ErrInvalidDateQuery.Error())
 		return
 	}
 	// TODO add regex check on date formats
@@ -33,9 +33,9 @@ func GetOrdersAndRevenue(c *gin.Context) {
 	// return the product metrics JSON
 	productsMetrics, err := query.ProductMetrics(requestProductMetrics)
 	if err != nil {
-		return
-		// return err
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 	}
 
 	c.IndentedJSON(http.StatusOK, productsMetrics)
+	return
 }
