@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `client` (
-  `id` int NOT NULL,
+  `id` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `surname` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -32,10 +32,10 @@ CREATE TABLE `client` (
 --
 
 CREATE TABLE `orders` (
-  `id` int NOT NULL,
+  `id` varchar(100) NOT NULL,
   `date` date NOT NULL,
-  `client_id` int NOT NULL,
-  `product_id` int NOT NULL
+  `client_id` varchar(100) NOT NULL,
+  `product_id` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `product` (
-  `id` int NOT NULL,
+  `id` varchar(100) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -74,29 +74,7 @@ ALTER TABLE `orders`
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT per le tabelle scaricate
---
 
---
--- AUTO_INCREMENT per la tabella `client`
---
-ALTER TABLE `client`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `product`
---
-ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
 -- Limiti per le tabelle scaricate
 --
 

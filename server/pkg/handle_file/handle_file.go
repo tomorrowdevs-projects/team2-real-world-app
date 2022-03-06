@@ -2,21 +2,17 @@ package handlefile
 
 import (
 	"bufio"
-	"errors"
 	"github.com/gocarina/gocsv"
 	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath" // check file extension
-	helpers "team2-real-world-app/server/pkg/helpers"
-	model "team2-real-world-app/server/pkg/model"
+	dbmanager "team2-real-world-app/server/pkg/database"
+	"team2-real-world-app/server/pkg/helpers"
+	"team2-real-world-app/server/pkg/model"
 )
 
 // define expected errors at the top
-var (
-	ErrInvalidFileExtension = errors.New("the file extension is not .csv")
-	ErrInvalidFileSize      = errors.New("the file size exceeds the maximum allowed")
-)
 
 type NewHandleFile struct {
 }
@@ -25,14 +21,11 @@ func NewFile() *NewHandleFile {
 	return &NewHandleFile{} // to get the address or a pointer variable
 }
 
+// HandleFile populates struct from file
 func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, error) {
 
-	/*// check file extension
-	if !handleFile.IsCsvExtension(filePath) {
-		return nil, ErrInvalidFileExtension
-	}
-
-	// check the fil size
+	/*/
+	// check the file size
 	status, err := handleFile.IsTheRightSize(filePath)
 	if !status {
 		return nil, ErrInvalidFileSize
@@ -43,9 +36,10 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 
 	if err != nil {
 		return nil, err
-	}*/
+	}
+	*/
 
-	// TO DO
+	// TODO
 	// split file in x chunk and pass it to io.Reader
 	fileReader := bufio.NewReader(file) // implements a buffered reader
 	entries, err := handleFile.PopulateStruct(fileReader)
@@ -58,7 +52,7 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 }
 
 // IsCsvExtension - check if the file is a csv
-func (handleFile NewHandleFile) IsCsvExtension(filePath string) bool {
+func IsCsvExtension(filePath string) bool {
 	return filepath.Ext(filePath) == ".csv"
 }
 
@@ -90,4 +84,30 @@ func (handleFile NewHandleFile) PopulateStruct(fileReader *bufio.Reader) ([]mode
 		return nil, err
 	}
 	return entries, nil
+}
+
+// ProcessFileUpload fills struct with csv entries, opens db connection and migrates entries to database
+func ProcessFileUpload(file multipart.File) error {
+	var newFile = NewFile()
+	// filling struct with csv entries
+	entries, err := newFile.HandleFile(file) // <---
+	if err != nil {
+		return model.ErrFileFormat
+	}
+
+	// opening db connection
+	var db = dbmanager.NewDBManager()
+	_, err = db.GetConnection()
+	if err != nil {
+		return model.ErrDbDisconnected
+	}
+	defer db.Disconnect() // close connection
+
+	// populating db with saved entries
+	err = db.PopulateFromStruct(entries)
+	if err != nil {
+		return model.ErrDbPopulation
+	}
+
+	return err
 }

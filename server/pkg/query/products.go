@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	dbmanager "team2-real-world-app/server/pkg/database"
+	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/response"
 )
 
@@ -25,7 +26,7 @@ func AllProducts() ([]response.AllProducts, error) {
 
 	dbx, err := db.GetConnection()
 	if err != nil {
-		return nil, err
+		return nil, model.ErrDbDisconnected
 	}
 
 	defer db.Disconnect() // close connection
