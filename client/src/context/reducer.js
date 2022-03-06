@@ -19,6 +19,11 @@ const reducer = (state, action) => {
         ...state,
         productList: payload,
       };
+    case 'SET_CURRENT_PRODUCTS_URL':
+      return {
+        ...state,
+        urlCurrentProducts: payload,
+      };
     //Queries
     case 'SET_ALREADY_REQUESTED':
       return {
@@ -30,11 +35,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         queryParam: param,
-      };
-    case 'SET_CURRENT_PRODUCTS_URL':
-      return {
-        ...state,
-        urlCurrent: payload,
       };
     case 'SET_CURRENT_METRICS_URL':
       return {

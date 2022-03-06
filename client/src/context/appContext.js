@@ -56,6 +56,7 @@ const defaultState = {
   //urlGetOrderAvg: 'http://localhost:8080/orders_avg',
   urlGetOrderAvg:
     'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
+  urlCurrentFileUpload: '',
   urlCurrentProducts: '',
   urlCurrentMetrics: '',
 };
