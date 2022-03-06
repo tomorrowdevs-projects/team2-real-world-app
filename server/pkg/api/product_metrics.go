@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/request"
+	"team2-real-world-app/server/pkg/model/response"
 	"team2-real-world-app/server/pkg/query"
 )
 
@@ -34,8 +35,10 @@ func GetOrdersAndRevenue(c *gin.Context) {
 	productsMetrics, err := query.ProductMetrics(requestProductMetrics)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 
-	c.IndentedJSON(http.StatusOK, productsMetrics)
+	JsonResp := []*response.ProductMetrics{productsMetrics}
+	c.IndentedJSON(http.StatusOK, JsonResp)
 	return
 }

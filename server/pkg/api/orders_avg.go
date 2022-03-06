@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"team2-real-world-app/server/pkg/model"
 	"team2-real-world-app/server/pkg/model/request"
+	"team2-real-world-app/server/pkg/model/response"
 	"team2-real-world-app/server/pkg/query"
 )
 
@@ -30,12 +31,14 @@ func GetOrdersAvg(c *gin.Context) {
 	OrdersAVG, err := query.OrdersAVG(requestAvgOrders) // <---
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	// NOTE: temporary average orders (for POC purpose)
 	/*	var Orders = response.OrdersAvg{
 		OrdersValue: 50.50, StartDate: startDate, EndDate: endDate,
 	}*/
-	c.IndentedJSON(http.StatusOK, OrdersAVG)
+	JsonResp := []*response.OrdersAvg{OrdersAVG}
+	c.IndentedJSON(http.StatusOK, JsonResp)
 	return
 }
