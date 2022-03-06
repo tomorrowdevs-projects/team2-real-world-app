@@ -46,7 +46,7 @@ func ProductMetrics(request request.ProductMetrics) (*response.ProductMetrics, e
 
 	// create response struct
 	var responseProductMetrics = &response.ProductMetrics{
-		ProductUuid: product,
+		ProductName: product,
 		TotalOrders: totOrders,
 		Revenue:     revenue,
 		StartDate:   request.StartDate,
