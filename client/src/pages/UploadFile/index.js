@@ -1,90 +1,95 @@
-import { useState, useEffect, useRef } from 'react';
-import axios, { CancelToken, isCancel } from 'axios';
+import { useEffect } from 'react';
 import { useAppContext } from '../../context/appContext';
 import UploadFileSection from './UploadFile';
 
 const UploadFile = () => {
-  const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState(null);
-  const { handleAlert, setDispatch, isFileUploaded } = useAppContext();
+  const {
+    //Reducer
+    dispatch,
+    //Upload file
+    isDataAvailable,
+    alreadyRequestedUpload,
+    fileToUpload,
+    responseUpload,
+    isLoadingUpload,
+    errorUpload,
+    progressUpload,
+    //URL
+    urlFileUpload,
+    urlCurrentFileUpload,
+  } = useAppContext();
 
-  //Cancel file upload
-  const cancelFileUpload = useRef(null);
-  let cancelToken;
-
-  //Hide the progress bar at the end of the upload
+  //Set file to upload
   useEffect(() => {
-    progress === 100 && setTimeout(() => setProgress(null), 500);
-  }, [progress, setProgress]);
+    fileToUpload
+      ? console.log('File to upload: ', fileToUpload.get('file').name)
+      : console.log('File to upload: ', fileToUpload);
+  }, [fileToUpload]);
+
+  useEffect(() => {
+    fileToUpload &&
+      !fileToUpload.get('file').name &&
+      dispatch({ type: 'SET_FILE_TO_UPLOAD', payload: null });
+  }, [dispatch, fileToUpload]);
 
   const handleInputFile = event => {
-    setFile(event.target.files[0]);
-    handleAlert(false);
+    const fileData = new FormData();
+    console.log(fileData.get('file'));
+    fileData.append('file', event.target.files[0]);
+    dispatch({ type: 'SET_FILE_TO_UPLOAD', payload: fileData });
   };
+
+  //Set Progress bar
+  useEffect(() => {
+    dispatch({ type: 'SET_PROGRESS_BAR', payload: progressUpload });
+  }, [dispatch, progressUpload]);
+
+  //Set response of upload file
+  useEffect(() => {
+    dispatch({ type: 'SET_ALREADY_REQUESTED_UPLOAD', payload: false });
+    dispatch({ type: 'SET_CURRENT_FILE_UPLOAD_URL', payload: '' });
+    if (isLoadingUpload) return;
+    if (errorUpload) {
+      dispatch({ type: 'SET_CURRENT_FILE_UPLOAD_URL', payload: '' });
+      // dispatch({ type: 'SET_FILE_TO_UPLOAD', payload: null });
+    }
+    if (responseUpload) {
+      dispatch({ type: 'SET_RESPONSE_LAST_UPLOAD', payload: responseUpload });
+      dispatch({ type: 'SET_DATA_AVAILABLE', payload: true });
+      dispatch({ type: 'SET_CURRENT_FILE_UPLOAD_URL', payload: '' });
+    }
+  }, [
+    dispatch,
+    responseUpload,
+    isLoadingUpload,
+    errorUpload,
+    alreadyRequestedUpload,
+  ]);
+
+  //Submit upload file
+  useEffect(() => {
+    console.log('Current url upload: ', urlCurrentFileUpload);
+  }, [urlCurrentFileUpload]);
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    if (!file) {
-      handleAlert(true, 'Please, choose a file first.', 'danger');
-      return;
-    }
-    const fileData = new FormData();
-    fileData.append('file', file);
-    handleAlert(false);
-
-    //Check if there are any previous pending requests
-    if (typeof cancelToken != typeof undefined) {
-      cancelToken.cancel('Operation canceled due to new request.');
-    }
-    //Save the cancel token for the current request
-    cancelToken = axios.CancelToken.source();
-
-    const option = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      onUploadProgress: data => {
-        //Set the progress value to show the progress bar
-        setProgress(Math.round((100 * data.loaded) / data.total));
-      },
-      //File upload interruption
-      cancelToken: new CancelToken(
-        cancel => (cancelFileUpload.current = cancel)
-      ),
-    };
-
-    axios
-      .post('//localhost:8080/upload', fileData, option)
-      .then(response => {
-        console.log('Response upload file: ', response);
-        setDispatch('FILE_UPLOADED', true);
-        handleAlert(true, `File was uploaded succesfully`, 'success', false);
-      })
-      .catch(error => {
-        console.log(error.response);
-        if (isCancel(error)) {
-          console.log('Request cancelled successfully.');
-          handleAlert(true, 'File upload is canceled', 'danger');
-          return;
-        }
-        handleAlert(true, `Something went wrong, please try again`, 'danger');
+    if (fileToUpload) {
+      dispatch({
+        type: 'SET_CURRENT_FILE_UPLOAD_URL',
+        payload: urlFileUpload,
       });
-  };
-  const cancelUpload = () => {
-    if (cancelFileUpload.current) {
-      cancelFileUpload.current('');
-      setProgress(null);
+    } else {
+      dispatch({ type: 'SET_ALREADY_REQUESTED_UPLOAD', payload: true });
     }
   };
 
   return (
     <UploadFileSection
+      isLoadingUpload={isLoadingUpload}
       handleInputFile={handleInputFile}
       handleSubmit={handleSubmit}
-      progress={progress}
-      cancelUpload={cancelUpload}
-      isFileUploaded={isFileUploaded}
+      progressUpload={progressUpload}
+      isDataAvailable={isDataAvailable}
     />
   );
 };
