@@ -2,11 +2,14 @@ package handlefile
 
 import (
 	"bufio"
+	"fmt"
 	"github.com/gocarina/gocsv"
 	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath" // check file extension
+	"strconv"
+	"strings"
 	dbmanager "team2-real-world-app/server/pkg/database"
 	"team2-real-world-app/server/pkg/helpers"
 	"team2-real-world-app/server/pkg/model"
@@ -39,14 +42,72 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 	}
 	*/
 
-	// TODO
-	// split file in x chunk and pass it to io.Reader
-	fileReader := bufio.NewReader(file) // implements a buffered reader
+	// TODO - split file in x chunk and pass it to io.Reader
+
+	scanner := bufio.NewScanner(file)
+
+	countRow := 0
+
+	var db = dbmanager.NewDBManager()
+	log.Printf(" ▶ Try to connected ...\n")
+
+	_, err := db.GetConnection()
+
+	if err != nil {
+		return nil, model.ErrDbDisconnected
+	}
+
+	defer db.Disconnect() // close connection
+
+	log.Printf(" ▶ Database connected ✔ \n")
+	var entries []model.Entry
+
+	for scanner.Scan() {
+
+		if countRow == 0 {
+			continue
+		}
+
+		if countRow == 2 {
+
+			countRow = 0
+			db.PopulateFromStruct(entries)
+
+		} else {
+
+			parts := strings.Split(scanner.Text(), ",")
+
+			price, _ := strconv.ParseFloat(parts[6], 2) ////
+
+			var entry = model.Entry{
+				OrderID:   parts[0],
+				ClientID:  parts[1],
+				Name:      parts[2],
+				Surname:   parts[3],
+				ProductID: parts[4],
+				Product:   parts[5],
+				Price:     price,
+				Date:      parts[7]}
+
+			entries = append(entries, entry)
+			fmt.Println(entries)
+
+			countRow = countRow + 1
+
+		}
+
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	/*fileReader := bufio.NewReader(file) // implements a buffered reader
 	entries, err := handleFile.PopulateStruct(fileReader)
 	if err != nil {
 		return nil, err
 	}
-	log.Printf(" - Struct populated ")
+	log.Printf(" - Struct populated ")*/
 
 	return entries, err
 }
