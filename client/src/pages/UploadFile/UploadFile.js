@@ -1,12 +1,11 @@
-import { Form, Button, ProgressBar } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import './upload-file-section.scss';
 
 const UploadFileSection = ({
-  progress,
-  handleSubmit,
+  isLoadingUpload,
   handleInputFile,
-  cancelUpload,
-  isFileUploaded,
+  handleSubmit,
+  isDataAvailable,
 }) => {
   return (
     <main>
@@ -20,33 +19,24 @@ const UploadFileSection = ({
               type='file'
               size='lg'
               onChange={handleInputFile}
-              accept='.csv'
-              disabled={progress}
+              //accept='.csv'
+              disabled={isLoadingUpload}
             />
           </Form.Group>
           <div
             style={{
               height: '2rem',
             }}
-          >
-            <div className='container-progress d-flex flex-column justify-content-center'>
-              {progress && (
-                <ProgressBar now={progress} label={`${progress}%`} animated />
-              )}
-            </div>
-          </div>
+          ></div>
           <div className='button-box'>
-            <Button variant='primary' type='submit' disabled={progress}>
+            <Button variant='primary' type='submit' disabled={isLoadingUpload}>
               Upload
             </Button>
-            {progress && progress < 100 && (
-              <Button variant='outline-primary' onClick={() => cancelUpload()}>
-                Cancel
-              </Button>
-            )}
-            {isFileUploaded && (
-              <h2 className='ms-3 fst-italic'>There are data in memory.</h2>
-            )}
+            <h2 className='ms-3 mb-0 fst-italic text-center'>
+              {isDataAvailable
+                ? 'Data available in memory'
+                : 'No data available in memory'}
+            </h2>
           </div>
         </Form>
       </section>
