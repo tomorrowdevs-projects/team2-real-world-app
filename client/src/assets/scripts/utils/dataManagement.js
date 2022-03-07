@@ -27,14 +27,18 @@ export const getUserData = (user, data, defaultPhoto) => {
  * @param {string} date
  * @returns {any}
  */
-export const getResponseData = (list, prop, type, text, date = null) => {
+export const getResponseData = (list, prop, type, text, option = null) => {
   if (!list) {
     return '';
-  } else if (date === 'date') {
+  } else if (option === 'date') {
     return list[0][prop] &&
       typeof list[0][prop] === type &&
       isValidDate(list[0][prop])
       ? list[0][prop]
+      : text;
+  } else if (option === 'float(2)') {
+    return list[0][prop] && typeof list[0][prop] === type
+      ? parseFloat(list[0][prop].toFixed(2))
       : text;
   } else {
     return list[0][prop] && typeof list[0][prop] === type

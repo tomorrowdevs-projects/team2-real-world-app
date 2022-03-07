@@ -112,7 +112,25 @@ test(`It should return the value of the property if the property exists and is o
 const response4 = [
   {
     id: 1,
+    orders_avg: 230.1234,
+    start_date: '2022-01-01',
+    end_date: '2022-02-20',
+  },
+];
+
+const response5 = [
+  {
+    id: 1,
     orders_avg: 230,
+    start_date: '2022-01-01',
+    end_date: '2022-02-20',
+  },
+];
+
+const response6 = [
+  {
+    id: 1,
+    orders_avg: 0.6,
     start_date: '2022-01-01',
     end_date: '2022-02-20',
   },
@@ -120,6 +138,30 @@ const response4 = [
 
 test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
-    getResponseData(response4, 'orders_avg', 'number', 'Data not available')
-  ).toEqual(230);
+    getResponseData(
+      response4,
+      'orders_avg',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual(230.12);
+  expect(
+    getResponseData(
+      response5,
+      'orders_avg',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual(230.0);
+  expect(
+    getResponseData(
+      response6,
+      'orders_avg',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual(0.6);
 });
