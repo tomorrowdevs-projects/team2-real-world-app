@@ -3,24 +3,30 @@ import { useAppContext } from '../../context/appContext';
 import './progress-bar-upload.scss';
 
 const ProgressBarUpload = () => {
-  const { progressBarValue, cancelUpload } = useAppContext();
-  const show = true;
+  const { showProgressBar, progressUpload, cancelUpload } = useAppContext();
   return (
-    <div className='progress-box mx-auto d-flex flex-column justify-content-center'>
-      {show && (
-        <>
+    <>
+      {showProgressBar && (
+        <div className='progress-box mx-auto d-flex flex-column justify-content-center'>
           <div className='progress-text-btn-box'>
             <p className='mb-0 align-self-center fst-italic'>
-              Upload file in progress...
+              {progressUpload < 100 && 'Upload file in progress...'}
+              {progressUpload === 100 && 'Upload completed'}
             </p>
-            <Button variant='outline-primary' onClick={() => cancelUpload()}>
-              Cancel
-            </Button>
+            {progressUpload < 100 && (
+              <Button variant='outline-primary' onClick={() => cancelUpload()}>
+                Cancel
+              </Button>
+            )}
           </div>
-          <ProgressBar now={progressBarValue} label={`${progressBarValue}%`} />
-        </>
+          <ProgressBar
+            now={progressUpload}
+            label={`${progressUpload}%`}
+            animated
+          />
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
