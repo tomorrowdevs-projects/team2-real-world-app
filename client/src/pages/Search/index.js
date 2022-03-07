@@ -407,7 +407,8 @@ const Search = () => {
         metricsResult,
         'orders_avg',
         'number',
-        '<data not available>'
+        '<data not available>',
+        'float(2)'
       )}
     />
   );

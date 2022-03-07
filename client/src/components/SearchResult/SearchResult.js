@@ -50,7 +50,7 @@ const SearchResult = ({
                 <td>
                   <h5 className='text-center'>
                     {responseLabel === 'Customers' && numberOfClients}
-                    {responseLabel === 'Average' && ordersAvg}
+                    {responseLabel === 'Average' && `€ ${ordersAvg}`}
                   </h5>
                 </td>
               </tr>
