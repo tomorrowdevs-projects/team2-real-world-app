@@ -31,9 +31,11 @@ func OrdersAVG(request request.OrdersAvg) (*response.OrdersAvg, error) {
 	var ordersAvg float64
 
 	err = dbx.Get(&ordersAvg, "SELECT "+
-		"COUNT(id)"+
+		"AVG(product.price)"+
 		"FROM orders "+
-		"WHERE orders.date BETWEEN ? and ?",
+		"JOIN product "+
+		"WHERE orders.product_id = product.id "+
+		"and (orders.date BETWEEN ? and ?)",
 		request.StartDate, request.EndDate)
 
 	if err != nil {
