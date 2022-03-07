@@ -11,7 +11,7 @@ import NotFound from '../pages/NotFound';
 import { useAppContext } from '../context/appContext';
 
 function App() {
-  const { currentUser, isFileUploaded } = useAppContext();
+  const { currentUser, isDataAvailable } = useAppContext();
 
   return (
     <Routes>
@@ -24,7 +24,7 @@ function App() {
           element={
             <ProtectedRouteSearch
               user={currentUser}
-              fileUpload={isFileUploaded}
+              isDataAvailable={isDataAvailable}
             />
           }
         >

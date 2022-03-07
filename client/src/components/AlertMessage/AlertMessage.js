@@ -1,12 +1,12 @@
 import { Alert, Spinner } from 'react-bootstrap';
-import './alert-message.scss';
 import { useAppContext } from '../../context/appContext';
+import './alert-message.scss';
 
 const AlertMessage = () => {
   const { handleAlert, alert } = useAppContext();
   const { show, message, variant, dismissible, animation } = alert;
   return (
-    <div className='alert-box mt-3 mb-0 mx-auto'>
+    <div className='alert-box'>
       {show && (
         <Alert
           className='mb-0'

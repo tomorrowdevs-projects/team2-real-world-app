@@ -1,0 +1,37 @@
+@import '../../assets/style/custom';
+
+.progress-box {
+  background-color: #cff4fc;
+  border: solid 2px $primary;
+  max-width: 320px;
+  padding: {
+    top: 3px;
+    bottom: 5px;
+    left: 18px;
+    right: 18px;
+  }
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  @media (min-width: 490px) {
+    max-width: 490px;
+  }
+  .progress-text-btn-box {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: {
+      top: 5px;
+      bottom: 3px;
+    }
+    button {
+      font-size: 12px;
+      height: 24px;
+      padding: {
+        top: 0;
+        bottom: 0;
+        left: 10px;
+        right: 10px;
+      }
+    }
+  }
+}

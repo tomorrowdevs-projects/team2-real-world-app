@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { appFirebase } from '../services/auth/firebase-config';
 import Loading from '../components/Loading/Loading';
+import { useUploadFile } from '../hooks/useUploadFile';
 import { useFetchProducts } from '../hooks/useFetchProducts';
 import { useFetchMetrics } from '../hooks/useFetchMetrics';
 
@@ -17,9 +18,14 @@ const AppContext = React.createContext();
 
 const defaultState = {
   //User
-  currentUser: null,
+  currentUser: false,
   //Upload file
-  isFileUploaded: false,
+  isDataAvailable: false,
+  alreadyRequestedUpload: false,
+  fileToUpload: null,
+  showProgressBar: false,
+  progressBarValue: null,
+  responseLastUpload: null,
   //Product list
   productList: null,
   //Queries
@@ -45,6 +51,7 @@ const defaultState = {
     animation: '',
   },
   //URL
+  urlFileUpload: '//localhost:8080/upload',
   urlGetProducts: 'http://localhost:8080/products',
   //urlGetProducts: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
   urlGetProductMetrics: 'http://localhost:8080/product_metrics',
@@ -56,6 +63,7 @@ const defaultState = {
   urlGetOrderAvg: 'http://localhost:8080/orders_avg',
   //urlGetOrderAvg:
   //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
+  urlCurrentFileUpload: '',
   urlCurrentProducts: '',
   urlCurrentMetrics: '',
 };
@@ -65,8 +73,17 @@ export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  //HTTP REQUESTS
+  const {
+    responseUpload,
+    isLoadingUpload,
+    errorUpload,
+    progressUpload,
+    cancelUpload,
+  } = useUploadFile(state.urlCurrentFileUpload, state.fileToUpload);
+
   const { dataFetchProducts, isFetchLoadingProducts, errorFetchProducts } =
-    useFetchProducts(state.urlCurrent);
+    useFetchProducts(state.urlCurrentProducts);
 
   const { dataFetchMetrics, isFetchLoadingMetrics, errorFetchMetrics } =
     useFetchMetrics(state.urlCurrentMetrics);
@@ -76,7 +93,7 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: type, payload: payload });
   };
 
-  //Alerts
+  //Alert handler functions
   const handleAlert = useCallback(
     (...value) => {
       dispatch({ type: 'HANDLE_ALERT', payload: value });
@@ -84,21 +101,59 @@ export const AppProvider = ({ children }) => {
     [dispatch]
   );
 
+  const handleAlertSearch = (...value) => {
+    dispatch({ type: 'HANDLE_ALERT_SEARCH', payload: value });
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => handleAlert(false), 3000);
     clearInterval(timeout);
     state.alert.show && setTimeout(() => handleAlert(false), 3000);
   }, [state.alert.show, handleAlert]);
 
-  const handleAlertSearch = (...value) => {
-    dispatch({ type: 'HANDLE_ALERT_SEARCH', payload: value });
-  };
-
-  //File uploaded
+  //Check data available in memory
   useEffect(() => {
-    console.log('File uploaded?', state.isFileUploaded);
-    !state.currentUser && setDispatch('FILE_UPLOADED', false);
-  }, [state.isFileUploaded, state.currentUser]);
+    console.log('Is data available in memory?', state.isDataAvailable);
+    !state.currentUser && setDispatch('SET_DATA_AVAILABLE', false);
+  }, [state.isDataAvailable, state.currentUser]);
+
+  //Set Progress bar
+  useEffect(() => {
+    if (errorUpload) {
+      dispatch({
+        type: 'SHOW_PROGRESS_BAR',
+        payload: false,
+      });
+    } else if (!errorUpload && progressUpload > 0 && progressUpload < 100) {
+      handleAlert(false);
+      dispatch({ type: 'SHOW_PROGRESS_BAR', payload: true });
+    } else if (!errorUpload && progressUpload === 100) {
+      setTimeout(
+        () => dispatch({ type: 'SHOW_PROGRESS_BAR', payload: false }),
+        4000
+      );
+    }
+  }, [dispatch, progressUpload, errorUpload, handleAlert]);
+
+  //Handle alert upload page
+  useEffect(() => {
+    if (state.alreadyRequestedUpload && !state.fileToUpload) {
+      dispatch({
+        type: 'HANDLE_ALERT',
+        payload: [true, 'Please, choose a file first.', 'danger', false],
+      });
+    } else if (errorUpload && errorUpload === 'Upload cancelled.') {
+      dispatch({
+        type: 'HANDLE_ALERT',
+        payload: [true, errorUpload, 'danger', false],
+      });
+    } else if (errorUpload && errorUpload !== 'Upload cancelled.') {
+      dispatch({
+        type: 'HANDLE_ALERT',
+        payload: [true, `Sorry... ${errorUpload}.`, 'danger', false],
+      });
+    }
+  }, [dispatch, state.alreadyRequestedUpload, state.fileToUpload, errorUpload]);
 
   //Auth
   const auth = getAuth(appFirebase);
@@ -177,6 +232,11 @@ export const AppProvider = ({ children }) => {
         setDispatch,
         handleAlert,
         handleAlertSearch,
+        responseUpload,
+        isLoadingUpload,
+        errorUpload,
+        progressUpload,
+        cancelUpload,
         dataFetchProducts,
         isFetchLoadingProducts,
         errorFetchProducts,

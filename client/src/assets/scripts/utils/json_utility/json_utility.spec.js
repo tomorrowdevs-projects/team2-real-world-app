@@ -18,24 +18,9 @@ const fetchDataFormat = [
 //Validate json format
 test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson(fetchDataFormat)).toEqual(true);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson(undefined)).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson(null)).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson([])).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson([{}])).toEqual(false);
-});
-
-test(`It should return true if the format of the input data is a valid json format and false otherwise`, () => {
   expect(isValidJson([{}, {}])).toEqual(false);
 });

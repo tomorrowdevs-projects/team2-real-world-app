@@ -1,14 +1,15 @@
 import { getResponseData } from './dataManagement';
 
+//GET RESPONSE DATA
 const response = null;
 
-//GET RESPONSE DATA
 test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(response, 'product_name', 'string', 'Data not available')
   ).toEqual('');
 });
 
+//GET RESPONSE DATA
 const response1 = [
   {
     id: 1,
@@ -20,26 +21,16 @@ const response1 = [
   },
 ];
 
-//GET RESPONSE DATA
 test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(response1, 'product_name', 'string', 'Data not available')
   ).toEqual('Remote Tuner');
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(response1, 'total_orders', 'number', 'Data not available')
   ).toEqual(30);
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(response1, 'revenue', 'number', 'Data not available')
   ).toEqual(350.45);
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(
       response1,
@@ -49,9 +40,6 @@ test(`It should return the value of the property if the property exists and is o
       'date'
     )
   ).toEqual('2022-01-01');
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(
       response1,
@@ -63,6 +51,7 @@ test(`It should return the value of the property if the property exists and is o
   ).toEqual('2022-02-20');
 });
 
+//GET RESPONSE DATA
 const response2 = [
   {
     id: 1,
@@ -78,21 +67,21 @@ test(`It should return the value of the property if the property exists and is o
   expect(
     getResponseData(response2, 'product_name', 'string', 'Data not available')
   ).toEqual('Data not available');
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(response2, 'total_orders', 'number', 'Data not available')
   ).toEqual('Data not available');
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(response2, 'revenue', 'number', 'Data not available')
   ).toEqual('Data not available');
-});
-
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
+  expect(
+    getResponseData(
+      response2,
+      'start_date',
+      'string',
+      'Data not available',
+      'date'
+    )
+  ).toEqual('Data not available');
   expect(
     getResponseData(
       response2,
@@ -104,18 +93,7 @@ test(`It should return the value of the property if the property exists and is o
   ).toEqual('Data not available');
 });
 
-test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
-  expect(
-    getResponseData(
-      response2,
-      'start_date',
-      'string',
-      'Data not available',
-      'date'
-    )
-  ).toEqual('Data not available');
-});
-
+//GET RESPONSE DATA
 const response3 = [
   {
     id: 1,

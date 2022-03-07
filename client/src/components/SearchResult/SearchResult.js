@@ -6,7 +6,6 @@ const SearchResult = ({
   isInvalidProductName,
   isInvalidDateRangeProp,
   responseLabel,
-  dateText,
   startDate,
   endDate,
   productName,
@@ -23,7 +22,7 @@ const SearchResult = ({
   } else
     return (
       <div className='container-result mt-4'>
-        <DateLabel dateText={dateText} dateFrom={startDate} dateTo={endDate} />
+        <DateLabel dateFrom={startDate} dateTo={endDate} />
         <Table striped bordered hover size='sm'>
           {select ? (
             <>

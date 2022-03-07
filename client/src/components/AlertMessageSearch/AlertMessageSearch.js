@@ -4,7 +4,7 @@ import './alert-message-search.scss';
 const AlertMessageSearch = ({ alert }) => {
   const { show, message, variant, dismissible, animation } = alert;
   return (
-    <div className='alert-box'>
+    <div className='alert-box-search'>
       {show && (
         <Alert
           className='alert-message-box'

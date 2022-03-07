@@ -9,7 +9,7 @@ export const formatList = jsonData => {
     if (
       item.product_id &&
       item.product_name &&
-      typeof item.product_id === 'number' &&
+      typeof item.product_id === 'string' &&
       typeof item.product_name === 'string' &&
       item.product_name !== ''
     ) {
