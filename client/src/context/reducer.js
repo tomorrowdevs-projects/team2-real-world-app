@@ -8,10 +8,40 @@ const reducer = (state, action) => {
         currentUser: payload,
       };
     //Upload file
-    case 'FILE_UPLOADED':
+    case 'SET_DATA_AVAILABLE':
       return {
         ...state,
-        isFileUploaded: payload,
+        isDataAvailable: payload,
+      };
+    case 'SET_ALREADY_REQUESTED_UPLOAD':
+      return {
+        ...state,
+        alreadyRequestedUpload: payload,
+      };
+    case 'SET_FILE_TO_UPLOAD':
+      return {
+        ...state,
+        fileToUpload: payload,
+      };
+    case 'SET_CURRENT_FILE_UPLOAD_URL':
+      return {
+        ...state,
+        urlCurrentFileUpload: payload,
+      };
+    case 'SHOW_PROGRESS_BAR':
+      return {
+        ...state,
+        showProgressBar: payload,
+      };
+    case 'SET_PROGRESS_BAR':
+      return {
+        ...state,
+        progressBarValue: payload,
+      };
+    case 'SET_RESPONSE_LAST_UPLOAD':
+      return {
+        ...state,
+        responseLastUpload: payload,
       };
     //Product list
     case 'SET_PRODUCT_LIST':
