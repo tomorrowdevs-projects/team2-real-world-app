@@ -29,8 +29,14 @@ test(`It should return the value of the property if the property exists and is o
     getResponseData(response1, 'total_orders', 'number', 'Data not available')
   ).toEqual(30);
   expect(
-    getResponseData(response1, 'revenue', 'number', 'Data not available')
-  ).toEqual(350.45);
+    getResponseData(
+      response1,
+      'revenue',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual('350.45');
   expect(
     getResponseData(
       response1,
@@ -71,15 +77,12 @@ test(`It should return the value of the property if the property exists and is o
     getResponseData(response2, 'total_orders', 'number', 'Data not available')
   ).toEqual('Data not available');
   expect(
-    getResponseData(response2, 'revenue', 'number', 'Data not available')
-  ).toEqual('Data not available');
-  expect(
     getResponseData(
       response2,
-      'start_date',
-      'string',
+      'revenue',
+      'number',
       'Data not available',
-      'date'
+      'float(2'
     )
   ).toEqual('Data not available');
   expect(
@@ -91,6 +94,39 @@ test(`It should return the value of the property if the property exists and is o
       'date'
     )
   ).toEqual('Data not available');
+  expect(
+    getResponseData(
+      response2,
+      'end_date',
+      'string',
+      'Data not available',
+      'date'
+    )
+  ).toEqual('Data not available');
+});
+
+//GET RESPONSE DATA
+const response2b = [
+  {
+    id: 1,
+    product_name: 'Remote Tuner',
+    total_orders: 30,
+    revenue: 0,
+    start_date: '2022-01-01',
+    end_date: '2022-02-20',
+  },
+];
+
+test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
+  expect(
+    getResponseData(
+      response2b,
+      'revenue',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual('0.00');
 });
 
 //GET RESPONSE DATA
@@ -107,8 +143,27 @@ test(`It should return the value of the property if the property exists and is o
   expect(
     getResponseData(response3, 'num_clients', 'number', 'Data not available')
   ).toEqual(34);
+  expect(
+    getResponseData(
+      response3,
+      'start_date',
+      'string',
+      'Data not available',
+      'date'
+    )
+  ).toEqual('2022-01-01');
+  expect(
+    getResponseData(
+      response3,
+      'end_date',
+      'string',
+      'Data not available',
+      'date'
+    )
+  ).toEqual('2022-02-20');
 });
 
+//GET RESPONSE DATA
 const response4 = [
   {
     id: 1,
@@ -136,6 +191,24 @@ const response6 = [
   },
 ];
 
+const response7 = [
+  {
+    id: 1,
+    orders_avg: 0.6,
+    start_date: '2022-01-01',
+    end_date: '2022-02-20',
+  },
+];
+
+const response8 = [
+  {
+    id: 1,
+    orders_avg: 0,
+    start_date: '2022-01-01',
+    end_date: '2022-02-20',
+  },
+];
+
 test(`It should return the value of the property if the property exists and is of the expected type, otherwise the default text`, () => {
   expect(
     getResponseData(
@@ -145,7 +218,7 @@ test(`It should return the value of the property if the property exists and is o
       'Data not available',
       'float(2)'
     )
-  ).toEqual(230.12);
+  ).toEqual('230.12');
   expect(
     getResponseData(
       response5,
@@ -154,7 +227,7 @@ test(`It should return the value of the property if the property exists and is o
       'Data not available',
       'float(2)'
     )
-  ).toEqual(230.0);
+  ).toEqual('230.00');
   expect(
     getResponseData(
       response6,
@@ -163,5 +236,23 @@ test(`It should return the value of the property if the property exists and is o
       'Data not available',
       'float(2)'
     )
-  ).toEqual(0.6);
+  ).toEqual('0.60');
+  expect(
+    getResponseData(
+      response7,
+      'orders_avg',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual('0.60');
+  expect(
+    getResponseData(
+      response8,
+      'orders_avg',
+      'number',
+      'Data not available',
+      'float(2)'
+    )
+  ).toEqual('0.00');
 });
