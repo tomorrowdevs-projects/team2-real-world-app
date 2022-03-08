@@ -1,24 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"team2-real-world-app/server/pkg/api"
-	handlefile "team2-real-world-app/server/pkg/handle_file"
 )
 
 func main() {
 
-	var newFile = handlefile.NewFile()
-	file, err := os.Open("")
-
-	entries, err := newFile.HandleFile(file)
-
-	fmt.Println(entries)
+	//var newFile = handlefile.NewFile()
+	//file, err := os.Open("")
+	//
+	//entries, err := newFile.HandleFile(file)
+	//
+	//fmt.Println(entries)
 
 	// launching server
 	router := api.Router()
-	err = router.Run("localhost:8080")
+	err := router.Run("localhost:8080")
 
 	if err != nil {
 		return

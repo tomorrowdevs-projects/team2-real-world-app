@@ -2,7 +2,6 @@ package handlefile
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/gocarina/gocsv"
 	"log"
 	"mime/multipart"
@@ -46,54 +45,53 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 
 	scanner := bufio.NewScanner(file)
 
-	countRow := 0
-
 	var db = dbmanager.NewDBManager()
 	log.Printf(" ▶ Try to connected ...\n")
 
 	_, err := db.GetConnection()
-
 	if err != nil {
-		return nil, model.ErrDbDisconnected
+		return nil, err
 	}
-
 	defer db.Disconnect() // close connection
 
 	log.Printf(" ▶ Database connected ✔ \n")
+
 	var entries []model.Entry
+	var entry model.Entry
+	countRow := 0
 
 	for scanner.Scan() {
-
-		if countRow == 0 {
-			continue
-		}
-
-		if countRow == 2 {
-
-			countRow = 0
+		// populating db every time a struct is filled with 10000 rows  (TODO try different ones)
+		if countRow == 10000 {
 			db.PopulateFromStruct(entries)
-
+			// clearing struct
+			entries = []model.Entry{}
+			// resetting counter
+			countRow = 1
 		} else {
+			if countRow > 0 {
+				// converting scanned line in slice
+				parts := strings.Split(scanner.Text(), ",")
+				price, _ := strconv.ParseFloat(parts[6], 2)
 
-			parts := strings.Split(scanner.Text(), ",")
+				entry = model.Entry{
+					OrderID:   parts[0],
+					ClientID:  parts[1],
+					Name:      parts[2],
+					Surname:   parts[3],
+					ProductID: parts[4],
+					Product:   parts[5],
+					Price:     price,
+					Date:      parts[7]}
 
-			price, _ := strconv.ParseFloat(parts[6], 2) ////
+				entries = append(entries, entry)
 
-			var entry = model.Entry{
-				OrderID:   parts[0],
-				ClientID:  parts[1],
-				Name:      parts[2],
-				Surname:   parts[3],
-				ProductID: parts[4],
-				Product:   parts[5],
-				Price:     price,
-				Date:      parts[7]}
-
-			entries = append(entries, entry)
-			fmt.Println(entries)
-
-			countRow = countRow + 1
-
+				countRow = countRow + 1
+				//fmt.Println(entries)
+			} else {
+				// skip header of the csv
+				countRow = countRow + 1
+			}
 		}
 
 	}
