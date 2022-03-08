@@ -337,6 +337,7 @@ const Search = () => {
       handleSubmit={handleSubmit}
       //Queries
       responseReady={responseReady}
+      //Product name presence validation
       isInvalidProductName={
         getResponseData(
           metricsResult,
@@ -345,6 +346,7 @@ const Search = () => {
           '<data not available>'
         ) === '<data not available>' && accordionSelected === 0
       }
+      //Correct data range validation
       isInvalidDateRangeProp={isInvalidDateRangeProp(
         getResponseData(
           metricsResult,
@@ -361,6 +363,7 @@ const Search = () => {
           'date'
         )
       )}
+      //Queries props
       startDate={convertDateDMY(
         getResponseData(
           metricsResult,
@@ -395,7 +398,8 @@ const Search = () => {
         metricsResult,
         'revenue',
         'number',
-        '<data not available>'
+        '<data not available>',
+        'float(2)'
       )}
       numberOfClients={getResponseData(
         metricsResult,
