@@ -34,7 +34,7 @@ func GetOrdersAndRevenue(c *gin.Context) {
 	// return the product metrics JSON
 	productsMetrics, err := query.ProductMetrics(requestProductMetrics)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
 

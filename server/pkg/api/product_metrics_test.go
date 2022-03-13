@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -37,7 +38,7 @@ func TestGetOrdersAndRevenue(t *testing.T) {
 
 	// Check if the response status code is 200 or 400.
 	if status := rr.Code; (status != http.StatusOK) && (status != http.StatusBadRequest) {
-		t.Errorf("Returned wrong status code: got %v want %v or %v",
+		t.Errorf(`Returned wrong status code: got %v want %v or %v`,
 			status, http.StatusOK, http.StatusBadRequest)
 	}
 
@@ -45,24 +46,70 @@ func TestGetOrdersAndRevenue(t *testing.T) {
 	var metrics []OrdersAndRevenueByProduct
 	json.Unmarshal(rr.Body.Bytes(), &metrics)
 
-	for i := 0; i < len(metrics); i++ {
-		if reflect.TypeOf(metrics[i].ProductName) != (reflect.TypeOf("string")) {
-			t.Errorf("Returned an unexpected Name (see line %v)", i)
-			break
-		} else if reflect.TypeOf(metrics[i].TotalOrders) != (reflect.TypeOf(0)) {
-			t.Errorf("Returned an unexpected value of Orders (see line %v)", i)
-			break
-		} else if reflect.TypeOf(metrics[i].Revenue) != (reflect.TypeOf(0.0)) {
-			t.Errorf("Returned an unexpected value of Revenue (see line %v)", i)
-			break
-		} else if reflect.TypeOf(metrics[i].StartDate) != (reflect.TypeOf("string")) ||
-			reflect.TypeOf(metrics[i].EndDate) != (reflect.TypeOf("string")) {
-			t.Errorf("Returned an unexpected Date (see line %v)", i)
-			break
-		}
-		if metrics[i].ProductName != "0" {
-			t.Errorf("Returned an unexpected Product (see line %v)", i)
-		}
+	var metricsLen = len(metrics)
+
+	if metricsLen > 0 {
+
+		assert.Equalf(t, reflect.TypeOf(metrics[0].ProductName), reflect.TypeOf("string"),
+			"Returned an unexpected Name. "+
+				"Expected %v, returned %v",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(metrics[0].ProductName))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[0].TotalOrders), reflect.TypeOf(0),
+			"Returned an unexpected value of Orders. "+
+				"Expected %v value, returned %v value.",
+			reflect.TypeOf(0),
+			reflect.TypeOf(metrics[0].TotalOrders))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[0].Revenue), reflect.TypeOf(0.5),
+			"Returned an unexpected value of Revenue. "+
+				"Expected %v value, returned %v value.",
+			reflect.TypeOf(0.5),
+			reflect.TypeOf(metrics[0].Revenue))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[0].StartDate), reflect.TypeOf("string"),
+			"Returned an unexpected Start Date. \n"+
+				"Expected %v value, returned %v value ",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(metrics[0].StartDate))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[0].EndDate), reflect.TypeOf("string"),
+			"Returned an unexpected End Date. \n"+
+				"Expected %v value, returned %v value ",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(metrics[0].EndDate))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[metricsLen-1].ProductName), reflect.TypeOf("string"),
+			"Returned an unexpected Name. "+
+				"Expected %v, returned %v",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(metrics[metricsLen-1].ProductName))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[metricsLen-1].TotalOrders), reflect.TypeOf(0),
+			"Returned an unexpected value of Orders. "+
+				"Expected %v value, returned %v value.",
+			reflect.TypeOf(0),
+			reflect.TypeOf(metrics[metricsLen-1].TotalOrders))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[metricsLen-1].Revenue), reflect.TypeOf(0.5),
+			"Returned an unexpected value of Revenue. "+
+				"Expected %v value, returned %v value.",
+			reflect.TypeOf(0.5),
+			reflect.TypeOf(metrics[metricsLen-1].Revenue))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[metricsLen-1].StartDate), reflect.TypeOf("string"),
+			"Returned an unexpected Start Date. \n"+
+				"Expected %v value, returned %v value ",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(metrics[metricsLen-1].StartDate))
+
+		assert.Equalf(t, reflect.TypeOf(metrics[metricsLen-1].EndDate), reflect.TypeOf("string"),
+			"Returned an unexpected End Date. \n"+
+				"Expected %v value, returned %v value ",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(metrics[metricsLen-1].EndDate))
+
 	}
 
 }
