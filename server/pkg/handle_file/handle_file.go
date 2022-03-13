@@ -42,12 +42,9 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 	}
 	*/
 
-	// TODO - split file in x chunk and pass it to io.Reader
-
-	scanner := bufio.NewScanner(file)
-
+	// opening db connection
 	var db = dbmanager.NewDBManager()
-	log.Printf(" ▶ Try to connected ...\n")
+	log.Printf(" ▶ Try to connect ...\n")
 
 	_, err := db.GetConnection()
 	if err != nil {
@@ -64,10 +61,13 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 
 	countRow := 0
 	counter := 1
-	
+
+	// opening scanner on file to start populating db
+	scanner := bufio.NewScanner(file)
 	log.Println("population started")
+
 	for scanner.Scan() {
-		// populating db every time a struct is filled with 10000 rows  (TODO try different ones)
+		// populating db every time a struct is filled with 10000 rows  (NOTE: does NOT work with bigger chunks e.g. 50000)
 		if countRow == 10000 {
 			counter += 1
 			//println(counter, "\n")
@@ -76,14 +76,16 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 			entries = nil
 			entries = []model.Entry{}
 			// resetting counter
-			countRow = 1
+			countRow = 1 // note: resetting from 1 to ignore header of csv
 		} else {
 			if countRow > 0 {
 				// converting scanned line in slice
 				strings.Split(scanner.Text(), ",")
 				parts = strings.Split(scanner.Text(), ",")
+				// converting field price of csv from string to float
 				price, _ = strconv.ParseFloat(parts[6], 2)
 
+				// populating struct
 				entry = model.Entry{
 					OrderID:   parts[0],
 					ClientID:  parts[1],
@@ -94,29 +96,25 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 					Price:     price,
 					Date:      parts[7]}
 
+				// appending struct to array of structs
 				entries = append(entries, entry)
 
 				countRow = countRow + 1
-				//fmt.Println(entries)
 			} else {
 				// skip header of the csv
 				countRow = countRow + 1
 			}
 		}
-
 	}
 
-	// if err := scanner.Err(); err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	/*fileReader := bufio.NewReader(file) // implements a buffered reader
-	entries, err := handleFile.PopulateStruct(fileReader)
-	if err != nil {
-		return nil, err
+	// populate remaining entries that did not reach chunk size
+	if len(entries) > 0 {
+		db.PopulateFromStruct(entries)
 	}
-	log.Printf(" - Struct populated ")*/
 
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("population ended")
 	return nil, err
