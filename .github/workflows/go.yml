@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-
+'''
   build:
     runs-on: ubuntu-latest
     steps:
@@ -25,3 +25,4 @@ jobs:
       - name: Test
         working-directory: ./server
         # run: go test -v ./...
+'''
