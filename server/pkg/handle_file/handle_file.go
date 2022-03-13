@@ -2,7 +2,6 @@ package handlefile
 
 import (
 	"bufio"
-	"github.com/gocarina/gocsv"
 	"log"
 	"mime/multipart"
 	"os"
@@ -12,6 +11,8 @@ import (
 	dbmanager "team2-real-world-app/server/pkg/database"
 	"team2-real-world-app/server/pkg/helpers"
 	"team2-real-world-app/server/pkg/model"
+
+	"github.com/gocarina/gocsv"
 )
 
 // define expected errors at the top
@@ -58,21 +59,30 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 
 	var entries []model.Entry
 	var entry model.Entry
-	countRow := 0
+	var parts []string
+	var price float64
 
+	countRow := 0
+	counter := 1
+	
+	log.Println("population started")
 	for scanner.Scan() {
 		// populating db every time a struct is filled with 10000 rows  (TODO try different ones)
 		if countRow == 10000 {
+			counter += 1
+			//println(counter, "\n")
 			db.PopulateFromStruct(entries)
 			// clearing struct
+			entries = nil
 			entries = []model.Entry{}
 			// resetting counter
 			countRow = 1
 		} else {
 			if countRow > 0 {
 				// converting scanned line in slice
-				parts := strings.Split(scanner.Text(), ",")
-				price, _ := strconv.ParseFloat(parts[6], 2)
+				strings.Split(scanner.Text(), ",")
+				parts = strings.Split(scanner.Text(), ",")
+				price, _ = strconv.ParseFloat(parts[6], 2)
 
 				entry = model.Entry{
 					OrderID:   parts[0],
@@ -96,9 +106,9 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 
 	}
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+	// if err := scanner.Err(); err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	/*fileReader := bufio.NewReader(file) // implements a buffered reader
 	entries, err := handleFile.PopulateStruct(fileReader)
@@ -107,7 +117,9 @@ func (handleFile NewHandleFile) HandleFile(file multipart.File) ([]model.Entry, 
 	}
 	log.Printf(" - Struct populated ")*/
 
-	return entries, err
+
+	log.Println("population ended")
+	return nil, err
 }
 
 // IsCsvExtension - check if the file is a csv

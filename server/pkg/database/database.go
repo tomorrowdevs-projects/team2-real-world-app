@@ -92,9 +92,9 @@ func (dbm *DBManager) IsConnected() bool {
 func (dbm *DBManager) PopulateFromStruct(entries []model.Entry) error {
 
 	// check the connection
-	if !dbm.isConnected {
-		return model.ErrDbDisconnected
-	}
+	//if !dbm.isConnected {
+	//	return model.ErrDbDisconnected
+	//}
 
 	// batch insert product table
 	_, err := dbm.conn.NamedExec(`INSERT IGNORE INTO product(id, name, price)
@@ -102,7 +102,7 @@ func (dbm *DBManager) PopulateFromStruct(entries []model.Entry) error {
 	if err != nil {
 		return err
 	}
-	log.Println(" - Product data added in Database")
+	//log.Println(" - Product data added in Database")
 
 	// batch insert client table
 	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO client(id, name, surname)
@@ -110,14 +110,14 @@ func (dbm *DBManager) PopulateFromStruct(entries []model.Entry) error {
 	if err != nil {
 		return err
 	}
-	log.Println(" - Client data added in Database")
+	//log.Println(" - Client data added in Database")
 
 	// batch insert order table
-	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO orders(id, client_id, product_id, date) 
+	_, err = dbm.conn.NamedExec(`INSERT IGNORE INTO orders(id, client_id, product_id, date)
 	VALUES(:order_id, :client_id, :product_id, :order_date)`, entries)
 	if err != nil {
 		return err
 	}
-	log.Println(" - Orders data added in Database")
+	//log.Println(" - Orders data added in Database")
 	return nil
 }
