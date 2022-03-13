@@ -9,6 +9,6 @@ type Entry struct {
 	Surname   string  `csv:"surname"   db:"surname"`
 	ProductID string  `csv:"productID" db:"product_id"`
 	Product   string  `csv:"product"   db:"product_name"`
-	Price     float64 `csv:"price"     db:"price"`
+	Price     float64 `csv:"price"     db:"price"` ///
 	Date      string  `csv:"date"      db:"order_date"`
 }

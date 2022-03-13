@@ -34,7 +34,7 @@ func AllProducts() ([]response.AllProducts, error) {
 	log.Printf(" ▶ Database connected ✔ \n")
 
 	var products []response.AllProducts
-	err = dbx.Select(&products, "SELECT id, name FROM product")
+	err = dbx.Select(&products, "SELECT id, name FROM product GROUP BY id")
 	if err != nil {
 		return nil, ProductsError
 	}

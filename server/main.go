@@ -6,6 +6,13 @@ import (
 
 func main() {
 
+	//var newFile = handlefile.NewFile()
+	//file, err := os.Open("")
+	//
+	//entries, err := newFile.HandleFile(file)
+	//
+	//fmt.Println(entries)
+
 	// launching server
 	router := api.Router()
 	err := router.Run("localhost:8080")

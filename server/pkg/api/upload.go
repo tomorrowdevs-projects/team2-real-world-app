@@ -27,7 +27,13 @@ func UploadFile(c *gin.Context) {
 	}
 
 	// processing csv: saves entries in struct, opens db connection and migrates struct to db
-	err = handlefile.ProcessFileUpload(file)
+	//err = handlefile.ProcessFileUpload(file)
+	var newFile = handlefile.NewFile()
+	_, err = newFile.HandleFile(file)
+	if err != nil {
+		return
+	}
+
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
