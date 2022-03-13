@@ -31,7 +31,7 @@ func CustomersCount(request request.CustomersCount) (*response.CustomersCount, e
 	var customersCount int
 
 	err = dbx.Get(&customersCount, "SELECT "+
-		"COUNT(client_id)"+
+		"COUNT(DISTINCT client_id)"+
 		"FROM client "+
 		"JOIN orders ON client.id = orders.client_id "+
 		"WHERE date BETWEEN ? and ? ",
