@@ -35,7 +35,7 @@ func TestGetCustomersNumber(t *testing.T) {
 
 	// Check if the response status code is 200 or 400.
 	if status := rr.Code; (status != http.StatusOK) && (status != http.StatusBadRequest) {
-		t.Errorf("Returned wrong status code: got %v want %v or %v",
+		t.Errorf(`Returned wrong status code: got %v want %v or %v`,
 			status, http.StatusOK, http.StatusBadRequest)
 	}
 

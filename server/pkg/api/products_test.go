@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -11,7 +12,7 @@ import (
 func TestGetProducts(t *testing.T) {
 
 	type Products struct {
-		ID   int    `json:"product_id"`
+		ID   string `json:"product_id"`
 		Name string `json:"product_name"`
 	}
 
@@ -37,14 +38,22 @@ func TestGetProducts(t *testing.T) {
 	var products []Products
 	json.Unmarshal(rr.Body.Bytes(), &products)
 
-	for i := 0; i < len(products); i++ {
-		if reflect.TypeOf(products[i].ID) != (reflect.TypeOf(0)) {
-			t.Errorf("Returned an unexpected ID (see line %v)", i)
-			break
-		} else if reflect.TypeOf(products[i].Name) != (reflect.TypeOf("string")) {
-			t.Errorf("Returned an unexpected Name (see line %v)", i)
-			break
-		}
+	var productsLen = len(products)
+
+	if productsLen > 0 {
+
+		assert.Equalf(t, reflect.TypeOf(products[0].ID), reflect.TypeOf("string"),
+			"Returned an unexpected ID. "+
+				"Expected type %v, returned %v",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(products[0].ID))
+
+		assert.Equalf(t, reflect.TypeOf(products[productsLen-1].Name), reflect.TypeOf("string"),
+			"Returned an unexpected Name. "+
+				"Expected type %v, returned %v",
+			reflect.TypeOf("string"),
+			reflect.TypeOf(products[productsLen-1].ID))
+
 	}
 
 }

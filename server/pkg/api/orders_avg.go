@@ -30,7 +30,7 @@ func GetOrdersAvg(c *gin.Context) {
 	// return AVG orders JSON
 	OrdersAVG, err := query.OrdersAVG(requestAvgOrders) // <---
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
 

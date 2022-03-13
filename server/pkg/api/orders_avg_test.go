@@ -35,17 +35,17 @@ func TestGetOrdersAvg(t *testing.T) {
 
 	// Check if the response status code is 200 or 400.
 	if status := rr.Code; (status != http.StatusOK) && (status != http.StatusBadRequest) {
-		t.Errorf("Returned wrong status code: got %v want %v or %v",
+		t.Errorf(`Returned wrong status code: got %v want %v or %v`,
 			status, http.StatusOK, http.StatusBadRequest)
 	}
 
 	var orders = OrdersAvg{}
 	json.Unmarshal(rr.Body.Bytes(), &orders)
 
-	assert.Equalf(t, reflect.TypeOf(orders.OrdersValue), reflect.TypeOf(0.0),
+	assert.Equalf(t, reflect.TypeOf(orders.OrdersValue), reflect.TypeOf(0.5),
 		"Returned an unexpected average Orders value. \n"+
 			"Expected %v value, returned %v value ",
-		reflect.TypeOf(0.0),
+		reflect.TypeOf(0.5),
 		reflect.TypeOf(orders.OrdersValue))
 
 	assert.Equalf(t, reflect.TypeOf(orders.StartDate), reflect.TypeOf("string"),
