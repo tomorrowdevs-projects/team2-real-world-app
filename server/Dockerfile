@@ -1,17 +1,19 @@
-FROM golang:1.17
+FROM golang:1.16-alpine
 
-WORKDIR /usr/src/app
+ADD . /server
+WORKDIR /server
 
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
 
-COPY . .
+COPY *.go ./
 
-RUN go build -v -o /usr/local/bin/app ./...
+RUN go build -o /docker-gs-ping
 
 EXPOSE 8080
 
-CMD ["app"]
+CMD [ "/docker-gs-ping" ]
 
 
 

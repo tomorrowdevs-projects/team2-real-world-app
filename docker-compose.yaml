@@ -10,10 +10,24 @@ services:
     stdin_open: true
     tty: true
 
-  server:
-    build: ./server
-    container_name: server_c
+  db:
+    image: mysql
+    restart: always
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: real_world_app
     ports:
-      - '8080:8080'
+      - "3306:3306"
     volumes:
-      - ./server:/app  
+      - ./server/test/docker/sql_file:/docker-entrypoint-initdb.d
+
+
+
+  #server:
+  #  build: ./server
+  #  container_name: server_c
+  #  ports:
+  #    - '8080:8080'
+  #  volumes:
+  #    - ./server:/server
