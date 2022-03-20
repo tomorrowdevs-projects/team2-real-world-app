@@ -1,9 +1,6 @@
-
-
 <h1>
 <img src="docs\images\TD-logo.png" alt="TD-logo" width="50" height="50" /> 
-Team 2 - Real World App</h1>
-
+X-COMM App</h1>
 
 <h2>Description</h2>
 <p>
@@ -47,7 +44,6 @@ You can find the documents used in the <code>docs/ADR/</code> folder.
     Frontend Technologies</a> </li>
 </ul>
 
-
 <br>
 
 <h2>Database Model</h2>
@@ -57,12 +53,11 @@ The entity–relationship model (ER model) that shows the relationships of entit
 <img src="docs\images\ER-DB.png" alt="ER Database">
 </p>
 
-
 <h2>Project Folder Structure</h2>
 <p>
 Schema representing how the folder structure is set up within the project.
 <br>
 <a href="https://whimsical.com/project-structure-6txcHoWTUd8wjZuHgFhL33">
-    Project Folder Schema</a> 
+    Project Folder Schema</a>
 
 </p>
