@@ -52,17 +52,17 @@ const defaultState = {
   },
   //URL
   urlFileUpload: '//localhost:8080/upload',
-  urlGetProducts: 'http://localhost:8080/products',
-  //urlGetProducts: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
-  urlGetProductMetrics: 'http://localhost:8080/product_metrics',
-  //urlGetProductMetrics:
-  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/product_metrics',
-  urlGetCustomerCount: 'http://localhost:8080/customers_count',
-  //urlGetCustomerCount:
-  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customer_metrics',
-  urlGetOrderAvg: 'http://localhost:8080/orders_avg',
-  //urlGetOrderAvg:
-  //'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
+  //urlGetProducts: 'http://localhost:8080/products',
+  urlGetProducts: `https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/products`,
+  //urlGetProductMetrics: 'http://localhost:8080/product_metrics',
+  urlGetProductMetrics:
+    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/product_metrics',
+  //urlGetCustomerCount: 'http://localhost:8080/customers_count',
+  urlGetCustomerCount:
+    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/customer_metrics',
+  //urlGetOrderAvg: 'http://localhost:8080/orders_avg',
+  urlGetOrderAvg:
+    'https://61ebc1bd7ec58900177cdd56.mockapi.io/domserver/average_metrics',
   urlCurrentFileUpload: '',
   urlCurrentProducts: '',
   urlCurrentMetrics: '',
